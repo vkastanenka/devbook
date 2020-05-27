@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 // Post schema
 const postSchema = new mongoose.Schema({
   user: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: [true, "Post must belong to a user"]
   },
@@ -14,20 +14,20 @@ const postSchema = new mongoose.Schema({
   },
   likes: [
     {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User"
     }
   ],
   dislikes: [
     {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User"
     }
   ],
   comments: [
     {
       user: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: [true, "Comment must belong to a user"]
       },
@@ -41,13 +41,13 @@ const postSchema = new mongoose.Schema({
       },
       likes: [
         {
-          type: Schema.Types.ObjectId,
+          type: mongoose.Schema.Types.ObjectId,
           ref: "User"
         }
       ],
       dislikes: [
         {
-          type: Schema.Types.ObjectId,
+          type: mongoose.Schema.Types.ObjectId,
           ref: "User"
         }
       ]

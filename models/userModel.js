@@ -43,18 +43,18 @@ const userSchema = new mongoose.Schema({
     },
   },
   profile: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Profile"
   },
   following: [
     {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User"
     }
   ],
   posts: [
     {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Post"
     }
   ],

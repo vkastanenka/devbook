@@ -1,5 +1,5 @@
 {
-  "name": "03.devconnect",
+  "name": "devconnector",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -31,5 +31,8 @@
     "slugify": "^1.4.0",
     "validator": "^12.2.0",
     "xss-clean": "^0.1.1"
+  },
+  "engines": {
+    "node": "^10"
   }
 }
