@@ -1,0 +1,6 @@
+config.env
+node_modules
+
+client/.env
+client/node_modules
+client/src/assets/node_modules
