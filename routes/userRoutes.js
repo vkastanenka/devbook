@@ -1,8 +1,8 @@
-// Set Up Router
+// Set up router
 const express = require("express");
 const router = express.Router();
 
-// Load Controllers
+// Load controllers
 const authController = require("../controllers/authController");
 const userController = require("../controllers/userController");
 
@@ -52,7 +52,7 @@ router.use(authController.protect);
 // @route   GET api/v1/users/currentUser
 // @desc    Returns user associated with JWT
 // @access  Protected
-router.get('/currentUser', userController.getCurrentUser);
+router.get("/currentUser", userController.getCurrentUser);
 
 // @route   PATCH api/v1/users/updatePassword
 // @desc    Update current user's password
@@ -87,22 +87,16 @@ router.delete("/follow/:id", userController.unfollowById);
 /////////////////////
 // Restricted Routes
 
+router.use(authController.restrictTo("admin"));
+
 // @route   PATCH api/v1/users/:id
 // @desc    Update user by their id
 // @access  Restricted
-router.patch(
-  "/user/:id",
-  authController.restrictTo("admin"),
-  userController.updateUserById
-);
+router.patch("/user/:id", userController.updateUserById);
 
 // @route   DELETE api/v1/users/:id
 // @desc    Delete user by their id
 // @access  Restricted
-router.delete(
-  "/user/:id",
-  authController.restrictTo("admin"),
-  userController.deleteUserById
-);
+router.delete("/user/:id", userController.deleteUserById);
 
 module.exports = router;

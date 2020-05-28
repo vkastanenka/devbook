@@ -5,7 +5,7 @@ const path = require("path");
 const AppError = require('./utils/appError');
 const userRouter = require('./routes/userRoutes');
 // const postRouter = require('./routes/postRoutes');
-// const profileRouter = require('./routes/userRoutes');
+const profileRouter = require('./routes/profileRoutes');
 
 const app = express();
 
@@ -34,7 +34,7 @@ app.use((req, res, next) => {
 // Routes
 app.use("/api/v1/users", userRouter);
 // app.use("/api/v1/posts", postRouter);
-// app.use("/api/v1/profiles", profileRouter);
+app.use("/api/v1/profiles", profileRouter);
 
 // Handling Unhandled Routes
 app.all("*", (req, res, next) => {

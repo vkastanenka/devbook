@@ -68,7 +68,7 @@ exports.test = (req, res, next) => res.json({ message: "Users route secured" });
 // @access  Public
 exports.getAllUsers = factory.getAll(User);
 
-// @route   GET api/v1/users/:id
+// @route   GET api/v1/users/users/:id
 // @desc    Returns users matching id parameter
 // @access  Public
 exports.getUserById = factory.getOne(User);
@@ -216,12 +216,12 @@ exports.unfollowById = catchAsync(async (req, res, next) => {
 /////////////////////
 // Restricted Routes
 
-// @route   PATCH api/v1/users/:id
+// @route   PATCH api/v1/users/user/:id
 // @desc    Update user by their id
 // @access  Restricted
 exports.updateUserById = factory.updateOne(User);
 
-// @route   DELETE api/v1/users/:id
+// @route   DELETE api/v1/users/user/:id
 // @desc    Delete user by their id
 // @access  Restricted
 exports.deleteUserById = factory.deleteOne(User);
