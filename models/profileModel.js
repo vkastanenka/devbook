@@ -117,7 +117,7 @@ const profileSchema = new mongoose.Schema({
 profileSchema.pre(/^find/, function(next) {
   this.populate({
     path: "user",
-    select: "name photo following",
+    select: "name photo following posts",
     populate: {
       path: "following",
       select: "name photo profile posts",

@@ -44,27 +44,27 @@ const userSchema = new mongoose.Schema({
   },
   profile: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Profile"
+    ref: "Profile",
   },
   following: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
-    }
+      ref: "User",
+    },
   ],
   posts: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Post"
-    }
+      ref: "Post",
+    },
   ],
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
   date: {
     type: Date,
-    default: Date.now()
-  }
+    default: Date.now(),
+  },
 });
 
 //////////////////////

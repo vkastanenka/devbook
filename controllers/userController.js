@@ -61,7 +61,9 @@ exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
 // @route   GET api/v1/users/test
 // @desc    Tests users route
 // @access  Public
-exports.test = (req, res, next) => res.json({ message: "Users route secured" });
+exports.test = (req, res, next) => {
+  res.json({ message: "Users route secured" });
+};
 
 // @route   GET api/v1/users
 // @desc    Returns all registered users
