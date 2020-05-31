@@ -32,9 +32,9 @@ exports.protect = catchAsync(async (req, res, next) => {
   ) {
     token = req.headers.authorization.split(" ")[1];
   }
-  // else if (localStorage.jwtToken) {
-  //   token = localStorage.jwtToken;
-  // }
+  else if (localStorage.jwtToken) {
+    token = localStorage.jwtToken;
+  }
 
   // Check if the token exists
   if (!token) {

@@ -1,25 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// React
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+
+// Redux
+import store from "./store/store";
+import { Provider } from "react-redux";
+
+// Actions
+import { setCurrentUser, logout } from "./store/actions/authActions";
+
+// Utilities
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utils/setAuthToken";
+
+// Components
+import Landing from "./pages/Landing/Landing";
+
+// Styling
+import "./assets/css/style.css";
+
+// Check for jwt
+if (localStorage.jwtToken) {
+  // Set authorization headers and user from jwt
+  setAuthToken(localStorage.jwtToken);
+  const decoded = jwt_decode(localStorage.jwtToken);
+  store.dispatch(setCurrentUser(decoded));
+
+  // Check for token expiration and logout if expired
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
+    store.dispatch(logout());
+    window.location.href = "/";
+  }
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={Landing} />
+        </Switch>
+      </BrowserRouter>
+    </Provider>
   );
 }
 

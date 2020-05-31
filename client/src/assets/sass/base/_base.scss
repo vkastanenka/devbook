@@ -1,0 +1,60 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%; // 1rem = 10px
+  box-sizing: border-box;
+
+  @include respond(bp-big-desktop) {
+    font-size: 75%; // 1rem = 12px
+  }
+
+  @include respond(bp-largest) {
+    font-size: 59.375%; // 1rem = 9.5px
+  }
+
+  @include respond(bp-larger) {
+    font-size: 56.25%; // 1rem = 9px;
+  }
+
+  @include respond(bp-large) {
+    font-size: 53.125%; // 1rem = 8.5px
+  }
+
+  @include respond(bp-medium) {
+    font-size: 50%; // 1rem = 8px
+  }
+}
+
+body {
+  min-height: 100vh;
+  @extend %gradient-background--abstract-1;
+}
+
+::-moz-selection {
+  background-color: $color-primary;
+  color: $color-white;
+}
+
+::selection {
+  background-color: $color-primary;
+  color: $color-white;
+}
+
+select {
+  text-align: center;
+  text-align-last: center;
+}
+
+option {
+  text-align: left;
+}
+
+textarea {
+  resize: none;
+}

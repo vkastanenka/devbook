@@ -1,0 +1,13 @@
+.landing {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  
+  &__heading {
+    position: absolute;
+    top: 1%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
