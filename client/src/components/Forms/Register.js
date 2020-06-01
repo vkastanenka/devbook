@@ -1,6 +1,7 @@
 // React
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { CSSTransition } from "react-transition-group";
 
 // Redux
 import { connect } from "react-redux";
@@ -98,6 +99,7 @@ class Register extends Component {
         disableSubmitButton: false,
         submitted: true,
       });
+      this.props.onRegister();
     }
   };
 
@@ -113,51 +115,61 @@ class Register extends Component {
         }
         onSubmit={this.onRegisterSubmit}
       >
-        <h2 className="heading-secondary ma-bt-md">Register</h2>
-        <div className="text-primary fc-danger">{errors.server500}</div>
+        <h2 className="heading-secondary ma-bt-sm">Register</h2>
+        <CSSTransition
+          in={errors.server500}
+          timeout={300}
+          classNames="fade-in"
+        >
+        <div className="text-primary fc-danger fw-medium ma-bt-sm">{errors.server500}</div>
+        </CSSTransition>
         <InputGroup
           type="text"
           name="registerName"
-          id="name"
+          id="registerName"
           placeholder="Full name"
           value={this.state.registerName}
           required={true}
           onChange={(e) => this.onChange(e)}
-          htmlFor="name"
+          htmlFor="registerName"
           label="Full name"
+          errors={errors.registerName}
         />
         <InputGroup
           type="email"
           name="registerEmail"
-          id="email"
+          id="registerEmail"
           placeholder="Email address"
           value={this.state.registerEmail}
           required={true}
           onChange={(e) => this.onChange(e)}
-          htmlFor="email"
+          htmlFor="registerEmail"
           label="Email address"
+          errors={errors.registerEmail}
         />
         <InputGroup
           type="password"
           name="registerPassword"
-          id="password"
+          id="registerPassword"
           placeholder="Password"
           value={this.state.registerPassword}
           required={true}
           onChange={(e) => this.onChange(e)}
-          htmlFor="password"
+          htmlFor="registerPassword"
           label="Password"
+          errors={errors.registerPassword}
         />
         <InputGroup
           type="password"
           name="registerPasswordConfirm"
-          id="passwordConfirm"
+          id="registerPasswordConfirm"
           placeholder="Confirm Password"
           value={this.state.registerPasswordConfirm}
           required={true}
           onChange={(e) => this.onChange(e)}
-          htmlFor="passwordConfirm"
+          htmlFor="registerPasswordConfirm"
           label="Confirm Password"
+          errors={errors.registerPasswordConfirm}
         />
         {!this.state.submitted ? (
           <div className="form__group">
@@ -180,6 +192,8 @@ Register.propTypes = {
   errors: PropTypes.object.isRequired,
   register: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
+  formClassName: PropTypes.string,
+  onRegister: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({

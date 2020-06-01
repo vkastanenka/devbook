@@ -37,8 +37,11 @@ const SelectGroup = (props) => {
         {options}
       </select>
       {props.label ? (
-        <label htmlFor={props.htmlFor} className="form__label">
-          {props.label}
+        <label
+          htmlFor={props.htmlFor}
+          className={!props.errors ? "form__label" : "form__label fc-danger"}
+        >
+          {!props.errors ? props.label : props.errors}
         </label>
       ) : null}
     </div>
@@ -56,6 +59,7 @@ SelectGroup.propTypes = {
   onChange: PropTypes.func.isRequired,
   htmlFor: PropTypes.string,
   label: PropTypes.string,
+  errors: PropTypes.string,
 };
 
 export default SelectGroup;

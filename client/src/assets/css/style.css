@@ -21,6 +21,20 @@ body {
   background-size: cover;
   background-repeat: no-repeat; }
 
+.fade-in-enter {
+  opacity: 0; }
+
+.fade-in-enter-active {
+  opacity: 1;
+  transition: all 300ms; }
+
+.fade-in-exit {
+  opacity: 1; }
+
+.fade-in-exit-active {
+  opacity: 0;
+  transition: all 300ms; }
+
 *,
 *::after,
 *::before {
@@ -115,13 +129,6 @@ body {
   .flex__center {
     justify-content: center; }
 
-.span-all-rows {
-  grid-row: 1 / -1; }
-
-.container {
-  max-width: 120rem;
-  margin: 0 auto; }
-
 .ma-bt-sm {
   margin-bottom: 1.5rem !important; }
 
@@ -134,11 +141,11 @@ body {
 .ma-bt-xlg {
   margin-bottom: 4.5rem !important; }
 
-.right {
-  text-align: right !important; }
-
 .fc-danger {
   color: #eb4d4b !important; }
+
+.fw-medium {
+  font-weight: 400; }
 
 .link-style {
   color: #fff;
@@ -146,12 +153,6 @@ body {
 
 .invisible {
   display: none; }
-
-.no-bottom-margin {
-  margin-bottom: 0 !important; }
-
-.fb {
-  flex-basis: 20%; }
 
 .btn, .btn:link, .btn:visited {
   font-size: 1.6rem;

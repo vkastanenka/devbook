@@ -7,7 +7,7 @@ import Register from "../Forms/Register";
 
 class LoginRegister extends Component {
   state = {
-    registered: false,
+    registered: true,
     newUserLogin: false,
   };
 
@@ -29,6 +29,9 @@ class LoginRegister extends Component {
               registered
                 ? "login-register__forms--register"
                 : "login-register__forms--register--active"
+            }
+            onRegister={() =>
+              this.setState({ registered: true, newUserLogin: true })
             }
           />
         </div>

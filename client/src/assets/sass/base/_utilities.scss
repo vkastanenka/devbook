@@ -12,15 +12,6 @@
   }
 }
 
-.span-all-rows {
-  grid-row: 1 / -1;
-}
-
-.container {
-  max-width: 120rem;
-  margin: 0 auto;
-}
-
 .ma-bt-sm {
   margin-bottom: 1.5rem !important;
 }
@@ -37,12 +28,12 @@
   margin-bottom: 4.5rem !important;
 }
 
-.right {
-  text-align: right !important;
-}
-
 .fc-danger {
   color: $color-danger !important;
+}
+
+.fw-medium {
+  font-weight: 400;
 }
 
 .link-style {
@@ -56,12 +47,4 @@
 
 .invisible {
   display: none;
-}
-
-.no-bottom-margin {
-  margin-bottom: 0 !important;
-}
-
-.fb {
-  flex-basis: 20%;
 }

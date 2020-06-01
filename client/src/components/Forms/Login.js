@@ -1,6 +1,7 @@
 // React
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { CSSTransition } from "react-transition-group";
 
 // Redux
 import { connect } from "react-redux";
@@ -36,6 +37,19 @@ class Login extends Component {
         errors: nextProps.errors,
         submitting: false,
         disableSubmitButton: false,
+      });
+
+      this.timer = setTimeout(() => {
+        this.props.clearErrors();
+        clearTimeout(this.timer);
+      }, 6000);
+    }
+
+    if (this.state.sendingToken && Object.keys(nextProps.errors).length > 0) {
+      this.setState({
+        errors: nextProps.errors,
+        sendingToken: false,
+        disableTokenButton: false,
       });
 
       this.timer = setTimeout(() => {
@@ -135,8 +149,16 @@ class Login extends Component {
         }
         onSubmit={this.onLoginSubmit}
       >
-        <h2 className="heading-secondary ma-bt-md">Log In</h2>
-        <div className="text-primary fc-danger">{errors.server500}</div>
+        <h2 className="heading-secondary ma-bt-sm">Login</h2>
+        <CSSTransition
+          in={errors.server500}
+          timeout={300}
+          classNames="fade-in"
+        >
+        <div className="text-primary fc-danger fw-medium ma-bt-sm">
+          {errors.server500}
+        </div>
+        </CSSTransition>
         <InputGroup
           type="email"
           name="loginEmail"
