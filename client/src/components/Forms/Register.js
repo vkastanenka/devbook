@@ -16,8 +16,9 @@ import InputGroup from "../Inputs/InputGroup";
 // Form for registering new users
 class Register extends Component {
   state = {
-    registerName: "",
     registerEmail: "",
+    registerName: "",
+    registerHandle: "",
     registerPassword: "",
     registerPasswordConfirm: "",
     submitting: false,
@@ -79,8 +80,9 @@ class Register extends Component {
 
     // User data to post
     const newUser = {
-      registerName: this.state.registerName,
       registerEmail: this.state.registerEmail,
+      registerName: this.state.registerName,
+      registerHandle: this.state.registerHandle,
       registerPassword: this.state.registerPassword,
       registerPasswordConfirm: this.state.registerPasswordConfirm,
     };
@@ -91,8 +93,9 @@ class Register extends Component {
     // 3. Let user know it was a success
     if (Object.keys(this.state.errors).length === 0) {
       this.setState({
-        registerName: "",
         registerEmail: "",
+        registerName: "",
+        registerHandle: "",
         registerPassword: "",
         registerPasswordConfirm: "",
         submitting: false,
@@ -116,13 +119,23 @@ class Register extends Component {
         onSubmit={this.onRegisterSubmit}
       >
         <h2 className="heading-secondary ma-bt-sm">Register</h2>
-        <CSSTransition
-          in={errors.server500}
-          timeout={300}
-          classNames="fade-in"
-        >
-        <div className="text-primary fc-danger fw-medium ma-bt-sm">{errors.server500}</div>
+        <CSSTransition in={errors.server500} timeout={300} classNames="fade-in">
+          <div className="text-primary fc-danger fw-medium ma-bt-sm">
+            {errors.server500}
+          </div>
         </CSSTransition>
+        <InputGroup
+          type="email"
+          name="registerEmail"
+          id="registerEmail"
+          placeholder="Email address"
+          value={this.state.registerEmail}
+          required={true}
+          onChange={(e) => this.onChange(e)}
+          htmlFor="registerEmail"
+          label="Email address"
+          errors={errors.registerEmail}
+        />
         <InputGroup
           type="text"
           name="registerName"
@@ -136,16 +149,16 @@ class Register extends Component {
           errors={errors.registerName}
         />
         <InputGroup
-          type="email"
-          name="registerEmail"
-          id="registerEmail"
-          placeholder="Email address"
-          value={this.state.registerEmail}
+          type="text"
+          name="registerHandle"
+          id="registerHandle"
+          placeholder="User handle"
+          value={this.state.registerHandle}
           required={true}
           onChange={(e) => this.onChange(e)}
-          htmlFor="registerEmail"
-          label="Email address"
-          errors={errors.registerEmail}
+          htmlFor="registerHandle"
+          label="User handle"
+          errors={errors.registerHandle}
         />
         <InputGroup
           type="password"
@@ -193,7 +206,7 @@ Register.propTypes = {
   register: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   formClassName: PropTypes.string,
-  onRegister: PropTypes.func.isRequired
+  onRegister: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

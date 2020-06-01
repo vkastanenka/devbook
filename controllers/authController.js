@@ -101,8 +101,9 @@ exports.register = catchAsync(async (req, res, next) => {
 
   // Create new user
   const newUser = await User.create({
-    name: req.body.registerName,
     email: req.body.registerEmail,
+    name: req.body.registerName,
+    handle: req.body.registerHandle,
     password: req.body.registerPassword,
     passwordConfirm: req.body.registerPasswordConfirm,
   });

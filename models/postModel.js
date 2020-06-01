@@ -2,64 +2,62 @@
 const mongoose = require("mongoose");
 
 // Post schema
-const postSchema = new mongoose.Schema(
-  {
-    user: {
+const postSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
+    required: [true, "Post must belong to a user"],
+  },
+  text: {
+    type: String,
+    required: [true, "Post must contain text"],
+  },
+  likes: [
+    {
       type: mongoose.Schema.ObjectId,
       ref: "User",
-      required: [true, "Post must belong to a user"],
     },
-    text: {
-      type: String,
-      required: [true, "Post must contain text"],
+  ],
+  dislikes: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
     },
-    likes: [
-      {
+  ],
+  comments: [
+    {
+      user: {
         type: mongoose.Schema.ObjectId,
         ref: "User",
+        required: [true, "Comment must belong to a user"],
       },
-    ],
-    dislikes: [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: "User",
+      text: {
+        type: String,
+        required: true,
       },
-    ],
-    comments: [
-      {
-        user: {
+      date: {
+        type: Date,
+        default: Date.now(),
+      },
+      likes: [
+        {
           type: mongoose.Schema.ObjectId,
           ref: "User",
-          required: [true, "Comment must belong to a user"],
         },
-        text: {
-          type: String,
-          required: true,
+      ],
+      dislikes: [
+        {
+          type: mongoose.Schema.ObjectId,
+          ref: "User",
         },
-        date: {
-          type: Date,
-          default: Date.now(),
-        },
-        likes: [
-          {
-            type: mongoose.Schema.ObjectId,
-            ref: "User",
-          },
-        ],
-        dislikes: [
-          {
-            type: mongoose.Schema.ObjectId,
-            ref: "User",
-          },
-        ],
-      },
-    ],
-    date: {
-      type: Date,
-      default: Date.now(),
+      ],
     },
-  }
-);
+  ],
+  date: {
+    type: Date,
+    default: Date.now(),
+  },
+});
 
 ///////////////////
 // Query Middleware
@@ -69,19 +67,11 @@ postSchema.pre(/^find/, function (next) {
   this.populate([
     {
       path: "user",
-      select: "name photo profile",
-      populate: {
-        path: "profile",
-        select: "handle -user",
-      },
+      select: "name photo handle",
     },
     {
       path: "comments.user",
-      select: "name photo profile",
-      populate: {
-        path: "profile",
-        select: "handle -user",
-      },
+      select: "name photo handle",
     },
   ]);
   next();

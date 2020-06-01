@@ -24,6 +24,11 @@ router.get("/", userController.getAllUsers);
 // @access  Public
 router.get("/user/:id", userController.getUserById);
 
+// @route   GET api/v1/users/handle/:handle
+// @desc    Returns user by handle
+// @access  Public
+router.get('/handle/:handle', userController.getUserByHandle);
+
 // @route   POST api/v1/users/register
 // @desc    Register user
 // @access  Public

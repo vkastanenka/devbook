@@ -33,22 +33,6 @@ exports.getAllProfiles = factory.getAll(Profile);
 // @access  Public
 exports.getProfileById = factory.getOne(Profile);
 
-// @route   GET api/v1/profiles/handle/:handle
-// @desc    Returns profile by handle
-// @access  Public
-exports.getProfileByHandle = catchAsync(async (req, res, next) => {
-  // Find profile
-  const profile = await Profile.findOne({
-    handle: req.params.handle,
-  });
-
-  // Respond if no profile is found
-  query404(profile, res, "There is no profile with that handle");
-
-  // Respond
-  res.status(200).json(profile);
-});
-
 ///////////////////
 // Protected Routes
 

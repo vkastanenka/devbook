@@ -5,14 +5,22 @@ const isEmpty = require("../../utils/isEmpty");
 module.exports = validateRegistration = (data) => {
   const errors = {};
 
-  data.registerName = !isEmpty(data.registerName) ? data.registerName : "";
   data.registerEmail = !isEmpty(data.registerEmail) ? data.registerEmail : "";
+  data.registerName = !isEmpty(data.registerName) ? data.registerName : "";
+  data.registerHandle = !isEmpty(data.registerHandle) ? data.registerHandle : "";
   data.registerPassword = !isEmpty(data.registerPassword)
     ? data.registerPassword
     : "";
   data.registerPasswordConfirm = !isEmpty(data.registerPasswordConfirm)
     ? data.registerPasswordConfirm
     : "";
+
+  // Email
+  if (Validator.isEmpty(data.registerEmail)) {
+    errors.registerEmail = "Email field is required";
+  } else if (!Validator.isEmail(data.registerEmail)) {
+    errors.registerEmail = "Email is not valid";
+  }
 
   // Name
   if (Validator.isEmpty(data.registerName)) {
@@ -24,11 +32,13 @@ module.exports = validateRegistration = (data) => {
     errors.registerName = "Full name is required";
   }
 
-  // Email
-  if (Validator.isEmpty(data.registerEmail)) {
-    errors.registerEmail = "Email field is required";
-  } else if (!Validator.isEmail(data.registerEmail)) {
-    errors.registerEmail = "Email is not valid";
+  // Handle
+  if (Validator.isEmpty(data.registerHandle)) {
+    errors.registerHandle = "Handle is required";
+  } else if (!Validator.isLength(data.registerHandle, { min: 5 })) {
+    errors.registerHandle = "Handle must be at least 5 characters";
+  } else if (!Validator.isLength(data.registerHandle, { max: 12 })) {
+    errors.registerHandle = "Handle must be at most 12 characters";
   }
 
   // Password

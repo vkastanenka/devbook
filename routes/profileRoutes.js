@@ -24,11 +24,6 @@ router.get('/', profileController.getAllProfiles);
 // @access  Public
 router.get('/profile/:id', profileController.getProfileById);
 
-// @route   GET api/v1/profiles/handle/:handle
-// @desc    Returns profile by handle
-// @access  Public
-router.get('/handle/:handle', profileController.getProfileByHandle);
-
 ///////////////////
 // Protected Routes
 

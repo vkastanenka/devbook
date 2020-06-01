@@ -6,126 +6,116 @@ const profileSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: [true, "Profile must belong to a user"]
-  },
-  handle: {
-    type: String,
-    required: [true, "Profile must contain a handle"],
-    unique: true,
-    max: 16
+    required: [true, "Profile must belong to a user"],
   },
   status: {
     type: String,
-    required: [true, "Profile must have a developer status"]
+    required: [true, "Profile must have a developer status"],
   },
   skills: {
     type: [String],
-    required: [true, "Profile must have skills specified"]
+    required: [true, "Profile must have skills specified"],
   },
   bio: {
-    type: String
+    type: String,
   },
   githubusername: {
-    type: String
+    type: String,
   },
   experience: [
     {
       title: {
         type: String,
-        required: [true, "Position title is required"]
+        required: [true, "Position title is required"],
       },
       company: {
         type: String,
-        required: [true, "Company name is required"]
+        required: [true, "Company name is required"],
       },
       location: {
-        type: String
+        type: String,
       },
       from: {
         type: Date,
-        required: [true, "Position start date is required"]
+        required: [true, "Position start date is required"],
       },
       to: {
-        type: Date
+        type: Date,
       },
       current: {
         type: Boolean,
-        default: false
+        default: false,
       },
       description: {
-        type: String
-      }
-    }
+        type: String,
+      },
+    },
   ],
   education: [
     {
       school: {
         type: String,
-        required: [true, "School name is required"]
+        required: [true, "School name is required"],
       },
       degree: {
         type: String,
-        required: [true, "Degree title is required"]
+        required: [true, "Degree title is required"],
       },
       fieldofstudy: {
         type: String,
-        required: [true, "Field of study is required"]
+        required: [true, "Field of study is required"],
       },
       from: {
         type: Date,
-        required: [true, "Start date it required"]
+        required: [true, "Start date it required"],
       },
       to: {
-        type: Date
+        type: Date,
       },
       current: {
         type: Boolean,
-        default: false
+        default: false,
       },
       description: {
-        type: String
-      }
-    }
+        type: String,
+      },
+    },
   ],
   social: {
     youtube: {
-      type: String
+      type: String,
     },
     twitter: {
-      type: String
+      type: String,
     },
     facebook: {
-      type: String
+      type: String,
     },
     linkedin: {
-      type: String
+      type: String,
     },
     instagram: {
-      type: String
-    }
+      type: String,
+    },
   },
   date: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 ///////////////////
 // Query Middleware
 
 // Populate required fields for front-end profile page
-profileSchema.pre(/^find/, function(next) {
+profileSchema.pre(/^find/, function (next) {
   this.populate({
     path: "user",
     select: "name photo following posts",
     populate: {
       path: "following",
-      select: "name photo profile posts",
-      populate: {
-        path: "profile",
-        select: "handle -user"
-      }
-    }
+      select: "name photo handle posts",
+    },
   });
 
   next();

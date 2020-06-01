@@ -75,6 +75,22 @@ exports.getAllUsers = factory.getAll(User);
 // @access  Public
 exports.getUserById = factory.getOne(User);
 
+// @route   GET api/v1/users/handle/:handle
+// @desc    Returns user by handle
+// @access  Public
+exports.getUserByHandle = catchAsync(async (req, res, next) => {
+  // Find user
+  const user = await User.findOne({
+    handle: req.params.handle,
+  });
+
+  // Respond if no user is found
+  query404(user, res, "There is no user with that handle");
+
+  // Respond
+  res.status(200).json(user);
+});
+
 ///////////////////
 // Protected Routes
 

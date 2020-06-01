@@ -15,6 +15,7 @@ import setAuthToken from "./utils/setAuthToken";
 
 // Components
 import Landing from "./pages/Landing/Landing";
+import User from "./pages/User/User";
 
 // Styling
 import "./assets/css/style.css";
@@ -40,6 +41,7 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Landing} />
+          <Route exact path="/user/:handle" component={User} />
         </Switch>
       </BrowserRouter>
     </Provider>

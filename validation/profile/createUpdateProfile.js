@@ -4,16 +4,8 @@ const isEmpty = require("../../utils/isEmpty");
 module.exports = validateProfile = (data) => {
   const errors = {};
 
-  data.handle = !isEmpty(data.handle) ? data.handle : "";
   data.status = !isEmpty(data.status) ? data.status : "";
   data.skills = !isEmpty(data.skills) ? data.skills : "";
-
-  // Handle
-  if (Validator.isEmpty(data.handle)) {
-    errors.handle = "Handle is required";
-  } else if (!Validator.isLength(data.handle, { min: 5 })) {
-    errors.handle = "Handle must be at least 5 characters";
-  }
 
   // Developer status
   if (Validator.isEmpty(data.status)) {
