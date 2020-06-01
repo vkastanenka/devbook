@@ -82,7 +82,10 @@ exports.getUserByHandle = catchAsync(async (req, res, next) => {
   // Find user
   const user = await User.findOne({
     handle: req.params.handle,
-  });
+  }).populate([
+    { path: "profile" },
+    { path: "following", select: "photo name handle" },
+  ]);
 
   // Respond if no user is found
   query404(user, res, "There is no user with that handle");
@@ -102,12 +105,19 @@ exports.getCurrentUser = (req, res, next) => {
 };
 
 // @route   PATCH api/v1/users/updateCurrentUser
-// @desc    Update current user's name, and email
+// @desc    Update current user's email, name, and handle
 // @access  Protected
 exports.updateCurrentUser = catchAsync(async (req, res, next) => {
   // Validate inputs
   const { errors, isValid } = validateUserUpdate(req.body);
   if (!isValid) return res.status(400).json(errors);
+
+  // Check if handle has been taken by another user
+  const handleCheck = await User.findOne({ handle: req.body.handle });
+  if (handleCheck && handleCheck._id.toString() !== req.user._id.toString()) {
+    errors.handle = "Handle is already taken";
+    return res.status(400).json(errors);
+  }
 
   // Respond with an error if the user tries to update their password
   if (req.body.password || req.body.passwordConfirm) {
@@ -117,7 +127,7 @@ exports.updateCurrentUser = catchAsync(async (req, res, next) => {
   }
 
   // Filter the user's request for only name and email fields
-  const filteredBody = filterObj(req.body, "name", "email");
+  const filteredBody = filterObj(req.body, "email", "name", "handle");
 
   // Update user document
   const updatedUser = await User.findByIdAndUpdate(req.user._id, filteredBody, {

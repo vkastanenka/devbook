@@ -51,17 +51,9 @@ exports.createCurrentUserProfile = catchAsync(async (req, res, next) => {
     return res.status(400).json({ errors });
   }
 
-  // Check if handle is already taken
-  const handleCheck = await Profile.findOne({ handle: req.body.handle });
-  if (handleCheck) {
-    errors.handle = "Handle is already taken";
-    return res.status(400).json(errors);
-  }
-
   // Format profile body
   const profileBody = {
     user: req.user._id,
-    handle: req.body.handle,
     status: req.body.status,
     skills: req.body.skills,
     bio: req.body.bio ? req.body.bio : "",
@@ -104,13 +96,6 @@ exports.updateCurrentUserProfile = catchAsync(async (req, res, next) => {
 
   // Find current user's profile document
   const profile = await Profile.findOne({ user: req.user.id });
-
-  // Check if handle has been taken by another user
-  const handleCheck = await Profile.findOne({ handle: req.body.handle });
-  if (handleCheck && handleCheck.user.toString() !== profile.user.toString()) {
-    errors.handle = "Handle is already taken";
-    return res.status(400).json(errors);
-  }
 
   // Format profile body
   const profileBody = {

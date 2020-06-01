@@ -31,8 +31,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith("Bearer")
   ) {
     token = req.headers.authorization.split(" ")[1];
-  }
-  else if (localStorage.jwtToken) {
+  } else if (localStorage.jwtToken) {
     token = localStorage.jwtToken;
   }
 
@@ -99,6 +98,13 @@ exports.register = catchAsync(async (req, res, next) => {
     return res.status(400).json(errors);
   }
 
+  // Check if handle is already taken
+  const handleCheck = await User.findOne({ handle: req.body.registerHandle });
+  if (handleCheck) {
+    errors.registerHandle = "Handle is already taken";
+    return res.status(400).json(errors);
+  }
+
   // Create new user
   const newUser = await User.create({
     email: req.body.registerEmail,
@@ -122,7 +128,12 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // Find user
   const { loginEmail, loginPassword } = req.body;
-  const user = await User.findOne({ email: loginEmail }).select("+password");
+  const user = await User.findOne({ email: loginEmail })
+    .select("+password")
+    .populate([
+      { path: "profile" },
+      { path: "following", select: "photo name handle" },
+    ]);
 
   // Check is either email or password are incorrect
   if (!user || !(await user.correctPassword(loginPassword, user.password))) {
