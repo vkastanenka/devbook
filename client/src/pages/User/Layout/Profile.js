@@ -8,11 +8,12 @@ import { connect } from "react-redux";
 
 // Actions
 import { updateUserPhoto } from "../../../store/actions/userActions";
-import { clearErrors } from '../../../store/actions/errorActions';
+import { clearErrors } from "../../../store/actions/errorActions";
 
 // Components
 import Icon from "../../../components/Icon/Icon";
 import Auxiliary from "../../../components/HigherOrder/Auxiliary";
+import FollowIcon from "./ProfileLayout/FollowIcon";
 
 class Profile extends Component {
   state = {
@@ -71,28 +72,28 @@ class Profile extends Component {
 
   render() {
     const { user } = this.props.users;
+    const { currentUser } = this.props;
 
     console.log(this.state.errors);
 
     return (
       <section className="profile">
         <div className="profile__head">
+          {!currentUser ? <FollowIcon /> : null}
           <div className="profile__pfp-container  ma-bt-sm">
             <img
               src={this.tryRequirePhoto()}
               alt="User photo"
               className="profile__pfp"
             />
-            {this.props.currentUser ? (
+            {currentUser ? (
               <Auxiliary>
                 {!this.state.errors.server500 ? (
                   <label htmlFor="photo-upload" className="profile__pfp-input">
                     Update User Photo
                   </label>
                 ) : (
-                  <p className="profile__pfp-input">
-                    Only images accepted!
-                  </p>
+                  <p className="profile__pfp-input">Only images accepted!</p>
                 )}
                 <input
                   type="file"
@@ -235,7 +236,9 @@ Profile.propTypes = {
 const mapStateToProps = (state) => ({
   auth: state.auth,
   users: state.users,
-  errors: state.errors
+  errors: state.errors,
 });
 
-export default connect(mapStateToProps, { updateUserPhoto, clearErrors })(Profile);
+export default connect(mapStateToProps, { updateUserPhoto, clearErrors })(
+  Profile
+);

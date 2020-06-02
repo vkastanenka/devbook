@@ -41,6 +41,10 @@
     }
   }
 
+  &--white {
+    fill: $color-white;
+  }
+
   &--black {
     fill: $color-grey-dark-3;
   }
