@@ -7,7 +7,9 @@
 @import "base/typography";
 @import "base/utilities";
 
+@import "components/browse-devs";
 @import "components/button";
+@import "components/content-card";
 @import "components/form";
 @import "components/icon";
 @import "components/login-register";
@@ -16,6 +18,7 @@
 
 @import "layout/navbar";
 @import "layout/profile";
+@import "layout/sidenav";
 
 @import "pages/landing";
 @import "pages/user";

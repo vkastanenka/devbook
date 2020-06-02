@@ -25,7 +25,12 @@ export const unsetUserLoad = () => {
 
 // Clear user
 export const clearUser = () => dispatch => {
-  actionDispatch(actionTypes.CLEAR_USER, {}, dispatch);
+  actionDispatch(actionTypes.CLEAR_USER, null, dispatch);
+}
+
+// Clear users
+export const clearUsers = () => dispatch => {
+  actionDispatch(actionTypes.CLEAR_ALL_USERS, null, dispatch);
 }
 
 /////////////////
@@ -42,6 +47,18 @@ export const getUserByHandle = (handle) => async (dispatch) => {
   } catch (err) {
     actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
     dispatch(unsetUserLoad());
+  }
+};
+
+// @route   GET api/v1/users
+// @desc    Returns all registered users
+// @access  Public
+export const getAllUsers = () => async (dispatch) => {
+  try {
+    const res = await axios.get('/api/v1/users');
+    actionDispatch(actionTypes.GET_ALL_USERS, res.data.data, dispatch);
+  } catch (err) {
+    actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
   }
 };
 

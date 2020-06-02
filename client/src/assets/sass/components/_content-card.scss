@@ -1,0 +1,23 @@
+.content-card {
+  background-color: $color-grey-light-1;
+  border-radius: 10px;
+  min-width: 40rem;
+
+  &__heading {
+    @extend %gradient-background--primary;
+    position: relative;
+    padding: 2rem;
+    text-align: center;
+    border-radius: 10px 10px 0 0;
+  }
+
+  &__icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+
+  &__body {
+    @extend %flex-center;
+  }
+}

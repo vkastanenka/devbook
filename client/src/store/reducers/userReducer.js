@@ -6,6 +6,7 @@ import updateObject from "../../utils/updateObject";
 
 const initialState = {
   user: null,
+  users: null,
   loading: false,
 };
 
@@ -23,7 +24,15 @@ const unsetUserLoad = (state, action) => {
 const setSearchedUser = (state, action) => {
   return updateObject(state, {
     user: action.payload,
-    loading: false
+    loading: false,
+  });
+};
+
+// Sets all users
+const setAllUsers = (state, action) => {
+  return updateObject(state, {
+    users: action.payload,
+    // loading: false,
   });
 };
 
@@ -35,6 +44,8 @@ export default function (state = initialState, action) {
       return unsetUserLoad(state, action);
     case actionTypes.GET_USER:
       return setSearchedUser(state, action);
+    case actionTypes.GET_ALL_USERS:
+      return setAllUsers(state, action);
     default:
       return state;
   }

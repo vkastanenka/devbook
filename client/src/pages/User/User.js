@@ -11,7 +11,7 @@ import { getUserByHandle } from "../../store/actions/userActions";
 // Components
 import Spinner from "../../components/Spinner/Spinner";
 import Auxiliary from "../../components/HigherOrder/Auxiliary";
-import Navbar from './Layout/Navbar'
+import Navbar from '../../components/Layout/Navbar'
 import Profile from "./Layout/Profile";
 // import ContentCard from '../../components/Cards/Content';
 

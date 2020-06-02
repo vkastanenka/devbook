@@ -36,12 +36,23 @@
   color: $color-primary !important;
 }
 
+.fc-dark {
+  color: $color-grey-dark-2;
+}
+
+.fc-darker {
+  color: $color-grey-dark-3;
+}
+
+.fc-darkest {
+  color: $color-grey-dark-4;
+}
+
 .fw-medium {
   font-weight: 400;
 }
 
 .link-style {
-  color: $color-white;
   text-decoration: none;
 }
 

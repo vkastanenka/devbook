@@ -6,24 +6,10 @@
   width: 100vw;
   z-index: 1000;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
   backdrop-filter: blur(1rem);
   background-color: rgba($color-black, 0.6);
 
-  &__content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 75%;
-    background-color: $color-white;
-    box-shadow: 0 2rem 4rem rgba($color-black, 0.2);
-    border-radius: 0.3rem;
-    display: table;
-    overflow: hidden;
-    transition: all 0.5s 0.2s;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

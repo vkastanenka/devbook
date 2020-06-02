@@ -1,0 +1,48 @@
+.sidenav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 20;
+  transition: all 0.5s;
+  height: 100%;
+  @extend %gradient-background--abstract-3;
+  border-left: 1px solid $color-primary;
+  text-align: center;
+  padding: 5rem 0;
+  width: 30rem;
+
+  &--active {
+    transform: translateX(0rem);
+  }
+
+  &--inactive {
+    transform: translateX(30rem);
+  }
+
+  &__icon-close {
+    position: absolute;
+    transition: all 0.5s;
+    top: 1.5rem;
+    right: 1.5rem;
+  }
+
+  & .heading-tertiary {
+    border-bottom: 1px $color-grey-light-1 solid;
+    display: inline-block
+  }
+
+  &__option {
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:not(:last-child) {
+      margin-bottom: 3rem;
+    }
+
+    &:hover {
+      color: $color-primary;
+      transform: translateY(-2px);
+    }
+  }
+}

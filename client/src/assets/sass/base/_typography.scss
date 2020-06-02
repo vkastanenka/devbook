@@ -32,6 +32,10 @@ body {
   color: transparent;
   display: inline-block;
   letter-spacing: 0.15rem;
+
+  &--smaller {
+    font-size: 3.2rem !important;
+  }
 }
 
 .heading-tertiary {
