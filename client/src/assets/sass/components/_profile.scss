@@ -76,13 +76,15 @@
     padding: 1rem;
     border: 2px solid $color-primary;
 
-    &:hover .profile__pfp {
-      filter: blur(0.3rem) brightness(50%);
-    }
+    &--current-user {
+      &:hover .profile__pfp {
+        filter: blur(0.3rem) brightness(50%);
+      }
 
-    &:hover .profile__pfp-input {
-      opacity: 1;
-      transform: translate(-50%, -50%);
+      &:hover .profile__pfp-input {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
     }
   }
 

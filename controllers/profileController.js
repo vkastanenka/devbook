@@ -1,5 +1,6 @@
 // Utilities
 const factory = require("./handlerFactory");
+const completeURL = require("../utils/completeURL");
 
 // Error handling
 const catchAsync = require("./../utils/catchAsync");
@@ -59,11 +60,11 @@ exports.createCurrentUserProfile = catchAsync(async (req, res, next) => {
     bio: req.body.bio ? req.body.bio : "",
     githubusername: req.body.githubusername ? req.body.githubusername : "",
     social: {
-      youtube: req.body.youtube ? req.body.youtube : "",
-      twitter: req.body.twitter ? req.body.twitter : "",
-      facebook: req.body.facebook ? req.body.facebook : "",
-      linkedin: req.body.linkedin ? req.body.linkedin : "",
-      instagram: req.body.instagram ? req.body.instagram : "",
+      youtube: req.body.youtube ? completeURL(req.body.youtube) : "",
+      twitter: req.body.twitter ? completeURL(req.body.twitter) : "",
+      facebook: req.body.facebook ? completeURL(req.body.facebook) : "",
+      linkedin: req.body.linkedin ? completeURL(req.body.linkedin) : "",
+      instagram: req.body.instagram ? completeURL(req.body.instagram) : "",
     },
   };
 
@@ -106,11 +107,11 @@ exports.updateCurrentUserProfile = catchAsync(async (req, res, next) => {
     bio: req.body.bio ? req.body.bio : "",
     githubusername: req.body.githubusername ? req.body.githubusername : "",
     social: {
-      youtube: req.body.youtube ? req.body.youtube : "",
-      twitter: req.body.twitter ? req.body.twitter : "",
-      facebook: req.body.facebook ? req.body.facebook : "",
-      linkedin: req.body.linkedin ? req.body.linkedin : "",
-      instagram: req.body.instagram ? req.body.instagram : "",
+      youtube: req.body.youtube ? completeURL(req.body.youtube) : "",
+      twitter: req.body.twitter ? completeURL(req.body.twitter) : "",
+      facebook: req.body.facebook ? completeURL(req.body.facebook) : "",
+      linkedin: req.body.linkedin ? completeURL(req.body.linkedin) : "",
+      instagram: req.body.instagram ? completeURL(req.body.instagram) : "",
     },
   };
 

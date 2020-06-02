@@ -1,6 +1,5 @@
 // React
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 // Redux
@@ -11,9 +10,11 @@ import { updateUserPhoto } from "../../../store/actions/userActions";
 import { clearErrors } from "../../../store/actions/errorActions";
 
 // Components
-import Icon from "../../../components/Icon/Icon";
 import Auxiliary from "../../../components/HigherOrder/Auxiliary";
 import FollowIcon from "./ProfileLayout/FollowIcon";
+import SocialMediaLink from "./ProfileLayout/SocialMediaLink";
+import SkillsList from "./ProfileLayout/SkillsList";
+import FollowList from './ProfileLayout/FollowList'
 
 class Profile extends Component {
   state = {
@@ -72,15 +73,40 @@ class Profile extends Component {
 
   render() {
     const { user } = this.props.users;
+    const { profile } = user;
     const { currentUser } = this.props;
+    let twIcon, fbIcon, liIcon, ytIcon, inIcon;
 
-    console.log(this.state.errors);
+    // Assign social media icons if listed in profile
+    if (profile.social) {
+      if (profile.social.twitter)
+        twIcon = <SocialMediaLink profile={profile} website="twitter" />;
+
+      if (profile.social.facebook)
+        fbIcon = <SocialMediaLink profile={profile} website="facebook" />;
+
+      if (profile.social.linkedin)
+        liIcon = <SocialMediaLink profile={profile} website="linkedin" />;
+
+      if (profile.social.youtube)
+        ytIcon = <SocialMediaLink profile={profile} website="youtube" />;
+
+      if (profile.social.instagram)
+        inIcon = <SocialMediaLink profile={profile} website="instagram" />;
+    }
 
     return (
       <section className="profile">
         <div className="profile__head">
           {!currentUser ? <FollowIcon /> : null}
-          <div className="profile__pfp-container  ma-bt-sm">
+          <div
+            className={
+              currentUser
+                ? `profile__pfp-container profile__pfp-container--current-user ma-bt-sm`
+                : `profile__pfp-container ma-bt-sm`
+            }
+          >
+            {/* eslint-disable-next-line */}
             <img
               src={this.tryRequirePhoto()}
               alt="User photo"
@@ -110,38 +136,13 @@ class Profile extends Component {
           <p className="text-secondary">
             {user.profile ? user.profile.status : null}
           </p>
-          {user.profile ? (
+          {profile ? (
             <div className="profile__social">
-              {user.profile.social.twitter ? (
-                <Icon
-                  type="twitter-with-circle"
-                  className="icon icon--large icon--white-primary icon--translate icon--active"
-                />
-              ) : null}
-              {user.profile.social.facebook ? (
-                <Icon
-                  type="facebook-with-circle"
-                  className="icon icon--large icon--white-primary icon--translate icon--active"
-                />
-              ) : null}
-              {user.profile.social.linkedin ? (
-                <Icon
-                  type="linkedin-with-circle"
-                  className="icon icon--large icon--white-primary icon--translate icon--active"
-                />
-              ) : null}
-              {user.profile.social.youtube ? (
-                <Icon
-                  type="youtube-with-circle"
-                  className="icon icon--large icon--white-primary icon--translate icon--active"
-                />
-              ) : null}
-              {user.profile.social.instagram ? (
-                <Icon
-                  type="instagram-with-circle"
-                  className="icon icon--large icon--white-primary icon--translate icon--active"
-                />
-              ) : null}
+              {twIcon}
+              {fbIcon}
+              {liIcon}
+              {ytIcon}
+              {inIcon}
             </div>
           ) : null}
         </div>
@@ -176,18 +177,12 @@ class Profile extends Component {
                 <h5 className="profile__heading">Skills</h5>
                 <ul className="profile__skills-list">
                   {user.profile ? (
-                    user.profile.skills.map((skill) => (
-                      <li className="profile__skills-list-item" key={skill}>
-                        <Icon
-                          type="controller-volume"
-                          className="icon--large icon--primary"
-                        />
-                        <span>{skill}</span>
-                      </li>
-                    ))
+                    <SkillsList skills={user.profile.skills} />
                   ) : (
-                    <li>
-                      This user has not yet provided their developer skills
+                    <li className="profile__skills-list-item">
+                      <span>
+                        This user has not yet provided their developer skills
+                      </span>
                     </li>
                   )}
                 </ul>
@@ -198,23 +193,13 @@ class Profile extends Component {
               <h5 className="profile__heading ma-bt-sm">Following</h5>
               <ul className="profile__following-list">
                 {user.following.length > 0 ? (
-                  user.following.map((user) => (
-                    <li
-                      className="profile__following-list-item"
-                      key={user.handle}
-                    >
-                      <Link to={`/user/${user.handle}`}>
-                        <img
-                          src={require(`../../../assets/img/users/${user.photo}`)}
-                          alt="Follow Photo"
-                          className="profile__following-pfp"
-                        />
-                        <span>{user.name}</span>
-                      </Link>
-                    </li>
-                  ))
+                  <FollowList following={user.following} />
                 ) : (
-                  <li>This user has not yet followed any other developers</li>
+                  <li className="profile__following-list-item">
+                    <span>
+                      This user has not yet followed any other developers
+                    </span>
+                  </li>
                 )}
               </ul>
             </div>
