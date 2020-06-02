@@ -1,0 +1,19 @@
+.user-card {
+  @extend %abs-center;
+  height: 90vh;
+  width: 95vw;
+  border-radius: 10px;
+
+  display: flex;
+  overflow: hidden;
+
+  & > :first-child {
+    flex-basis: 17%;
+    background-color: $color-grey-dark-4;
+  }
+
+  & > :nth-child(2) {
+    flex-basis: 83%;
+    background-color: $color-grey-dark-2;
+  }
+}

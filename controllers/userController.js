@@ -160,12 +160,12 @@ exports.updateCurrentUserPhoto = catchAsync(async (req, res, next) => {
 
     // Send updated JWT
     const token = createJWT(user);
-    return res.status(200).json({ photoName, token });
+    return res.status(200).json({ user, token });
   }
 
   // Error handling
   const errors = {};
-  errors.nophoto = "Please upload a photo!";
+  errors.noPhoto = "Please upload a photo!";
   return res.status(400).json(errors);
 });
 

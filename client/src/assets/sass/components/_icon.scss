@@ -1,7 +1,7 @@
 .icon {
   transition: all 0.3s;
 
-  &--largest {
+  &--larger {
     height: 3rem;
     width: 3rem;
   }
@@ -19,6 +19,10 @@
   &--small {
     height: 1.5rem;
     width: 1.5rem;
+  }
+
+  &--primary {
+    fill: $color-primary;
   }
 
   &--black-primary {

@@ -4,6 +4,7 @@ const initialState = {};
 
 // Any errors caught will be available
 const getErrors = (state, action) => {
+  console.log(action.payload);
   const errors = {};
   if (typeof action.payload === "string") {
     errors.server500 = "Internal server error, please try again later!";

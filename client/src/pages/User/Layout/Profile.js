@@ -6,86 +6,218 @@ import PropTypes from "prop-types";
 // Redux
 import { connect } from "react-redux";
 
+// Actions
+import { updateUserPhoto } from "../../../store/actions/userActions";
+import { clearErrors } from '../../../store/actions/errorActions';
+
 // Components
 import Icon from "../../../components/Icon/Icon";
+import Auxiliary from "../../../components/HigherOrder/Auxiliary";
 
 class Profile extends Component {
+  state = {
+    viewing: "profile",
+    errors: {},
+  };
+
+  // Binding timer to component instance
+  timer = null;
+
+  // Alerting user of errors / success / progress
+  componentWillReceiveProps(nextProps) {
+    if (Object.keys(nextProps.errors).length > 0) {
+      this.setState({ errors: nextProps.errors });
+
+      this.timer = setTimeout(() => {
+        this.props.clearErrors();
+        clearTimeout(this.timer);
+      }, 6000);
+    }
+
+    // Clear errors from state when global errors cleared
+    if (
+      Object.keys(this.state.errors).length > 0 &&
+      Object.keys(nextProps.errors).length === 0
+    ) {
+      clearTimeout(this.timer);
+      this.setState({ errors: {} });
+    }
+  }
+
+  // Clear any timers when form unmounts
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+    if (Object.keys(this.props.errors).length > 0) {
+      this.props.clearErrors();
+    }
+  }
+
+  // Updating user model photo field
+  onPhotoSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("photo", e.target.files[0]);
+    this.props.updateUserPhoto(formData);
+  };
+
+  // Prevents requiring a photo that doesn't exist
+  tryRequirePhoto = () => {
+    try {
+      return require(`../../../assets/img/users/${this.props.users.user.photo}`);
+    } catch (err) {
+      return require("../../../assets/img/users/default.jpg");
+    }
+  };
+
   render() {
     const { user } = this.props.users;
+
+    console.log(this.state.errors);
 
     return (
       <section className="profile">
         <div className="profile__head">
-          <img
-            src={require(`../../../assets/img/users/${user.photo}`)}
-            alt=""
-            className="profile__pfp"
-          />
+          <div className="profile__pfp-container  ma-bt-sm">
+            <img
+              src={this.tryRequirePhoto()}
+              alt="User photo"
+              className="profile__pfp"
+            />
+            {this.props.currentUser ? (
+              <Auxiliary>
+                {!this.state.errors.server500 ? (
+                  <label htmlFor="photo-upload" className="profile__pfp-input">
+                    Update User Photo
+                  </label>
+                ) : (
+                  <p className="profile__pfp-input">
+                    Only images accepted!
+                  </p>
+                )}
+                <input
+                  type="file"
+                  name="photo"
+                  id="photo-upload"
+                  className="invisible"
+                  onChange={this.onPhotoSubmit}
+                />
+              </Auxiliary>
+            ) : null}
+          </div>
           <h5 className="profile__heading">{user.name}</h5>
-          <p className="text-primary fc-primary">{`@${user.handle}`}</p>
-          <p className="text-primary fc-primary">
+          <p className="text-secondary fc-primary">{`@${user.handle}`}</p>
+          <p className="text-secondary">
             {user.profile ? user.profile.status : null}
           </p>
           {user.profile ? (
             <div className="profile__social">
-              {user.profile.twitter ? <Icon type="twitter" /> : null}
-              {user.profile.facebook ? <Icon type="facebook" /> : null}
-              {user.profile.linkedin ? <Icon type="linkedin" /> : null}
-              {user.profile.youtube ? <Icon type="youtube" /> : null}
-              {user.profile.instagram ? <Icon type="instagram" /> : null}
+              {user.profile.social.twitter ? (
+                <Icon
+                  type="twitter-with-circle"
+                  className="icon icon--large icon--white-primary icon--translate icon--active"
+                />
+              ) : null}
+              {user.profile.social.facebook ? (
+                <Icon
+                  type="facebook-with-circle"
+                  className="icon icon--large icon--white-primary icon--translate icon--active"
+                />
+              ) : null}
+              {user.profile.social.linkedin ? (
+                <Icon
+                  type="linkedin-with-circle"
+                  className="icon icon--large icon--white-primary icon--translate icon--active"
+                />
+              ) : null}
+              {user.profile.social.youtube ? (
+                <Icon
+                  type="youtube-with-circle"
+                  className="icon icon--large icon--white-primary icon--translate icon--active"
+                />
+              ) : null}
+              {user.profile.social.instagram ? (
+                <Icon
+                  type="instagram-with-circle"
+                  className="icon icon--large icon--white-primary icon--translate icon--active"
+                />
+              ) : null}
             </div>
           ) : null}
         </div>
         <div className="profile__body">
-          <div className="profile__bio">
-            <h5 className="profile__heading">Bio</h5>
-            <p className="text-primary">
-              {user.profile
-                ? user.profile.bio
-                  ? user.profile.bio
-                  : "This user has not yet filled out their developer bio."
-                : "This user has not yet filled out their developer bio."}
+          <div className="profile__body-selection ma-bt-sm">
+            <p
+              className="text-primary fw-medium"
+              onClick={() => this.setState({ viewing: "profile" })}
+            >
+              Profile
+            </p>
+            <p
+              className="text-primary fw-medium"
+              onClick={() => this.setState({ viewing: "following" })}
+            >
+              Following
             </p>
           </div>
-          <div className="profile__skills">
-            <h5 className="profile__heading">Skills</h5>
-            <ul className="profile__skills-list">
-              {user.profile ? (
-                user.profile.skills.map((skill) => (
-                  <li className="profile__skills-list-item" key={skill}>
-                    <Icon type="controller-volume" />
-                    <span>{skill}</span>
-                  </li>
-                ))
-              ) : (
-                <li>This user has not yet provided their developer skills</li>
-              )}
-            </ul>
-          </div>
-          <div className="profile__following">
-            <h5 className="profile__heading">Following</h5>
-            <ul className="profile__following-list">
-              {user.following.length > 0 ? (
-                user.following.map((user) => (
-                  <li
-                    className="profile__following-list-item"
-                    key={user.handle}
-                  >
-                    <Link to={`/user/${user.handle}`}>
-                      <img
-                        src={require(`../../../assets/img/users/${user.photo}`)}
-                        alt="Follow Photo"
-                        className="profile__following-pfp"
-                      />
-                      <span>{user.name}</span>
-                    </Link>
-                  </li>
-                ))
-              ) : (
-                <li>This user has not yet followed any other developers</li>
-              )}
-            </ul>
-          </div>
+          {this.state.viewing === "profile" ? (
+            <Auxiliary>
+              <div className="profile__bio ma-bt-sm">
+                <h5 className="profile__heading">Bio</h5>
+                <p className="text-secondary">
+                  {user.profile
+                    ? user.profile.bio
+                      ? user.profile.bio
+                      : "This user has not yet filled out their developer bio."
+                    : "This user has not yet filled out their developer bio."}
+                </p>
+              </div>
+              <div className="profile__skills">
+                <h5 className="profile__heading">Skills</h5>
+                <ul className="profile__skills-list">
+                  {user.profile ? (
+                    user.profile.skills.map((skill) => (
+                      <li className="profile__skills-list-item" key={skill}>
+                        <Icon
+                          type="controller-volume"
+                          className="icon--large icon--primary"
+                        />
+                        <span>{skill}</span>
+                      </li>
+                    ))
+                  ) : (
+                    <li>
+                      This user has not yet provided their developer skills
+                    </li>
+                  )}
+                </ul>
+              </div>
+            </Auxiliary>
+          ) : (
+            <div className="profile__following">
+              <h5 className="profile__heading ma-bt-sm">Following</h5>
+              <ul className="profile__following-list">
+                {user.following.length > 0 ? (
+                  user.following.map((user) => (
+                    <li
+                      className="profile__following-list-item"
+                      key={user.handle}
+                    >
+                      <Link to={`/user/${user.handle}`}>
+                        <img
+                          src={require(`../../../assets/img/users/${user.photo}`)}
+                          alt="Follow Photo"
+                          className="profile__following-pfp"
+                        />
+                        <span>{user.name}</span>
+                      </Link>
+                    </li>
+                  ))
+                ) : (
+                  <li>This user has not yet followed any other developers</li>
+                )}
+              </ul>
+            </div>
+          )}
         </div>
       </section>
     );
@@ -95,12 +227,15 @@ class Profile extends Component {
 Profile.propTypes = {
   auth: PropTypes.object.isRequired,
   users: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
   currentUser: PropTypes.bool.isRequired,
+  updateUserPhoto: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
   users: state.users,
+  errors: state.errors
 });
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps, { updateUserPhoto, clearErrors })(Profile);
