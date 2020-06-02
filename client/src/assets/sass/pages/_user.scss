@@ -1,4 +1,4 @@
-.user-card {
+.user {
   @extend %abs-center;
   height: 90vh;
   width: 95vw;
@@ -15,5 +15,10 @@
   & > :nth-child(2) {
     flex-basis: 83%;
     background-color: $color-grey-dark-2;
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
   }
 }

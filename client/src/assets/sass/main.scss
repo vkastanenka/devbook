@@ -1,21 +1,21 @@
-@import 'abstracts/extends';
-@import 'abstracts/mixins';
-@import 'abstracts/variables';
+@import "abstracts/extends";
+@import "abstracts/mixins";
+@import "abstracts/variables";
 
-@import 'base/animations';
-@import 'base/base';
-@import 'base/typography';
-@import 'base/utilities';
+@import "base/animations";
+@import "base/base";
+@import "base/typography";
+@import "base/utilities";
 
-@import 'components/button';
-@import 'components/form';
-@import 'components/icon';
-@import 'components/login-register';
-@import 'components/popup';
-@import 'components/profile';
-@import 'components/spinner';
-@import 'components/user-card';
+@import "components/button";
+@import "components/form";
+@import "components/icon";
+@import "components/login-register";
+@import "components/popup";
+@import "components/spinner";
 
-@import 'pages/landing';
+@import "layout/navbar";
+@import "layout/profile";
 
-
+@import "pages/landing";
+@import "pages/user";

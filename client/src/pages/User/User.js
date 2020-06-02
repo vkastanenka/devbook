@@ -11,7 +11,7 @@ import { getUserByHandle } from "../../store/actions/userActions";
 // Components
 import Spinner from "../../components/Spinner/Spinner";
 import Auxiliary from "../../components/HigherOrder/Auxiliary";
-// import Navbar from './Layout/Navbar'
+import Navbar from './Layout/Navbar'
 import Profile from "./Layout/Profile";
 // import ContentCard from '../../components/Cards/Content';
 
@@ -58,11 +58,14 @@ class User extends Component {
       content = (
         <Auxiliary>
           <Profile currentUser={this.state.currentUser} />
-          <div className="user-card__content"></div>
+          <div className="user__main">
+            <Navbar />
+            <div className="user__content"></div>
+          </div>
         </Auxiliary>
       );
 
-    return <div className="user-card">{content}</div>;
+    return <div className="user">{content}</div>;
   }
 }
 
