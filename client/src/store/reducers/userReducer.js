@@ -36,6 +36,13 @@ const getUsers = (state, action) => {
   });
 };
 
+// Update current user profile
+const updateProfile = (state, action) => {
+  return updateObject(state, {
+    user: action.payload
+  })
+}
+
 export default function (state = initialState, action) {
   switch (action.type) {
     case actionTypes.SET_USER_LOAD:
@@ -46,6 +53,8 @@ export default function (state = initialState, action) {
       return setSearchedUser(state, action);
     case actionTypes.GET_USERS:
       return getUsers(state, action);
+    case actionTypes.UPDATE_PROFILE:
+      return updateProfile(state, action);
     default:
       return state;
   }

@@ -14,7 +14,7 @@ import Popup from "../HigherOrder/Popup";
 import Auxiliary from "../HigherOrder/Auxiliary";
 import ContentCard from "../Cards/Content";
 import BrowseDevelopers from "../Forms/BrowseDevelopers";
-// import UpdateProfile from '../Forms/UpdateProfile';
+import UpdateProfile from '../Forms/UpdateProfile';
 // import UpdateAccount from '../Forms/UpdateAccount';
 // import UpdatePassword from '../Forms/UpdatePassword';
 
@@ -29,17 +29,17 @@ class SideNav extends Component {
   render() {
     const { user } = this.props.auth.user;
     const { active, inactivate } = this.props;
-    let browsingDevelopers, creatingProfile, updatingProfile, updatingAccount;
+    let popupCard;
 
     if (this.state.browsingDevelopers) {
-      browsingDevelopers = (
+      popupCard = (
         <Popup>
           <ContentCard
             heading="Browse Developers"
             icon={true}
             iconType="cross"
             iconOnClick={() => {
-              this.setState({ browsingDevelopers: false })
+              this.setState({ browsingDevelopers: false });
               this.props.inactivate();
             }}
           >
@@ -47,11 +47,27 @@ class SideNav extends Component {
           </ContentCard>
         </Popup>
       );
+    } else if (this.state.creatingProfile) {
+      popupCard = (
+        <Popup>
+          <ContentCard
+            heading="Create Profile"
+            icon={true}
+            iconType="cross"
+            iconOnClick={() => {
+              this.setState({ creatingProfile: false });
+              this.props.inactivate();
+            }}
+          >
+            <UpdateProfile new={true} />
+          </ContentCard>
+        </Popup>
+      );
     }
 
     return (
       <Auxiliary>
-        {browsingDevelopers}
+        {popupCard}
         <nav
           className={
             active ? "sidenav sidenav--active" : "sidenav sidenav--inactive"
