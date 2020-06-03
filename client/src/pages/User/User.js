@@ -10,8 +10,7 @@ import { getUserByHandle } from "../../store/actions/userActions";
 
 // Components
 import Spinner from "../../components/Spinner/Spinner";
-import Auxiliary from "../../components/HigherOrder/Auxiliary";
-import Navbar from '../../components/Layout/Navbar'
+import Navbar from "../../components/Layout/Navbar";
 import Profile from "./Layout/Profile";
 // import ContentCard from '../../components/Cards/Content';
 
@@ -50,22 +49,22 @@ class User extends Component {
   }
 
   render() {
-    let content;
+    let content = <Spinner />;
     const { user, loading } = this.props.users;
 
-    if (!user && loading) content = <Spinner />;
-    else if (user && !loading)
+    if (user && !loading) {
       content = (
-        <Auxiliary>
+        <main className="user">
           <Profile currentUser={this.state.currentUser} />
           <div className="user__main">
             <Navbar />
             <div className="user__content"></div>
           </div>
-        </Auxiliary>
+        </main>
       );
+    }
 
-    return <div className="user">{content}</div>;
+    return content;
   }
 }
 

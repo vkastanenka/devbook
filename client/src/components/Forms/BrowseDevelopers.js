@@ -172,7 +172,7 @@ class BrowseDevelopers extends Component {
             {this.state.handleFilterSelect ? "Handle" : "Name"}
           </span>
           <Icon
-            type="arrow-with-circle-right"
+            type="cycle"
             className="icon icon--large icon--primary"
           />
           {this.state.handleFilterSelect ? (

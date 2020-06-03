@@ -5,6 +5,7 @@ import React, { Component } from "react";
 import Login from "../Forms/Login";
 import Register from "../Forms/Register";
 
+// Card housing login and register forms
 class LoginRegister extends Component {
   state = {
     registered: true,

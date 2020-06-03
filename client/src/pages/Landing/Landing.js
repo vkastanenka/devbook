@@ -8,13 +8,16 @@ import { connect } from "react-redux";
 // Components
 import LoginRegister from "../../components/Cards/LoginRegister";
 
+// DevConnector landing Page
 class Landing extends Component {
+  // If authenticated, push user to their profile card
   componentDidMount() {
     if (this.props.auth.isAuth) {
       this.props.history.push(`/user/${this.props.auth.user.user.handle}`);
     }
   }
 
+  // If user authenticates, push them to their profile card
   componentWillReceiveProps(nextProps) {
     if (!this.props.auth.isAuth && nextProps.auth.isAuth) {
       this.props.history.push(`/user/${nextProps.auth.user.user.handle}`);

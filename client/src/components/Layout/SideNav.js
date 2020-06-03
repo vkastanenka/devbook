@@ -38,7 +38,10 @@ class SideNav extends Component {
             heading="Browse Developers"
             icon={true}
             iconType="cross"
-            iconOnClick={() => this.setState({ browsingDevelopers: false })}
+            iconOnClick={() => {
+              this.setState({ browsingDevelopers: false })
+              this.props.inactivate();
+            }}
           >
             <BrowseDevelopers />
           </ContentCard>

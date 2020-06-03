@@ -96,7 +96,7 @@ class Profile extends Component {
     }
 
     return (
-      <section className="profile">
+      <section className="user__profile profile">
         <div className="profile__head">
           {!currentUser ? <FollowIcon /> : null}
           <div
@@ -149,13 +149,13 @@ class Profile extends Component {
         <div className="profile__body">
           <div className="profile__body-selection ma-bt-sm">
             <p
-              className="text-primary fw-medium"
+              className="text-secondary fw-medium"
               onClick={() => this.setState({ viewing: "profile" })}
             >
               Profile
             </p>
             <p
-              className="text-primary fw-medium"
+              className="text-secondary fw-medium"
               onClick={() => this.setState({ viewing: "following" })}
             >
               Following
