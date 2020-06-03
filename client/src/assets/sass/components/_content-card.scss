@@ -2,6 +2,8 @@
   background-color: $color-grey-light-1;
   border-radius: 10px;
   min-width: 40rem;
+  max-height: 90vh;
+  overflow: hidden;
 
   &__heading {
     @extend %gradient-background--primary;
@@ -9,6 +11,8 @@
     padding: 2rem;
     text-align: center;
     border-radius: 10px 10px 0 0;
+    height: 12vh;
+    @extend %flex-center;
   }
 
   &__icon {

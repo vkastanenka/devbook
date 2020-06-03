@@ -11,6 +11,6 @@ export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const SET_USER_LOAD = 'SET_USER_LOAD';
 export const UNSET_USER_LOAD = 'UNSET_USER_LOAD';
 export const GET_USER = 'GET_USER';
-export const GET_ALL_USERS = 'GET_ALL_USERS';
+export const GET_USERS = 'GET_USERS';
 export const CLEAR_USER = 'CLEAR_USER';
 export const CLEAR_ALL_USERS = 'CLEAR_ALL_USERS';

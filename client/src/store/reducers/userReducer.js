@@ -29,7 +29,7 @@ const setSearchedUser = (state, action) => {
 };
 
 // Sets all users
-const setAllUsers = (state, action) => {
+const getUsers = (state, action) => {
   return updateObject(state, {
     users: action.payload,
     // loading: false,
@@ -44,8 +44,8 @@ export default function (state = initialState, action) {
       return unsetUserLoad(state, action);
     case actionTypes.GET_USER:
       return setSearchedUser(state, action);
-    case actionTypes.GET_ALL_USERS:
-      return setAllUsers(state, action);
+    case actionTypes.GET_USERS:
+      return getUsers(state, action);
     default:
       return state;
   }
