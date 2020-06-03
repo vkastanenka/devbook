@@ -10,6 +10,12 @@ import { connect } from "react-redux";
 import { clearErrors } from "../../store/actions/errorActions";
 import { login, sendPasswordResetToken } from "../../store/actions/authActions";
 
+/** LOGIN
+ * 1. We receive the JWT and decode it (contains user entire user document)
+ * 2. In redux auth state, user is set to JWT object, isAuth is true
+ * 3. Following array is empty, posts array is empty, and no profile field
+ */
+
 // Components
 import InputGroup from "../Inputs/InputGroup";
 

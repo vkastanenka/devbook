@@ -9,6 +9,11 @@ import { connect } from "react-redux";
 // Actions
 import { register } from "../../store/actions/authActions";
 import { clearErrors } from "../../store/actions/errorActions";
+import { willReceiveErrors, clearErrorsOnUnmount } from '../../utils/errorHandling';
+
+/** REGISTER
+ * 1. A post request is made to our api and a new user is created
+ */
 
 // Components
 import InputGroup from "../Inputs/InputGroup";
@@ -32,35 +37,12 @@ class Register extends Component {
 
   // Alerting user of errors / success / progress
   componentWillReceiveProps(nextProps) {
-    if (this.state.submitting && Object.keys(nextProps.errors).length > 0) {
-      this.setState({
-        errors: nextProps.errors,
-        submitting: false,
-        disableSubmitButton: false,
-      });
-
-      this.timer = setTimeout(() => {
-        this.props.clearErrors();
-        clearTimeout(this.timer);
-      }, 6000);
-    }
-
-    // Clear errors from state when global errors cleared
-    if (
-      Object.keys(this.state.errors).length > 0 &&
-      Object.keys(nextProps.errors).length === 0
-    ) {
-      clearTimeout(this.timer);
-      this.setState({ errors: {} });
-    }
+    willReceiveErrors(this, this.state, this.props, nextProps);
   }
 
   // Clear any timers when form unmounts
   componentWillUnmount() {
-    clearTimeout(this.timer);
-    if (Object.keys(this.props.errors).length > 0) {
-      this.props.clearErrors();
-    }
+    clearErrorsOnUnmount(this, this.props);
   }
 
   // State handler for input fields

@@ -84,7 +84,7 @@ exports.createCurrentUserProfile = catchAsync(async (req, res, next) => {
   const token = createJWT(updatedUser);
 
   // Respond
-  return res.status(201).json({ status: "success", token, updatedUser });
+  return res.status(201).json({ status: "success", token });
 });
 
 // @route   PATCH api/v1/profiles/currentUser
@@ -121,8 +121,11 @@ exports.updateCurrentUserProfile = catchAsync(async (req, res, next) => {
   // Find the updated user in order to populate required fields for front end
   const updatedUser = await User.findOne({ user: req.user.id });
 
+  // Create JWT with updated user information (new profile)
+  const token = createJWT(updatedUser);
+
   // Respond
-  return res.status(200).json({updatedUser});
+  return res.status(200).json({ status: "success", token });
 });
 
 // @route   POST api/v1/profiles/education

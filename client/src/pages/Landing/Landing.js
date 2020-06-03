@@ -5,6 +5,10 @@ import PropTypes from "prop-types";
 // Redux
 import { connect } from "react-redux";
 
+/** REDUX
+ * 1. If the authentication field isAuth is or becomes true, push to the user profile page
+ */
+
 // Components
 import LoginRegister from "../../components/Cards/LoginRegister";
 

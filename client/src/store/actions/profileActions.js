@@ -28,8 +28,9 @@ export const unsetUserLoad = () => {
 // @access  Protected
 export const createCurrentUserProfile = (profileData) => async (dispatch) => {
   try {
-    const res = await axios.post('/api/v1/profiles/currentUser', profileData);
-    actionDispatch(actionTypes.UPDATE_PROFILE, res.data.updatedUser, dispatch);
+    const res = await axios.post("/api/v1/profiles/currentUser", profileData);
+    const decoded = decodeToken(res.data.token);
+    dispatch(setCurrentUser(decoded));
   } catch (err) {
     actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
   }
@@ -40,8 +41,9 @@ export const createCurrentUserProfile = (profileData) => async (dispatch) => {
 // @access  Protected
 export const updateCurrentUserProfile = (profileData) => async (dispatch) => {
   try {
-    const res = await axios.patch('/api/v1/profiles/currentUser', profileData);
-    actionDispatch(actionTypes.UPDATE_PROFILE, res.data.updatedUser, dispatch);
+    const res = await axios.patch("/api/v1/profiles/currentUser", profileData);
+    const decoded = decodeToken(res.data.token);
+    dispatch(setCurrentUser(decoded));
   } catch (err) {
     actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
   }

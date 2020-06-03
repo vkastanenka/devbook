@@ -14,3 +14,6 @@ export const GET_USER = 'GET_USER';
 export const GET_USERS = 'GET_USERS';
 export const CLEAR_USER = 'CLEAR_USER';
 export const CLEAR_ALL_USERS = 'CLEAR_ALL_USERS';
+
+// Profile
+export const UPDATE_PROFILE = 'UPDATE_PROFILE';

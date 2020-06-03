@@ -14,7 +14,7 @@ import Popup from "../HigherOrder/Popup";
 import Auxiliary from "../HigherOrder/Auxiliary";
 import ContentCard from "../Cards/Content";
 import BrowseDevelopers from "../Forms/BrowseDevelopers";
-import UpdateProfile from '../Forms/UpdateProfile';
+import UpdateProfile from "../Forms/UpdateProfile";
 // import UpdateAccount from '../Forms/UpdateAccount';
 // import UpdatePassword from '../Forms/UpdatePassword';
 
@@ -60,6 +60,22 @@ class SideNav extends Component {
             }}
           >
             <UpdateProfile new={true} />
+          </ContentCard>
+        </Popup>
+      );
+    } else if (this.state.updatingProfile) {
+      popupCard = (
+        <Popup>
+          <ContentCard
+            heading="Update Profile"
+            icon={true}
+            iconType="cross"
+            iconOnClick={() => {
+              this.setState({ updatingProfile: false });
+              this.props.inactivate();
+            }}
+          >
+            <UpdateProfile new={false} />
           </ContentCard>
         </Popup>
       );
