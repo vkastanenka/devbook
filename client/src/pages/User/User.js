@@ -26,6 +26,7 @@ class User extends Component {
       // If authenticated, get user by handle in url params
       this.props.getUserByHandle(this.props.match.params.handle);
       // Set state if current user doesn't match url param
+      console.log(this.props.auth.user);
       if (this.props.match.params.handle !== this.props.auth.user.user.handle) {
         this.setState({ currentUser: false });
       }

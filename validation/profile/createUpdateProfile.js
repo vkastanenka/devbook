@@ -13,7 +13,7 @@ module.exports = validateProfile = (data) => {
   }
 
   // Developer skills
-  if (data.skills.length !== 5) {
+  if (data.skills.split(', ').length !== 5) {
     errors.skills = "5 developer skills or languages are required";
   }
 

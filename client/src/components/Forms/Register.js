@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 // Actions
 import { register } from "../../store/actions/authActions";
 import { clearErrors } from "../../store/actions/errorActions";
-import { willReceiveErrors, clearErrorsOnUnmount } from '../../utils/errorHandling';
+import { willReceiveErrors, clearErrorsOnUnmount } from '../../utils/formUtils';
 
 /** REGISTER
  * 1. A post request is made to our api and a new user is created
@@ -72,7 +72,7 @@ class Register extends Component {
     // Register new user in the DB
     await this.props.register(newUser);
 
-    // 3. Let user know it was a success
+    // Let user know it was a success
     if (Object.keys(this.state.errors).length === 0) {
       this.setState({
         registerEmail: "",

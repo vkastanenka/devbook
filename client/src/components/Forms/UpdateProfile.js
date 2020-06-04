@@ -13,7 +13,9 @@ import {
 import {
   willReceiveErrors,
   clearErrorsOnUnmount,
-} from "../../utils/errorHandling";
+  prepareRequest,
+  finishRequest
+} from "../../utils/formUtils";
 
 // Components
 import Auxiliary from "../HigherOrder/Auxiliary";
@@ -39,17 +41,39 @@ class UpdateProfile extends Component {
     errors: {},
   };
 
+  componentDidMount() {
+    if (!this.props.new) {
+      const { profile } = this.props.auth.user.user;
+      const { social } = profile;
+
+      const socialURLs = Object.keys(social);
+      const socialCheck = socialURLs.filter((url) => url !== "");
+
+      this.setState({
+        status: profile.status,
+        skills: profile.skills.join(", "),
+        githubusername: profile.githubusername,
+        bio: profile.bio,
+        twitter: social.twitter,
+        facebook: social.facebook,
+        linkedin: social.linkedin,
+        youtube: social.youtube,
+        displaySocialMediaInputs: socialCheck.length > 0 ? true : false,
+      });
+    }
+  }
+
   // Binding timer to component instance
   timer = null;
 
   // Alerting user of errors / success / progress
   componentWillReceiveProps(nextProps) {
-    willReceiveErrors(this, this.state, this.props, nextProps);
+    willReceiveErrors(this, nextProps);
   }
 
   // Clear any timers when form unmounts
   componentWillUnmount() {
-    clearErrorsOnUnmount(this, this.props);
+    clearErrorsOnUnmount(this);
   }
 
   // State handler for input fields
@@ -59,33 +83,58 @@ class UpdateProfile extends Component {
 
   // Make a post/patch request to create/update current user's profile
   onProfileUpdate = async (e) => {
-    e.preventDefault();
+    // Clear errors and notify user of request
+    prepareRequest(e, this);
 
-    // Clear errors if any before submitting
-    if (Object.keys(this.props.errors).length > 0) this.props.clearErrors();
+    // Profile data to post
+    const profileData = {
+      status: this.state.status,
+      skills: this.state.skills,
+      bio: this.state.bio,
+      githubusername: this.state.githubusername,
+      twitter: this.state.twitter,
+      facebook: this.state.facebook,
+      linkedin: this.state.linkedin,
+      youtube: this.state.youtube,
+      instagram: this.state.instagram,
+    };
 
-    // Let user know request is happening and disable button
-    this.setState({ submitting: true, disableSubmitButton: true });
+    // POST / PATCH request
+    this.props.new
+      ? await this.props.createCurrentUserProfile(profileData)
+      : await this.props.updateCurrentUserProfile(profileData);
 
-    // User data to post
+    // Let user know it was a success
+    finishRequest(this);
   };
 
   render() {
     let buttonText;
-    const { errors, submitting, submitted, disableSubmitButton } = this.state;
+    const {
+      errors,
+      submitting,
+      submitted,
+      disableSubmitButton,
+      displaySocialMediaInputs,
+    } = this.state;
     if (!submitting && !submitted) buttonText = "Submit profile";
     else if (submitting && !submitted) buttonText = "Submitting profile...";
-    else if (!submitted && submitted) buttonText = "Submitted profile!";
+    else if (!submitting && submitted) buttonText = "Submitted profile!";
 
     return (
-      <form className="form" onSubmit={this.onProfileUpdate}>
-        <h3 className="heading-tertiary">* denotes required fields</h3>
+      <form
+        className="form content-card__content"
+        onSubmit={this.onProfileUpdate}
+      >
+        <h3 className="text-primary font-megrim pd-y-sm">
+          * denotes required fields
+        </h3>
         <SelectGroup
           name="status"
           options={[
             {
               value: "",
-              label: "Developer Status *",
+              label: "* Developer status",
               disabled: true,
               hidden: true,
             },
@@ -103,20 +152,20 @@ class UpdateProfile extends Component {
           required={true}
           onChange={(e) => this.onChange(e)}
           htmlFor="status"
-          label="Developer status *"
+          label="* Developer status"
           errors={errors.status}
         />
         <InputGroup
           type="text"
           name="skills"
           id="skills"
-          placeholder="5 comma separated skills (HTML, CSS, JS, etc...) *"
+          placeholder="* 5 comma separated skills (HTML, CSS, JS, etc...)"
           value={this.state.skills}
           required={true}
           onChange={(e) => this.onChange(e)}
           htmlFor="skills"
-          label="Developer skills *"
-          errors={errors.registerName}
+          label="* Developer skills"
+          errors={errors.skills}
         />
         <InputGroup
           type="text"
@@ -139,28 +188,28 @@ class UpdateProfile extends Component {
           required={false}
           onChange={(e) => this.onChange(e)}
           htmlFor="bio"
-          label="bio"
+          label="Bio"
           errors={errors.bio}
         />
-        <button
-          className="btn-text"
-          onClick={() =>
-            this.setState((prevState) => ({
-              displaySocialMediaInputs: !prevState.displaySocialMediaInputs,
-              twitter: "",
-              facebook: "",
-              linkedin: "",
-              youtube: "",
-              instagram: "",
-            }))
-          }
-        >
-          Add social media links
-        </button>
+        <div className="form__group flex flex__center">
+          <button
+            className="btn-text mg-y-sm"
+            type="button"
+            onClick={() =>
+              this.setState((prevState) => ({
+                displaySocialMediaInputs: !prevState.displaySocialMediaInputs,
+              }))
+            }
+          >
+            {!displaySocialMediaInputs
+              ? "Add social media links"
+              : "Hide social media links"}
+          </button>
+        </div>
         {this.state.displaySocialMediaInputs ? (
           <Auxiliary>
             <InputGroup
-              type="url"
+              type="text"
               name="twitter"
               id="twitter"
               htmlFor="twitter"
@@ -172,7 +221,7 @@ class UpdateProfile extends Component {
               errors={errors.twitter}
             />
             <InputGroup
-              type="url"
+              type="text"
               name="facebook"
               id="facebook"
               htmlFor="facebook"
@@ -184,7 +233,7 @@ class UpdateProfile extends Component {
               onChange={(e) => this.onChange(e)}
             />
             <InputGroup
-              type="url"
+              type="text"
               name="linkedin"
               id="linkedin"
               htmlFor="linkedin"
@@ -196,7 +245,7 @@ class UpdateProfile extends Component {
               onChange={(e) => this.onChange(e)}
             />
             <InputGroup
-              type="url"
+              type="text"
               name="youtube"
               id="youtube"
               htmlFor="youtube"
@@ -208,7 +257,7 @@ class UpdateProfile extends Component {
               onChange={(e) => this.onChange(e)}
             />
             <InputGroup
-              type="url"
+              type="text"
               name="instagram"
               id="instagram"
               htmlFor="instagram"
@@ -222,7 +271,7 @@ class UpdateProfile extends Component {
           </Auxiliary>
         ) : null}
         <button
-          className="btn btn--primary"
+          className="btn btn--primary ma-bt-sm"
           type="submit"
           disabled={disableSubmitButton}
         >
@@ -235,12 +284,14 @@ class UpdateProfile extends Component {
 
 UpdateProfile.propTypes = {
   new: PropTypes.bool.isRequired,
+  auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   createCurrentUserProfile: PropTypes.func.isRequired,
   updateCurrentUserProfile: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  auth: state.auth,
   errors: state.errors,
 });
 

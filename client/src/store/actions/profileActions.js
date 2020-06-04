@@ -43,6 +43,7 @@ export const updateCurrentUserProfile = (profileData) => async (dispatch) => {
   try {
     const res = await axios.patch("/api/v1/profiles/currentUser", profileData);
     const decoded = decodeToken(res.data.token);
+    console.log(decoded);
     dispatch(setCurrentUser(decoded));
   } catch (err) {
     actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);

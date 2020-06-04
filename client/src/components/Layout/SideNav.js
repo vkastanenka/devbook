@@ -56,7 +56,6 @@ class SideNav extends Component {
             iconType="cross"
             iconOnClick={() => {
               this.setState({ creatingProfile: false });
-              this.props.inactivate();
             }}
           >
             <UpdateProfile new={true} />
@@ -72,7 +71,6 @@ class SideNav extends Component {
             iconType="cross"
             iconOnClick={() => {
               this.setState({ updatingProfile: false });
-              this.props.inactivate();
             }}
           >
             <UpdateProfile new={false} />

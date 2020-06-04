@@ -56,7 +56,7 @@ exports.createCurrentUserProfile = catchAsync(async (req, res, next) => {
   const profileBody = {
     user: req.user._id,
     status: req.body.status,
-    skills: req.body.skills,
+    skills: req.body.skills.split(", "),
     bio: req.body.bio ? req.body.bio : "",
     githubusername: req.body.githubusername ? req.body.githubusername : "",
     social: {
@@ -78,7 +78,9 @@ exports.createCurrentUserProfile = catchAsync(async (req, res, next) => {
   );
 
   // Retrieve the updated user document with the profile
-  const updatedUser = await User.findOne({ _id: req.user.id });
+  const updatedUser = await User.findById(req.user.id).populate({
+    path: "profile",
+  });
 
   // Create JWT with updated user information (new profile)
   const token = createJWT(updatedUser);
@@ -101,9 +103,8 @@ exports.updateCurrentUserProfile = catchAsync(async (req, res, next) => {
   // Format profile body
   const profileBody = {
     user: req.user._id,
-    handle: req.body.handle,
     status: req.body.status,
-    skills: req.body.skills,
+    skills: req.body.skills.split(", "),
     bio: req.body.bio ? req.body.bio : "",
     githubusername: req.body.githubusername ? req.body.githubusername : "",
     social: {
@@ -119,7 +120,9 @@ exports.updateCurrentUserProfile = catchAsync(async (req, res, next) => {
   await profile.update({ $set: profileBody }, { new: true });
 
   // Find the updated user in order to populate required fields for front end
-  const updatedUser = await User.findOne({ user: req.user.id });
+  const updatedUser = await User.findById(req.user.id).populate({
+    path: "profile",
+  });
 
   // Create JWT with updated user information (new profile)
   const token = createJWT(updatedUser);

@@ -78,7 +78,7 @@ class Profile extends Component {
     let twIcon, fbIcon, liIcon, ytIcon, inIcon;
 
     // Assign social media icons if listed in profile
-    if (profile.social) {
+    if (profile && profile.social) {
       if (profile.social.twitter)
         twIcon = <SocialMediaLink profile={profile} website="twitter" />;
 
