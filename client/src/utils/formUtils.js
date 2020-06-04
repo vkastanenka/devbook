@@ -60,3 +60,18 @@ export const finishRequest = (currentObject) => {
     }, 6000);
   }
 };
+
+// Changes button text based on request process
+export const buttonText = (
+  submitting,
+  submitted,
+  normalText,
+  submittingText,
+  submittedText
+) => {
+  let buttonText;
+  if (!submitting && !submitted) buttonText = normalText;
+  else if (submitting && !submitted) buttonText = submittingText;
+  else if (!submitting && submitted) buttonText = submittedText;
+  return buttonText;
+};

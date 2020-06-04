@@ -14,7 +14,8 @@ import {
   willReceiveErrors,
   clearErrorsOnUnmount,
   prepareRequest,
-  finishRequest
+  finishRequest,
+  buttonText,
 } from "../../utils/formUtils";
 
 // Components
@@ -36,8 +37,8 @@ class UpdateProfile extends Component {
     instagram: "",
     displaySocialMediaInputs: false,
     submitting: false,
-    disableSubmitButton: false,
     submitted: false,
+    disableSubmitButton: false,
     errors: {},
   };
 
@@ -109,7 +110,6 @@ class UpdateProfile extends Component {
   };
 
   render() {
-    let buttonText;
     const {
       errors,
       submitting,
@@ -117,9 +117,6 @@ class UpdateProfile extends Component {
       disableSubmitButton,
       displaySocialMediaInputs,
     } = this.state;
-    if (!submitting && !submitted) buttonText = "Submit profile";
-    else if (submitting && !submitted) buttonText = "Submitting profile...";
-    else if (!submitting && submitted) buttonText = "Submitted profile!";
 
     return (
       <form
@@ -275,7 +272,13 @@ class UpdateProfile extends Component {
           type="submit"
           disabled={disableSubmitButton}
         >
-          {buttonText}
+          {buttonText(
+            submitting,
+            submitted,
+            "Submit profile",
+            "Submitting profile...",
+            "Submitted profile!"
+          )}
         </button>
       </form>
     );

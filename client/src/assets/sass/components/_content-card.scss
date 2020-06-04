@@ -22,13 +22,13 @@
   }
 
   &__body {
-    // 78 vh
     color: $color-grey-dark-4;
     @extend %flex-center;
   }
 
   &__content {
-    height: 78vh;
+    max-height: 78vh;
     overflow-y: auto;
+    width: 100%;
   }
 }

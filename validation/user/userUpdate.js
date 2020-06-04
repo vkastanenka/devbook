@@ -7,6 +7,14 @@ module.exports = validateUserUpdate = (data) => {
 
   data.name = !isEmpty(data.name) ? data.name : "";
   data.email = !isEmpty(data.email) ? data.email : "";
+  data.handle = !isEmpty(data.handle) ? data.handle : "";
+
+  // Email
+  if (Validator.isEmpty(data.email)) {
+    errors.email = "Email field is required";
+  } else if (!Validator.isEmail(data.email)) {
+    errors.email = "Email is not valid";
+  }
 
   // Name
   if (Validator.isEmpty(data.name)) {
@@ -18,11 +26,9 @@ module.exports = validateUserUpdate = (data) => {
     errors.name = "Full name is required";
   }
 
-  // Email
-  if (Validator.isEmpty(data.email)) {
-    errors.email = "Email field is required";
-  } else if (!Validator.isEmail(data.email)) {
-    errors.email = "Email is not valid";
+  // Handle
+  if (Validator.isEmpty(data.handle)) {
+    errors.handle = "Handle field is required";
   }
 
   return {

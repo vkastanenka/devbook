@@ -3,11 +3,11 @@ import * as actionTypes from "./actionTypes";
 
 // Utilities
 import axios from "axios";
-import decodeToken from '../../utils/decodeToken';
+import decodeToken from "../../utils/decodeToken";
 import actionDispatch from "../../utils/actionDispatch";
 
 // Actions
-import { setCurrentUser } from './authActions';
+import { setCurrentUser } from "./authActions";
 
 // Sets loading state
 export const setUserLoad = () => {
@@ -24,14 +24,14 @@ export const unsetUserLoad = () => {
 };
 
 // Clear user
-export const clearUser = () => dispatch => {
+export const clearUser = () => (dispatch) => {
   actionDispatch(actionTypes.CLEAR_USER, null, dispatch);
-}
+};
 
 // Clear users
-export const clearUsers = () => dispatch => {
+export const clearUsers = () => (dispatch) => {
   actionDispatch(actionTypes.CLEAR_ALL_USERS, null, dispatch);
-}
+};
 
 /////////////////
 // Public Routes
@@ -56,7 +56,7 @@ export const getUserByHandle = (handle) => async (dispatch) => {
 export const getAllUsers = () => async (dispatch) => {
   // dispatch(setUserLoad());
   try {
-    const res = await axios.get('/api/v1/users');
+    const res = await axios.get("/api/v1/users");
     actionDispatch(actionTypes.GET_USERS, res.data.data, dispatch);
   } catch (err) {
     actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
@@ -69,13 +69,16 @@ export const getAllUsers = () => async (dispatch) => {
 // @access  Protected
 export const updateUserPhoto = (photo) => async (dispatch) => {
   try {
-    const res = await axios.patch('/api/v1/users/updateCurrentUserPhoto', photo);
+    const res = await axios.patch(
+      "/api/v1/users/updateCurrentUserPhoto",
+      photo
+    );
     const decoded = decodeToken(res.data.token);
     dispatch(setCurrentUser(decoded));
   } catch (err) {
     actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
   }
-}
+};
 
 // @route   POST api/v1/users/follow/:id
 // @desc    Follows user by their id

@@ -377,8 +377,9 @@ body {
   .content-card__body {
     color: #333; }
   .content-card__content {
-    height: 78vh;
-    overflow-y: auto; }
+    max-height: 78vh;
+    overflow-y: auto;
+    width: 100%; }
 
 .form {
   text-align: center;
