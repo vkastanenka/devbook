@@ -228,6 +228,25 @@ body {
 .rotate {
   animation: 1s infinite rotate; }
 
+.alert {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 400;
+  text-align: center;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 1.6rem 5rem;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15); }
+  .alert--success {
+    background-color: #0669ac; }
+  .alert--error {
+    background-color: #eb4d4b; }
+
 .browse-devs {
   display: flex;
   flex-direction: column;

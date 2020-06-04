@@ -1,7 +1,6 @@
 // React
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { CSSTransition } from "react-transition-group";
 
 // Redux
 import { connect } from "react-redux";
@@ -9,11 +8,12 @@ import { connect } from "react-redux";
 // Actions
 import { register } from "../../store/actions/authActions";
 import { clearErrors } from "../../store/actions/errorActions";
-import { willReceiveErrors, clearErrorsOnUnmount } from '../../utils/formUtils';
-
-/** REGISTER
- * 1. A post request is made to our api and a new user is created
- */
+import {
+  willReceiveErrors,
+  clearErrorsOnUnmount,
+  prepareRequest,
+  buttonText,
+} from "../../utils/formUtils";
 
 // Components
 import InputGroup from "../Inputs/InputGroup";
@@ -27,8 +27,8 @@ class Register extends Component {
     registerPassword: "",
     registerPasswordConfirm: "",
     submitting: false,
-    disableSubmitButton: false,
     submitted: false,
+    disableSubmitButton: false,
     errors: {},
   };
 
@@ -37,12 +37,12 @@ class Register extends Component {
 
   // Alerting user of errors / success / progress
   componentWillReceiveProps(nextProps) {
-    willReceiveErrors(this, this.state, this.props, nextProps);
+    willReceiveErrors(this, nextProps);
   }
 
   // Clear any timers when form unmounts
   componentWillUnmount() {
-    clearErrorsOnUnmount(this, this.props);
+    clearErrorsOnUnmount(this);
   }
 
   // State handler for input fields
@@ -52,13 +52,8 @@ class Register extends Component {
 
   // Make a post request to register a new user
   onRegisterSubmit = async (e) => {
-    e.preventDefault();
-
-    // Clear errors if any before submitting
-    if (Object.keys(this.props.errors).length > 0) this.props.clearErrors();
-
-    // Let user know request is happening and disable button
-    this.setState({ submitting: true, disableSubmitButton: true });
+    // Clear errors and notify user of request
+    prepareRequest(e, this);
 
     // User data to post
     const newUser = {
@@ -89,7 +84,7 @@ class Register extends Component {
   };
 
   render() {
-    const { errors } = this.state;
+    const { errors, submitting, submitted, disableSubmitButton } = this.state;
 
     return (
       <form
@@ -101,11 +96,6 @@ class Register extends Component {
         onSubmit={this.onRegisterSubmit}
       >
         <h2 className="heading-secondary ma-bt-sm">Register</h2>
-        <CSSTransition in={errors.server500} timeout={300} classNames="fade-in">
-          <div className="text-primary fc-danger fw-medium ma-bt-sm">
-            {errors.server500}
-          </div>
-        </CSSTransition>
         <InputGroup
           type="email"
           name="registerEmail"
@@ -166,17 +156,21 @@ class Register extends Component {
           label="Confirm Password"
           errors={errors.registerPasswordConfirm}
         />
-        {!this.state.submitted ? (
-          <div className="form__group">
-            <button
-              type="submit"
-              className="btn btn--primary"
-              disabled={this.state.disableSubmitButton}
-            >
-              {!this.state.submitting ? "Register" : "submitting..."}
-            </button>
-          </div>
-        ) : null}
+        <div className="form__group">
+          <button
+            type="submit"
+            className="btn btn--primary"
+            disabled={disableSubmitButton}
+          >
+            {buttonText(
+              submitting,
+              submitted,
+              "Register",
+              "Registering...",
+              "Registered!"
+            )}
+          </button>
+        </div>
       </form>
     );
   }

@@ -159,6 +159,12 @@ exports.login = catchAsync(async (req, res, next) => {
 exports.sendPasswordResetToken = catchAsync(async (req, res, next) => {
   const errors = {};
 
+  // Check if there is an input for the user's email
+  if (!req.body.email) {
+    errors.passwordReset = "Please enter your email to send the token";
+    return res.status(400).json(errors);
+  }
+
   // Check if user associated to req.body.email exists
   const user = await User.findOne({ email: req.body.email });
   if (!user) {

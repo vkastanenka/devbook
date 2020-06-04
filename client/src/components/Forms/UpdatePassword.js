@@ -71,6 +71,15 @@ class UpdatePassword extends Component {
     const { errors, submitting, submitted, disableSubmitButton } = this.state;
 
     return (
+      // TODO:
+      //   <form
+      //   className={
+      //     !this.props.formClassName
+      //       ? "form"
+      //       : `form ${this.props.formClassName}`
+      //   }
+      //   onSubmit={this.onRegisterSubmit}
+      // >
       <form className="form ma-y-sm" onSubmit={this.onPasswordUpdate}>
         <h3 className="text-primary font-megrim pd-y-sm">Update Password</h3>
         <InputGroup
@@ -112,6 +121,9 @@ class UpdatePassword extends Component {
           label="Confirm new password"
           errors={errors.newPasswordConfirm}
         />
+        {/* TODO:
+        <div className="form__group">
+        */}
         <button
           className="btn btn--primary ma-bt-sm"
           type="submit"
@@ -125,6 +137,9 @@ class UpdatePassword extends Component {
             "Updated password!"
           )}
         </button>
+        {/* TODO:
+        </div>
+        */}
       </form>
     );
   }

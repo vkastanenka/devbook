@@ -27,8 +27,12 @@ module.exports = validateUserUpdate = (data) => {
   }
 
   // Handle
-  if (Validator.isEmpty(data.handle)) {
-    errors.handle = "Handle field is required";
+  if (Validator.isEmpty(data.registerHandle)) {
+    errors.registerHandle = "Handle is required";
+  } else if (!Validator.isLength(data.registerHandle, { min: 5 })) {
+    errors.registerHandle = "Handle must be at least 5 characters";
+  } else if (!Validator.isLength(data.registerHandle, { max: 12 })) {
+    errors.registerHandle = "Handle must be at most 12 characters";
   }
 
   return {

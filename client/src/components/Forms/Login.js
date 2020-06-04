@@ -1,7 +1,6 @@
 // React
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { CSSTransition } from "react-transition-group";
 
 // Redux
 import { connect } from "react-redux";
@@ -9,15 +8,12 @@ import { connect } from "react-redux";
 // Actions
 import { clearErrors } from "../../store/actions/errorActions";
 import { login, sendPasswordResetToken } from "../../store/actions/authActions";
-
-/** LOGIN
- * 1. We receive the JWT and decode it (contains user entire user document)
- * 2. In redux auth state, user is set to JWT object, isAuth is true
- * 3. Following array is empty, posts array is empty, and no profile field
- */
+import { clearErrorsOnUnmount, prepareRequest } from "../../utils/formUtils";
 
 // Components
+import Alert from "../Alert/Alert";
 import InputGroup from "../Inputs/InputGroup";
+import Auxiliary from "../HigherOrder/Auxiliary";
 
 // Login form to log a user into the site
 class Login extends Component {
@@ -76,11 +72,7 @@ class Login extends Component {
 
   // Clear any timers and errors when form unmounts
   componentWillUnmount() {
-    clearTimeout(this.timer);
-    if (Object.keys(this.props.errors).length > 0) {
-      this.props.clearErrors();
-      this.setState({ errors: {} });
-    }
+    clearErrorsOnUnmount(this);
   }
 
   // State handler for input fields
@@ -90,16 +82,11 @@ class Login extends Component {
 
   // Make a post request to login a new user
   onLoginSubmit = async (e) => {
-    e.preventDefault();
-
-    // Clear errors if any before submitting
-    if (Object.keys(this.props.errors).length > 0) this.props.clearErrors();
+    // Clear errors and notify user of request
+    prepareRequest(e, this);
 
     // Change forgot password
     if (this.state.forgotPassword) this.setState({ forgotPassword: false });
-
-    // Let user know request is happening and disable button
-    this.setState({ submitting: true, disableSubmitButton: true });
 
     // User data to post
     const userData = {
@@ -144,80 +131,89 @@ class Login extends Component {
   };
 
   render() {
-    const { errors } = this.state;
+    const {
+      errors,
+      loginEmail,
+      loginPassword,
+      forgotPassword,
+      disableTokenButton,
+      sendingToken,
+      disableSubmitButton,
+      submitting,
+    } = this.state;
 
     return (
-      <form
-        className={
-          !this.props.formClassName
-            ? "form"
-            : `form ${this.props.formClassName}`
-        }
-        onSubmit={this.onLoginSubmit}
-      >
-        <h2 className="heading-secondary ma-bt-sm">Login</h2>
-        <CSSTransition
-          in={errors.server500}
-          timeout={300}
-          classNames="fade-in"
+      <Auxiliary>
+        {errors.passwordReset ? (
+          <Alert type="error" message={errors.passwordReset} />
+        ) : null}
+        <form
+          className={
+            !this.props.formClassName
+              ? "form"
+              : `form ${this.props.formClassName}`
+          }
+          onSubmit={this.onLoginSubmit}
         >
-        <div className="text-primary fc-danger fw-medium ma-bt-sm">
-          {errors.server500}
-        </div>
-        </CSSTransition>
-        <InputGroup
-          type="email"
-          name="loginEmail"
-          id="email"
-          placeholder="Email address"
-          value={this.state.loginEmail}
-          required={true}
-          onChange={(e) => this.onChange(e)}
-          htmlFor="email"
-          label="Email address"
-        />
-        <InputGroup
-          type="password"
-          name="loginPassword"
-          id="password"
-          placeholder="Password"
-          value={this.state.loginPassword}
-          required={true}
-          onChange={(e) => this.onChange(e)}
-          htmlFor="password"
-          label="Password"
-        />
-        <div className="form__group flex flex__center ma-bt-lg">
-          {!this.state.forgotPassword ? (
+          <h2 className="heading-secondary ma-bt-sm">Login</h2>
+          <InputGroup
+            type="email"
+            name="loginEmail"
+            id="email"
+            placeholder="Email address"
+            value={loginEmail}
+            required={true}
+            onChange={(e) => this.onChange(e)}
+            htmlFor="email"
+            label="Email address"
+            errors={errors.loginEmail}
+          />
+          <InputGroup
+            type="password"
+            name="loginPassword"
+            id="password"
+            placeholder="Password"
+            value={loginPassword}
+            required={true}
+            onChange={(e) => this.onChange(e)}
+            htmlFor="password"
+            label="Password"
+            errors={errors.loginPassword}
+          />
+          <div className="form__group flex flex__center ma-bt-lg">
+            {!forgotPassword ? (
+              <button
+                type="button"
+                className="btn-text"
+                onClick={() => this.setState({ forgotPassword: true })}
+                disabled={disableTokenButton}
+              >
+                Forgot your password?
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="btn-text"
+                onClick={this.onSendPasswordResetToken}
+                disabled={disableTokenButton}
+              >
+                {!sendingToken
+                  ? "Email password reset token"
+                  : "Emailing password reset token..."}
+              </button>
+            )}
+          </div>
+          <div className="form__group">
             <button
-              className="btn-text"
-              onClick={() => this.setState({ forgotPassword: true })}
-              disabled={this.state.disableTokenButton}
+              type="submit"
+              className="btn btn--primary"
+              disabled={disableSubmitButton}
             >
-              Forgot your password?
+              {!submitting ? "Login" : "Logging In..."}
             </button>
-          ) : (
-            <button
-              className="btn-text"
-              onClick={this.onSendPasswordResetToken}
-              disabled={this.state.disableTokenButton}
-            >
-              {!this.state.sendingToken
-                ? "Email password reset token"
-                : "Emailing password reset token..."}
-            </button>
-          )}
-        </div>
-        <div className="form__group">
-          <button
-            type="submit"
-            className="btn btn--primary"
-            disabled={this.state.disableSubmitButton}
-          >
-            {!this.state.submitting ? "Login" : "Logging In..."}
-          </button>
-        </div>
-      </form>
+          </div>
+        </form>
+      </Auxiliary>
     );
   }
 }

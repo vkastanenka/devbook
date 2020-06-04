@@ -5,11 +5,8 @@ import PropTypes from "prop-types";
 // Redux
 import { connect } from "react-redux";
 
-/** REDUX
- * 1. If the authentication field isAuth is or becomes true, push to the user profile page
- */
-
 // Components
+import Alert from "../../components/Alert/Alert";
 import LoginRegister from "../../components/Cards/LoginRegister";
 
 // DevConnector landing Page
@@ -31,6 +28,9 @@ class Landing extends Component {
   render() {
     return (
       <main className="landing">
+        {this.props.errors.server500 ? (
+          <Alert type="error" message={this.props.errors.server500} />
+        ) : null}
         <h1 className="heading-primary font-megrim landing__heading">
           DevConnector
         </h1>
@@ -42,10 +42,12 @@ class Landing extends Component {
 
 Landing.propTypes = {
   auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  errors: state.errors,
 });
 
 export default connect(mapStateToProps)(Landing);

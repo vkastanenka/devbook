@@ -30,6 +30,7 @@ export const clearErrorsOnUnmount = (currentClass) => {
   clearTimeout(currentClass.timer);
   if (Object.keys(currentClass.props.errors).length > 0) {
     currentClass.props.clearErrors();
+    currentClass.setState({ errors: {} });
   }
 };
 

@@ -53,7 +53,7 @@ class LoginRegister extends Component {
           >
             <h3 className="heading-tertiary ma-bt-lg">Already registered?</h3>
             <p className="text-primary ma-bt-md">
-              Login to catch up on your latest feed
+              Login to catch up on your latest feed.
             </p>
             <button
               className="btn btn--ghost"
@@ -70,7 +70,7 @@ class LoginRegister extends Component {
             }
           >
             <h3 className="heading-tertiary ma-bt-lg">
-              {!newUserLogin ? "Not a member?" : "Thank you for registering"}
+              {!newUserLogin ? "Not a member?" : "Thank you for registering!"}
             </h3>
             <p className="text-primary ma-bt-md">
               {!newUserLogin
