@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 // Actions
+import { clearErrors } from "../../store/actions/errorActions";
 import { updateCurrentUser } from "../../store/actions/authActions";
 import {
   willReceiveErrors,
@@ -71,7 +72,7 @@ class UpdateAccount extends Component {
     };
 
     // PATCH request
-    this.props.updateCurrentUser(accountData);
+    await this.props.updateCurrentUser(accountData);
 
     // Let user know it was a success
     finishRequest(this);
@@ -167,4 +168,6 @@ const mapStateToProps = (state) => ({
   errors: state.errors,
 });
 
-export default connect(mapStateToProps, { updateCurrentUser })(UpdateAccount);
+export default connect(mapStateToProps, { clearErrors, updateCurrentUser })(
+  UpdateAccount
+);

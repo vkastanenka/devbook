@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 // Actions
+import { clearErrors } from "../../store/actions/errorActions";
 import {
   createCurrentUserProfile,
   updateCurrentUserProfile,
@@ -299,6 +300,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
+  clearErrors,
   createCurrentUserProfile,
   updateCurrentUserProfile,
 })(UpdateProfile);

@@ -40,7 +40,7 @@ function App() {
     <Provider store={store}>
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={Landing} />
+          <Route exact path="/:token?" component={Landing} />
           <Route exact path="/user/:handle" component={User} />
         </Switch>
       </BrowserRouter>

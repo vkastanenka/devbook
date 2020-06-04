@@ -8,10 +8,13 @@ import { connect } from "react-redux";
 // Actions
 import { clearErrors } from "../../store/actions/errorActions";
 import { login, sendPasswordResetToken } from "../../store/actions/authActions";
-import { clearErrorsOnUnmount, prepareRequest } from "../../utils/formUtils";
+import {
+  clearErrorsOnUnmount,
+  prepareRequest,
+  buttonText,
+} from "../../utils/formUtils";
 
 // Components
-import Alert from "../Alert/Alert";
 import InputGroup from "../Inputs/InputGroup";
 import Auxiliary from "../HigherOrder/Auxiliary";
 
@@ -24,8 +27,8 @@ class Login extends Component {
     disableSubmitButton: false,
     forgotPassword: false,
     sendingToken: false,
-    disableTokenButton: false,
     sentToken: false,
+    disableTokenButton: false,
     errors: {},
   };
 
@@ -116,7 +119,6 @@ class Login extends Component {
       this.setState({
         sendingToken: false,
         sentToken: true,
-        forgotPassword: false,
       });
 
       // Clear success message after 6 seconds
@@ -124,6 +126,7 @@ class Login extends Component {
         this.setState({
           sentToken: false,
           disableTokenButton: false,
+          forgotPassword: false,
         });
         clearTimeout(this.timer);
       }, 6000);
@@ -138,15 +141,13 @@ class Login extends Component {
       forgotPassword,
       disableTokenButton,
       sendingToken,
+      sentToken,
       disableSubmitButton,
       submitting,
     } = this.state;
 
     return (
       <Auxiliary>
-        {errors.passwordReset ? (
-          <Alert type="error" message={errors.passwordReset} />
-        ) : null}
         <form
           className={
             !this.props.formClassName
@@ -197,9 +198,13 @@ class Login extends Component {
                 onClick={this.onSendPasswordResetToken}
                 disabled={disableTokenButton}
               >
-                {!sendingToken
-                  ? "Email password reset token"
-                  : "Emailing password reset token..."}
+                {buttonText(
+                  sendingToken,
+                  sentToken,
+                  "Email password reset token",
+                  "Emailing password reset token...",
+                  "Email sent!"
+                )}
               </button>
             )}
           </div>
