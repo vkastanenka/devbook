@@ -9,10 +9,10 @@ import { connect } from "react-redux";
 import {
   followUser,
   unfollowUser,
-} from "../../../../store/actions/userActions";
+} from "../../../../../store/actions/userActions";
 
 // Components
-import Icon from "../../../../components/Icon/Icon";
+import Icon from "../../../../../components/Icon/Icon";
 
 // Icon to follow and unfollow other user profiles
 class FollowIcon extends Component {

@@ -84,14 +84,30 @@ exports.getUserByHandle = catchAsync(async (req, res, next) => {
     handle: req.params.handle,
   }).populate([
     { path: "profile" },
-    { path: "following", select: "photo name handle" },
+    { path: "posts", populate: { path: "comments" } },
+    {
+      path: "following",
+      select: "photo name handle posts",
+      populate: { path: "posts", populate: { path: "comments" } },
+    },
   ]);
 
   // Respond if no user is found
   query404(user, res, "There is no user with that handle");
 
+  // Organize posts
+  const followPostsSubArray = user.following.map((follow) => follow.posts);
+  let followPosts = [];
+  followPostsSubArray.forEach((follow) => (followPosts = [...follow]));
+  let posts = [...user.posts, ...followPosts];
+
+  // Sort the posts from newest to oldest
+  posts = posts.sort((a, b) => {
+    return new Date(b.date) - new Date(a.date);
+  });
+
   // Respond
-  res.status(200).json(user);
+  res.status(200).json({ user, posts });
 });
 
 ///////////////////

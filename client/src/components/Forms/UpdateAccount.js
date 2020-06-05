@@ -97,7 +97,6 @@ class UpdateAccount extends Component {
           onChange={(e) => this.onChange(e)}
           htmlFor="email"
           label="Email address"
-          errors={errors.email}
         />
         <InputGroup
           type="text"
@@ -110,7 +109,6 @@ class UpdateAccount extends Component {
           onChange={(e) => this.onChange(e)}
           htmlFor="name"
           label="Full name"
-          errors={errors.name}
         />
         <InputGroup
           type="text"
@@ -123,7 +121,6 @@ class UpdateAccount extends Component {
           required={true}
           onChange={(e) => this.onChange(e)}
           label="User handle"
-          errors={errors.handle}
         />
         <div className="form__group">
           <button

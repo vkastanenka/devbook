@@ -6,14 +6,14 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 // Actions
-import { updateUserPhoto } from "../../../store/actions/userActions";
+import { updateUserPhoto } from "../../../../store/actions/userActions";
 
 // Components
-import Auxiliary from "../../../components/HigherOrder/Auxiliary";
-import FollowIcon from "./ProfileLayout/FollowIcon";
-import SocialMediaLink from "./ProfileLayout/SocialMediaLink";
-import SkillsList from "./ProfileLayout/SkillsList";
-import FollowList from "./ProfileLayout/FollowList";
+import Auxiliary from "../../../../components/HigherOrder/Auxiliary";
+import FollowIcon from "./Layout/FollowIcon";
+import SocialMediaLink from "./Layout/SocialMediaLink";
+import SkillsList from "./Layout/SkillsList";
+import FollowList from "./Layout/FollowList";
 
 class Profile extends Component {
   state = {
@@ -31,9 +31,9 @@ class Profile extends Component {
   // Prevents requiring a photo that doesn't exist
   tryRequirePhoto = () => {
     try {
-      return require(`../../../assets/img/users/${this.props.users.user.photo}`);
+      return require(`../../../../assets/img/users/${this.props.users.user.photo}`);
     } catch (err) {
-      return require("../../../assets/img/users/default.jpg");
+      return require("../../../../assets/img/users/default.jpg");
     }
   };
 

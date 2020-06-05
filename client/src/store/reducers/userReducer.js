@@ -46,6 +46,13 @@ const updateUser = (state, action) => {
   }
 };
 
+// Add post to user document
+const createPost = (state, action) => {
+  const user = Object.assign(state.user);
+  user.posts.unshift(action.payload);
+  return updateObject(state, { user });
+}
+
 export default function (state = initialState, action) {
   switch (action.type) {
     case actionTypes.SET_USER_LOAD:
@@ -58,6 +65,8 @@ export default function (state = initialState, action) {
       return getUsers(state, action);
     case actionTypes.UPDATE_USER:
       return updateUser(state, action);
+    case actionTypes.CREATE_POST:
+      return createPost(state, action);
     default:
       return state;
   }

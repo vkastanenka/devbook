@@ -3,7 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // Components
-import Icon from "../../../../components/Icon/Icon";
+import Icon from "../../../../../components/Icon/Icon";
 
 // Icons linking to user profile's social media
 const SocialMediaLink = props => {

@@ -15,7 +15,7 @@ const FollowList = (props) => {
         <Link to={`/user/${follow.handle}`}>
           {/* eslint-disable-next-line */}
           <img
-            src={require(`../../../../assets/img/users/${follow.photo}`)}
+            src={require(`../../../../../assets/img/users/${follow.photo}`)}
             alt="Follow Photo"
             className="profile__following-pfp"
           />

@@ -10,7 +10,6 @@ const validatePostInput = require("../validation/post/createPost");
 // Models
 const Post = require("../models/postModel");
 const User = require("../models/userModel");
-const Profile = require('../models/profileModel');
 
 /////////////////
 // Public Routes
@@ -65,27 +64,29 @@ exports.getPostsByUserId = catchAsync(async (req, res, next) => {
   res.status(200).json(filteredPosts);
 });
 
+// TODO: Refactor
 // @route   GET api/v1/posts/handle/:handle
 // @desc    Get posts by handle
 // @access  Public
 exports.getPostsByHandle = catchAsync(async (req, res, next) => {
   // Find profile
-  const profile = await Profile.findOne({
+  const user = await User.findOne({
     handle: req.params.handle,
   });
 
-  // Check if the profile exists
-  query404(profile, res, "There is no profile with that handle");
+  // Check if the user exists
+  if (!user) return res.status(404).json({ query: 'There is no user with that handle' });
 
   // Find all posts
   const allPosts = await Post.find();
 
   // Filter posts that only relate to the profile's user as well as their followed users
   let filteredPosts;
-  const followingIDs = profile.user.following.map((follow) => follow._id);
+  const followingIDs = user.following.map((follow) => follow._id);
+
   filteredPosts = allPosts.filter((post) => {
     if (
-      post.user._id.toString() === profile.user._id.toString() ||
+      post.user._id.toString() === user._id.toString() ||
       followingIDs.includes(post.user._id.toString())
     )
       return true;

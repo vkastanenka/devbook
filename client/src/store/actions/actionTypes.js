@@ -16,3 +16,7 @@ export const GET_USERS = 'GET_USERS';
 export const CLEAR_USER = 'CLEAR_USER';
 export const CLEAR_ALL_USERS = 'CLEAR_ALL_USERS';
 export const UPDATE_USER = 'UPDATE_USER';
+
+// Posts
+export const CREATE_POST = 'CREATE_POST';
+export const UPDATE_POST = 'UPDATE_POST';

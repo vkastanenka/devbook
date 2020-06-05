@@ -3,7 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // Components
-import Icon from "../../../../components/Icon/Icon";
+import Icon from "../../../../../components/Icon/Icon";
 
 // List of skills from developer profile
 const SkillsList = (props) => {
