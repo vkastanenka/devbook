@@ -78,9 +78,11 @@ exports.createCurrentUserProfile = catchAsync(async (req, res, next) => {
   );
 
   // Retrieve the updated user document with the profile
-  const updatedUser = await User.findById(req.user.id).populate({
-    path: "profile",
-  });
+  const updatedUser = await User.findById(req.user.id)
+    .populate({
+      path: "profile",
+    })
+    .populate({ path: "following" });
 
   // Create JWT with updated user information (new profile)
   const token = createJWT(updatedUser);
@@ -120,9 +122,11 @@ exports.updateCurrentUserProfile = catchAsync(async (req, res, next) => {
   await profile.update({ $set: profileBody }, { new: true });
 
   // Find the updated user in order to populate required fields for front end
-  const updatedUser = await User.findById(req.user.id).populate({
-    path: "profile",
-  });
+  const updatedUser = await User.findById(req.user.id)
+    .populate({
+      path: "profile",
+    })
+    .populate({ path: "following" });
 
   // Create JWT with updated user information (new profile)
   const token = createJWT(updatedUser);

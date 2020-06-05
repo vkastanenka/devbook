@@ -20,6 +20,7 @@ import {
 } from "../../utils/formUtils";
 
 // Components
+import Form from "../HigherOrder/Form";
 import Auxiliary from "../HigherOrder/Auxiliary";
 import InputGroup from "../Inputs/InputGroup";
 import SelectGroup from "../Inputs/SelectGroup";
@@ -60,6 +61,7 @@ class UpdateProfile extends Component {
         facebook: social.facebook,
         linkedin: social.linkedin,
         youtube: social.youtube,
+        instagram: social.instagram,
         displaySocialMediaInputs: socialCheck.length > 0 ? true : false,
       });
     }
@@ -120,11 +122,11 @@ class UpdateProfile extends Component {
     } = this.state;
 
     return (
-      <form
-        className="form content-card__content"
-        onSubmit={this.onProfileUpdate}
+      <Form
+        formClassName="content-card__content content-card__content--profile ma-y-sm"
+        submitFunction={this.onProfileUpdate}
       >
-        <h3 className="text-primary font-megrim pd-y-sm">
+        <h3 className="text-primary font-megrim ma-y-sm">
           * denotes required fields
         </h3>
         <SelectGroup
@@ -189,9 +191,9 @@ class UpdateProfile extends Component {
           label="Bio"
           errors={errors.bio}
         />
-        <div className="form__group flex flex__center">
+        <div className="form__group flex flex--center">
           <button
-            className="btn-text mg-y-sm"
+            className="btn-text ma-y-sm"
             type="button"
             onClick={() =>
               this.setState((prevState) => ({
@@ -281,7 +283,7 @@ class UpdateProfile extends Component {
             "Submitted profile!"
           )}
         </button>
-      </form>
+      </Form>
     );
   }
 }

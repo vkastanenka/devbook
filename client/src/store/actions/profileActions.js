@@ -7,7 +7,7 @@ import decodeToken from "../../utils/decodeToken";
 import actionDispatch from "../../utils/actionDispatch";
 
 // Actions
-import { setCurrentUser } from "./authActions";
+import { updateSetUser } from "./authActions";
 
 // Sets loading state
 export const setUserLoad = () => {
@@ -30,7 +30,8 @@ export const createCurrentUserProfile = (profileData) => async (dispatch) => {
   try {
     const res = await axios.post("/api/v1/profiles/currentUser", profileData);
     const decoded = decodeToken(res.data.token);
-    dispatch(setCurrentUser(decoded));
+    dispatch(updateSetUser(decoded));
+    actionDispatch(actionTypes.UPDATE_USER, decoded, dispatch);
   } catch (err) {
     actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
   }
@@ -43,8 +44,8 @@ export const updateCurrentUserProfile = (profileData) => async (dispatch) => {
   try {
     const res = await axios.patch("/api/v1/profiles/currentUser", profileData);
     const decoded = decodeToken(res.data.token);
-    console.log(decoded);
-    dispatch(setCurrentUser(decoded));
+    dispatch(updateSetUser(decoded));
+    actionDispatch(actionTypes.UPDATE_USER, decoded, dispatch);
   } catch (err) {
     actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
   }

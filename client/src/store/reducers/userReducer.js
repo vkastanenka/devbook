@@ -32,16 +32,19 @@ const setSearchedUser = (state, action) => {
 const getUsers = (state, action) => {
   return updateObject(state, {
     users: action.payload,
-    // loading: false,
   });
 };
 
-// Update current user profile
-const updateProfile = (state, action) => {
-  return updateObject(state, {
-    user: action.payload
-  })
-}
+// Update current user
+const updateUser = (state, action) => {
+  if (action.payload.user._id === state.user._id) {
+    return updateObject(state, {
+      user: action.payload.user,
+    });
+  } else {
+    return state;
+  }
+};
 
 export default function (state = initialState, action) {
   switch (action.type) {
@@ -53,8 +56,8 @@ export default function (state = initialState, action) {
       return setSearchedUser(state, action);
     case actionTypes.GET_USERS:
       return getUsers(state, action);
-    case actionTypes.UPDATE_PROFILE:
-      return updateProfile(state, action);
+    case actionTypes.UPDATE_USER:
+      return updateUser(state, action);
     default:
       return state;
   }

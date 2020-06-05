@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 78vh;
+  max-height: 78vh;
 
   &__filter-toggle {
     text-align: center;
@@ -10,19 +10,10 @@
     margin-bottom: 3rem;
     margin-top: 0.5rem;
 
-    & > :first-child {
-      margin-right: 1rem;
-      font-size: 1.8rem;
-      color: $color-grey-dark-2;
-    }
-
-    & > :nth-child(2) {
-      font-weight: 400;
+    &:first-child span {
       font-size: 2rem;
-      color: $color-grey-dark-4;
       transition: all 0.3s;
       cursor: pointer;
-      margin-right: 0.5rem;
       position: relative;
       z-index: 10;
 
@@ -31,7 +22,7 @@
 
         & + svg {
           opacity: 1;
-          transform: translate(0, 2px);;
+          transform: translate(0.5rem, 2px);
         }
       }
     }
@@ -45,19 +36,42 @@
     }
 
     & .form__input {
-      margin-top: 0.5rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &__page-numbers {
+    display: flex;
+    justify-content: center;
+
+    & > * {
+      margin: 0 0.25rem;
+    }
+  }
+
+  &__page-number {
+    cursor: pointer;
+    transition: all 0.3s;
+    padding: 0 0.5rem;
+
+    &:hover,
+    &--active {
+      color: $color-grey-light-1;
+      background-color: $color-primary-light;
+      box-shadow: $box-shadow--1;
     }
   }
 
   &__dev-list {
     width: 100%;
     margin: 0 auto;
-    max-height: calc(68vh - 3rem);
+    max-height: calc(68vh - 8rem);
     overflow-y: auto;
   }
 
   &__dev {
-    width: 70%;
+    width: 60%;
     margin: 0 auto 3rem auto;
 
     & > :first-child {
@@ -95,3 +109,5 @@
     border: 1px solid $color-primary;
   }
 }
+
+// 1.5 top and bottom 

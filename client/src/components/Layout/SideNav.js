@@ -43,7 +43,12 @@ class SideNav extends Component {
               this.props.inactivate();
             }}
           >
-            <BrowseDevelopers />
+            <BrowseDevelopers
+              closeForm={() => {
+                this.setState({ browsingDevelopers: false });
+                this.props.inactivate();
+              }}
+            />
           </ContentCard>
         </Popup>
       );
@@ -56,6 +61,7 @@ class SideNav extends Component {
             iconType="cross"
             iconOnClick={() => {
               this.setState({ creatingProfile: false });
+              this.props.inactivate();
             }}
           >
             <UpdateProfile new={true} />
@@ -71,6 +77,7 @@ class SideNav extends Component {
             iconType="cross"
             iconOnClick={() => {
               this.setState({ updatingProfile: false });
+              this.props.inactivate();
             }}
           >
             <UpdateProfile new={false} />
@@ -86,9 +93,10 @@ class SideNav extends Component {
             iconType="cross"
             iconOnClick={() => {
               this.setState({ updatingAccount: false });
+              this.props.inactivate();
             }}
           >
-            <div className="content-card__content">
+            <div className="content-card__content content-card__content--update-account ma-y-sm">
               <UpdateAccount />
               <UpdatePassword />
             </div>

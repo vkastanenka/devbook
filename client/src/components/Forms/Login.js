@@ -181,7 +181,7 @@ class Login extends Component {
             label="Password"
             errors={errors.loginPassword}
           />
-          <div className="form__group flex flex__center ma-bt-lg">
+          <div className="form__group flex flex--center ma-bt-lg">
             {!forgotPassword ? (
               <button
                 type="button"

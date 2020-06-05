@@ -190,6 +190,10 @@
         color: $color-primary;
       }
     }
+
+    & span {
+      font-size: 1.4rem;
+    }
   }
 
   &__following-pfp {

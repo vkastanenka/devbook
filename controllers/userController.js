@@ -133,7 +133,9 @@ exports.updateCurrentUser = catchAsync(async (req, res, next) => {
   const updatedUser = await User.findByIdAndUpdate(req.user._id, filteredBody, {
     new: true,
     runValidators: true,
-  });
+  })
+    .populate({ path: "profile" })
+    .populate({ path: "following" });
 
   // Create the JWT
   const token = createJWT(updatedUser);
@@ -155,7 +157,8 @@ exports.updateCurrentUserPhoto = catchAsync(async (req, res, next) => {
     const photoName = req.file.filename;
     const user = await User.findOneAndUpdate(
       { _id: req.user.id },
-      { photo: photoName }
+      { photo: photoName },
+      { new: true }
     );
 
     // Send updated JWT

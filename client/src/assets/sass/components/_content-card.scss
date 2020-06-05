@@ -27,8 +27,15 @@
   }
 
   &__content {
-    max-height: 78vh;
     overflow-y: auto;
     width: 100%;
+
+    &--profile {
+      max-height: calc(78vh - 7.5rem);
+    }
+
+    &--update-account {
+      max-height: calc(78vh - 1.5rem);
+    }
   }
 }

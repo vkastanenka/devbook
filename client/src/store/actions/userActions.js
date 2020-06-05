@@ -7,7 +7,7 @@ import decodeToken from "../../utils/decodeToken";
 import actionDispatch from "../../utils/actionDispatch";
 
 // Actions
-import { setCurrentUser } from "./authActions";
+import { setCurrentUser, updateSetUser } from "./authActions";
 
 // Sets loading state
 export const setUserLoad = () => {
@@ -74,7 +74,7 @@ export const updateUserPhoto = (photo) => async (dispatch) => {
       photo
     );
     const decoded = decodeToken(res.data.token);
-    dispatch(setCurrentUser(decoded));
+    dispatch(updateSetUser(decoded));
   } catch (err) {
     actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
   }

@@ -9,10 +9,11 @@ import { connect } from "react-redux";
 import { getUserByHandle } from "../../store/actions/userActions";
 
 // Components
+import Alert from "../../components/Alert/Alert";
 import Spinner from "../../components/Spinner/Spinner";
+import Auxiliary from "../../components/HigherOrder/Auxiliary";
 import Navbar from "../../components/Layout/Navbar";
 import Profile from "./Layout/Profile";
-// import ContentCard from '../../components/Cards/Content';
 
 class User extends Component {
   state = {
@@ -26,7 +27,6 @@ class User extends Component {
       // If authenticated, get user by handle in url params
       this.props.getUserByHandle(this.props.match.params.handle);
       // Set state if current user doesn't match url param
-      console.log(this.props.auth.user);
       if (this.props.match.params.handle !== this.props.auth.user.user.handle) {
         this.setState({ currentUser: false });
       }
@@ -50,34 +50,59 @@ class User extends Component {
   }
 
   render() {
-    let content = <Spinner />;
+    let content = (
+      <Auxiliary>
+        <Profile currentUser={this.state.currentUser} loading={true} />
+        <div className="user__main">
+          <Navbar loading={true} />
+          <div className="user__content flex flex--abs-center">
+            <Spinner />
+          </div>
+        </div>
+      </Auxiliary>
+    );
     const { user, loading } = this.props.users;
 
     if (user && !loading) {
       content = (
-        <main className="user">
+        <Auxiliary>
           <Profile currentUser={this.state.currentUser} />
           <div className="user__main">
             <Navbar />
             <div className="user__content"></div>
           </div>
-        </main>
+        </Auxiliary>
       );
     }
 
-    return content;
+    return (
+      <main className="user">
+        <Auxiliary>
+          {" "}
+          {this.props.errors.server500 ? (
+            <Alert type="error" message={this.props.errors.server500} />
+          ) : null}
+          {this.props.errors.noPhoto ? (
+            <Alert type="error" message={this.props.errors.noPhoto} />
+          ) : null}
+          {content}
+        </Auxiliary>
+      </main>
+    );
   }
 }
 
 User.propTypes = {
   auth: PropTypes.object.isRequired,
   users: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
   getUserByHandle: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
   users: state.users,
+  errors: state.errors,
 });
 
 export default connect(mapStateToProps, { getUserByHandle })(User);

@@ -27,18 +27,13 @@ class BrowseDevelopers extends Component {
   };
 
   // Set users in state when component mounts
-  componentDidMount() {
-    this.props.getAllUsers();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.users.users && nextProps.users.users) {
-      this.setState({
-        users: nextProps.users.users,
-        filteredUsers: nextProps.users.users,
-        pages: Math.ceil(nextProps.users.users.length / 10),
-      });
-    }
+  async componentDidMount() {
+    await this.props.getAllUsers();
+    this.setState({
+      users: this.props.users.users,
+      filteredUsers: this.props.users.users,
+      pages: Math.ceil(this.props.users.users.length / 5),
+    });
   }
 
   // Filtering users based on state
@@ -52,7 +47,7 @@ class BrowseDevelopers extends Component {
         filteredUsers: users,
         userFilter: "",
         handleFilter: "",
-        pages: Math.ceil(users.length / 10),
+        pages: Math.ceil(users.length / 5),
         currentPage: 1,
       });
     }
@@ -73,7 +68,7 @@ class BrowseDevelopers extends Component {
         // Set the state
         this.setState({
           filteredUsers,
-          pages: Math.ceil(filteredUsers.length / 10),
+          pages: Math.ceil(filteredUsers.length / 5),
           currentPage: 1,
         });
       }
@@ -93,7 +88,7 @@ class BrowseDevelopers extends Component {
         // Set the state
         this.setState({
           filteredUsers,
-          pages: Math.ceil(filteredUsers.length / 10),
+          pages: Math.ceil(filteredUsers.length / 5),
           currentPage: 1,
         });
       }
@@ -114,13 +109,13 @@ class BrowseDevelopers extends Component {
     else {
       // eslint-disable-next-line
       filteredPageUsers = filteredUsers.filter((user, index) => {
-        if (index < currentPage * 10 && index >= currentPage * 10 - 10) {
+        if (index < currentPage * 5 && index >= currentPage * 5 - 5) {
           return user;
         }
       });
 
       const users = filteredPageUsers.map((user) => (
-        <li className="browse-devs__dev" key={user._id}>
+        <li className="browse-devs__dev" onClick={this.props.closeForm} key={user._id}>
           <Link className="link-style" to={`/user/${user.handle}`}>
             {/* eslint-disable-next-line */}
             <img
@@ -140,7 +135,11 @@ class BrowseDevelopers extends Component {
         pageNumbers.push(
           <p
             key={i}
-            className="browse-devs__page-number"
+            className={`browse-devs__page-number text-primary ${
+              this.state.currentPage === i
+                ? "browse-devs__page-number--active"
+                : null
+            }`}
             onClick={() => this.setState({ currentPage: i })}
           >
             {i}
@@ -150,31 +149,32 @@ class BrowseDevelopers extends Component {
 
       content = (
         <Auxiliary>
-          <ul className="browse-devs__dev-list">{users}</ul>
           {this.state.pages ? (
-            <div className="browse-devs__page-numbers">{pageNumbers}</div>
+            <div className="browse-devs__page-numbers ma-bt-sm">
+              {pageNumbers}
+            </div>
           ) : null}
+          <ul className="browse-devs__dev-list">{users}</ul>
         </Auxiliary>
       );
     }
 
     return (
-      <div className="browse-devs">
+      <div className="browse-devs ma-y-sm">
         <div className="browse-devs__filter-toggle">
-          <span>Browse Developers By:</span>
-          <span
-            onClick={() =>
-              this.setState((prevState) => ({
-                handleFilterSelect: !prevState.handleFilterSelect,
-              }))
-            }
-          >
-            {this.state.handleFilterSelect ? "Handle" : "Name"}
-          </span>
-          <Icon
-            type="cycle"
-            className="icon icon--large icon--primary"
-          />
+          <h3 className="text-primary font-megrim ma-bt-sm">
+            Browse Developers By:{" "}
+            <span
+              onClick={() =>
+                this.setState((prevState) => ({
+                  handleFilterSelect: !prevState.handleFilterSelect,
+                }))
+              }
+            >
+              {this.state.handleFilterSelect ? "Handle" : "Name"}
+            </span>
+            <Icon type="cycle" className="icon icon--large icon--primary" />
+          </h3>
           {this.state.handleFilterSelect ? (
             <InputGroup
               type="text"
@@ -183,8 +183,6 @@ class BrowseDevelopers extends Component {
               placeholder="Handle filter"
               value={this.state.handleFilter}
               onChange={(e) => this.onChange(e)}
-              htmlFor="handleFilter"
-              label="Handle filter"
             />
           ) : (
             <InputGroup
@@ -194,8 +192,6 @@ class BrowseDevelopers extends Component {
               placeholder="Name filter"
               value={this.state.userFilter}
               onChange={(e) => this.onChange(e)}
-              htmlFor="userFilter"
-              label="Name filter"
             />
           )}
         </div>
@@ -207,6 +203,7 @@ class BrowseDevelopers extends Component {
 
 BrowseDevelopers.propTypes = {
   users: PropTypes.object.isRequired,
+  closeForm: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({

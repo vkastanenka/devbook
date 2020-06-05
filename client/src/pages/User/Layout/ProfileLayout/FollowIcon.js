@@ -23,15 +23,19 @@ class FollowIcon extends Component {
 
   // Sets state to display icon/action depending on whether or not user is followed
   componentDidMount() {
-    const currentUser = this.props.auth.user.user;
+    const currentFollows = this.props.auth.user.user.following.map(
+      (user) => user._id
+    );
     const { user } = this.props.users;
-    const followIndex = currentUser.following.indexOf(user._id);
+    const followIndex = currentFollows.indexOf(user._id);
     if (followIndex > -1) this.setState({ followed: true });
   }
 
   // Changes icon / action once user is followed / unfollowed
   componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.user.user.following.indexOf(this.props.users.user._id) > -1) {
+    if (
+      nextProps.auth.user.user.following.indexOf(this.props.users.user._id) > -1
+    ) {
       this.setState({ followed: true });
     } else {
       this.setState({ followed: false });

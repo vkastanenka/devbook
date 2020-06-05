@@ -1,7 +1,6 @@
 // React
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-// import { CSSTransition } from "react-transition-group";
 import PropTypes from "prop-types";
 
 // Redux
@@ -9,7 +8,6 @@ import { connect } from "react-redux";
 
 // Components
 import Icon from "../Icon/Icon";
-// import Popup from "../HigherOrder/Popup";
 import Auxiliary from "../HigherOrder/Auxiliary";
 import SideNav from "../Layout/SideNav";
 
@@ -29,6 +27,39 @@ class Navbar extends Component {
 
   render() {
     const { user } = this.props.auth.user;
+    let userLink;
+
+    if (!this.props.loading) {
+      userLink = (
+        <Link to={`/user/${user.handle}`} className="link-style">
+          <div className="navbar__current-user">
+            {/* eslint-disable-next-line */}
+            <img
+              src={this.tryRequirePhoto()}
+              alt="User photo"
+              className="navbar__current-user-photo"
+            />
+            <h2 className="heading-secondary heading-secondary--smaller font-megrim">
+              {user.name.split(" ")[0]}
+            </h2>
+          </div>
+        </Link>
+      );
+    } else {
+      userLink = (
+        <div className="navbar__current-user">
+          {/* eslint-disable-next-line */}
+          <img
+            src={require("../../assets/img/users/default.jpg")}
+            alt="User photo"
+            className="navbar__current-user-photo"
+          />
+          <h2 className="heading-secondary heading-secondary--smaller font-megrim">
+            Loading...
+          </h2>
+        </div>
+      );
+    }
 
     return (
       <Auxiliary>
@@ -37,19 +68,7 @@ class Navbar extends Component {
           inactivate={() => this.setState({ viewingOptions: false })}
         />
         <nav className="navbar">
-          <Link to={`/user/${user.handle}`} className="link-style">
-            <div className="navbar__current-user">
-              {/* eslint-disable-next-line */}
-              <img
-                src={this.tryRequirePhoto()}
-                alt="User photo"
-                className="navbar__current-user-photo"
-              />
-              <h2 className="heading-secondary heading-secondary--smaller font-megrim">
-                {user.name.split(" ")[0]}
-              </h2>
-            </div>
-          </Link>
+          {userLink}
           <div className="navbar__options">
             <Icon
               onClick={() => this.setState({ viewingOptions: true })}
@@ -64,6 +83,7 @@ class Navbar extends Component {
 }
 
 Navbar.propTypes = {
+  loading: PropTypes.bool,
   auth: PropTypes.object.isRequired,
 };
 

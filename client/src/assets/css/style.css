@@ -26,7 +26,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat; }
 
-.login-register, .user__main {
+.login-register, .user {
   background-image: linear-gradient(135deg, rgba(34, 34, 34, 0.9), rgba(34, 34, 34, 0.9)), url("../img/wallpaper--card.jpg");
   background-position: center;
   background-size: cover;
@@ -174,13 +174,14 @@ body {
   text-align: center; }
 
 .flex {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex; }
-  .flex__center {
+  .flex--center {
     justify-content: center; }
-  .flex__column-center {
+  .flex--column-center {
     flex-direction: column;
+    align-items: center; }
+  .flex--abs-center {
+    justify-content: center;
     align-items: center; }
 
 .ma-bt-sm {
@@ -251,30 +252,23 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 78vh; }
+  max-height: 78vh; }
   .browse-devs__filter-toggle {
     text-align: center;
     height: 10vh;
     margin-bottom: 3rem;
     margin-top: 0.5rem; }
-    .browse-devs__filter-toggle > :first-child {
-      margin-right: 1rem;
-      font-size: 1.8rem;
-      color: #777; }
-    .browse-devs__filter-toggle > :nth-child(2) {
-      font-weight: 400;
+    .browse-devs__filter-toggle:first-child span {
       font-size: 2rem;
-      color: #333;
       transition: all 0.3s;
       cursor: pointer;
-      margin-right: 0.5rem;
       position: relative;
       z-index: 10; }
-      .browse-devs__filter-toggle > :nth-child(2):hover {
+      .browse-devs__filter-toggle:first-child span:hover {
         color: #0669ac; }
-        .browse-devs__filter-toggle > :nth-child(2):hover + svg {
+        .browse-devs__filter-toggle:first-child span:hover + svg {
           opacity: 1;
-          transform: translate(0, 2px); }
+          transform: translate(0.5rem, 2px); }
     .browse-devs__filter-toggle svg {
       transition: all 0.5s;
       opacity: 0;
@@ -282,14 +276,28 @@ body {
       position: relative;
       z-index: 9; }
     .browse-devs__filter-toggle .form__input {
-      margin-top: 0.5rem; }
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem; }
+  .browse-devs__page-numbers {
+    display: flex;
+    justify-content: center; }
+    .browse-devs__page-numbers > * {
+      margin: 0 0.25rem; }
+  .browse-devs__page-number {
+    cursor: pointer;
+    transition: all 0.3s;
+    padding: 0 0.5rem; }
+    .browse-devs__page-number:hover, .browse-devs__page-number--active {
+      color: #f7f7f7;
+      background-color: #149bf1;
+      box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15); }
   .browse-devs__dev-list {
     width: 100%;
     margin: 0 auto;
-    max-height: calc(68vh - 3rem);
+    max-height: calc(68vh - 8rem);
     overflow-y: auto; }
   .browse-devs__dev {
-    width: 70%;
+    width: 60%;
     margin: 0 auto 3rem auto; }
     .browse-devs__dev > :first-child {
       display: flex;
@@ -396,9 +404,12 @@ body {
   .content-card__body {
     color: #333; }
   .content-card__content {
-    max-height: 78vh;
     overflow-y: auto;
     width: 100%; }
+    .content-card__content--profile {
+      max-height: calc(78vh - 7.5rem); }
+    .content-card__content--update-account {
+      max-height: calc(78vh - 1.5rem); }
 
 .form {
   text-align: center;
@@ -605,11 +616,12 @@ body {
   padding: 0 2rem; }
   .navbar__current-user {
     display: flex;
-    align-items: center;
-    transition: all 0.3s; }
+    align-items: center; }
     .navbar__current-user > :first-child {
       margin-right: 2rem; }
-    .navbar__current-user:hover {
+    .navbar__current-user > :nth-child(2) {
+      transition: all 0.3s; }
+    .navbar__current-user:hover > :nth-child(2) {
       transform: translateY(-2px); }
   .navbar__current-user-photo {
     height: 6rem;
@@ -739,6 +751,8 @@ body {
         transition: all 0.3s; }
       .profile__following-list-item > :first-child:hover span {
         color: #0669ac; }
+    .profile__following-list-item span {
+      font-size: 1.4rem; }
   .profile__following-pfp {
     height: 4rem;
     width: 4rem;
@@ -794,3 +808,5 @@ body {
     flex-basis: 83%;
     display: flex;
     flex-direction: column; }
+  .user__content {
+    min-height: calc(100% - 8rem); }

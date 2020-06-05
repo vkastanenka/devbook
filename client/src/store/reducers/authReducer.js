@@ -30,6 +30,11 @@ const setCurrentUser = (state, action) => {
   });
 };
 
+// Updates user data with a new JWT
+const updateSetUser = (state, action) => {
+  return updateObject(state, { user: action.payload });
+};
+
 export default function (state = initialState, action) {
   switch (action.type) {
     case actionTypes.SET_AUTH_LOAD:
@@ -38,6 +43,8 @@ export default function (state = initialState, action) {
       return unsetAuthLoad(state, action);
     case actionTypes.SET_CURRENT_USER:
       return setCurrentUser(state, action);
+    case actionTypes.UPDATE_SET_USER:
+      return updateSetUser(state, action);
     default:
       return state;
   }

@@ -82,16 +82,7 @@ class UpdateAccount extends Component {
     const { errors, submitting, submitted, disableSubmitButton } = this.state;
 
     return (
-      // TODO:
-      //   <form
-      //   className={
-      //     !this.props.formClassName
-      //       ? "form"
-      //       : `form ${this.props.formClassName}`
-      //   }
-      //   onSubmit={this.onRegisterSubmit}
-      // >
-      <form className="form ma-y-sm" onSubmit={this.onAccountUpdate}>
+      <form className="form" onSubmit={this.onAccountUpdate}>
         <h3 className="text-primary font-megrim pd-y-sm">
           Update User Information
         </h3>
@@ -134,25 +125,21 @@ class UpdateAccount extends Component {
           label="User handle"
           errors={errors.handle}
         />
-        {/* TODO:
         <div className="form__group">
-        */}
-        <button
-          className="btn btn--primary ma-bt-sm"
-          type="submit"
-          disabled={disableSubmitButton}
-        >
-          {buttonText(
-            submitting,
-            submitted,
-            "Update information",
-            "Updating information...",
-            "Updated information!"
-          )}
-        </button>
-        {/* TODO:
+          <button
+            className="btn btn--primary ma-bt-sm"
+            type="submit"
+            disabled={disableSubmitButton}
+          >
+            {buttonText(
+              submitting,
+              submitted,
+              "Update information",
+              "Updating information...",
+              "Updated information!"
+            )}
+          </button>
         </div>
-        */}
       </form>
     );
   }
