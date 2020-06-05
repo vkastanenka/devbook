@@ -46,12 +46,32 @@ const updateUser = (state, action) => {
   }
 };
 
-// Add post to user document
+// Add post user object
 const createPost = (state, action) => {
   const user = Object.assign(state.user);
   user.posts.unshift(action.payload);
   return updateObject(state, { user });
-}
+};
+
+// Remove post from user object
+const deletePost = (state, action) => {
+  let user = Object.assign(state.user);
+  const filteredPosts = user.posts.filter(
+    (post) => post._id !== action.payload
+  );
+  user.posts = filteredPosts;
+  return updateObject(state, { user });
+};
+
+// Updates a post
+const updatePost = (state, action) => {
+  let user = Object.assign(state.user);
+  const updatedPosts = user.posts.map((post) =>
+    post._id === action.payload._id ? action.payload : post
+  );
+  user.posts = updatedPosts
+  return updateObject(state, { user });
+};
 
 export default function (state = initialState, action) {
   switch (action.type) {
@@ -67,6 +87,10 @@ export default function (state = initialState, action) {
       return updateUser(state, action);
     case actionTypes.CREATE_POST:
       return createPost(state, action);
+    case actionTypes.DELETE_POST:
+      return deletePost(state, action);
+    case actionTypes.UPDATE_POST:
+      return updatePost(state, action);
     default:
       return state;
   }

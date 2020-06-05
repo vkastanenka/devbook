@@ -1,0 +1,15 @@
+.content {
+  display: flex;
+
+  & > :first-child {
+    flex-basis: 55%;
+  }
+
+  & > :nth-child(2) {
+    flex-basis: 45%;
+  }
+
+  & > * {
+    margin: 2rem;
+  }
+}

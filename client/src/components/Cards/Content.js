@@ -1,4 +1,4 @@
-// React
+// React TODO: Change to functional component
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
@@ -10,7 +10,13 @@ class Content extends Component {
     const { icon, iconType, iconOnClick, heading } = this.props;
 
     return (
-      <div className="content-card">
+      <div
+        className={
+          !this.props.cardClassName
+            ? "content-card"
+            : `content-card ${this.props.cardClassName}`
+        }
+      >
         <div className="content-card__heading">
           {icon ? (
             <Icon
@@ -32,6 +38,7 @@ Content.propTypes = {
   iconType: PropTypes.string,
   iconOnClick: PropTypes.func,
   heading: PropTypes.string.isRequired,
+  cardClassName: PropTypes.string,
 };
 
 export default Content;

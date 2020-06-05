@@ -6,19 +6,19 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 // Actions
-import { createPost } from "../../../../store/actions/postActions";
-import { clearErrors } from "../../../../store/actions/errorActions";
+import { createPost } from "../../../../../../store/actions/postActions";
+import { clearErrors } from "../../../../../../store/actions/errorActions";
 import {
   willReceiveErrors,
   clearErrorsOnUnmount,
   prepareRequest,
   finishRequest,
   buttonText,
-} from "../../utils/formUtils";
+} from "../../../../../../utils/formUtils";
 
 // Components
 import Form from "../../../../../../components/HigherOrder/Form";
-import TextAreaGroup from "../../../../components/InputGroups/TextAreaGroup";
+import TextAreaGroup from "../../../../../../components/Inputs/TextAreaGroup";
 
 // Form to submit a new post the the user's timeline
 class TimelineForm extends Component {
@@ -56,25 +56,26 @@ class TimelineForm extends Component {
     // POST request
     await this.props.createPost({ text: this.state.text });
 
+    if (Object.keys(this.state.errors).length === 0) {
+      this.setState({ text: '' });
+    }
+
     // Let user know it was a success
     finishRequest(this);
   };
 
   render() {
-    const { submitting, submitted, disableSubmitButton, errors } = this.state;
+    const { submitting, submitted, disableSubmitButton } = this.state;
     return (
-      <Form submitFunction={this.onCreatePost}>
+      <Form submitFunction={this.onCreatePost} formClassName='timeline__form ma-y-sm'>
         <TextAreaGroup
           name="text"
           id="text"
-          inputClass="form__textarea"
+          // inputClass="form__textarea"
           placeholder="What's on your mind?"
           value={this.state.text}
           required={true}
           onChange={(e) => this.onChange(e)}
-          htmlFor="text"
-          label="Bio"
-          errors={errors.text}
         />
         <button
           className="btn btn--ghost"

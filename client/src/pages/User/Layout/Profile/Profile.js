@@ -45,7 +45,6 @@ class Profile extends Component {
     if (!loading) {
       user = this.props.users.user;
       profile = user.profile;
-      console.log(user.following);
     }
 
 

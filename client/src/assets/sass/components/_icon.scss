@@ -22,14 +22,22 @@
   }
 
   &--primary {
-    fill: $color-primary;
+    fill: $color-primary-light;
+  }
+
+  &--primary-white {
+    fill: $color-primary-light;
+
+    &:hover {
+      fill: $color-white;
+    }
   }
 
   &--black-primary {
     fill: $color-grey-dark-3;
 
     &:hover {
-      fill: $color-primary;
+      fill: $color-primary-light;
     }
   }
 
@@ -37,7 +45,7 @@
     fill: $color-white;
 
     &:hover {
-      fill: $color-primary
+      fill: $color-primary-light
     }
   }
 

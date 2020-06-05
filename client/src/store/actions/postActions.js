@@ -1,7 +1,7 @@
-import * as actionTypes from './actionTypes';
+import * as actionTypes from "./actionTypes";
 
 // Utilities
-import axios from 'axios';
+import axios from "axios";
 import actionDispatch from "../../utils/actionDispatch";
 
 // @route   POST api/v1/posts/currentUser
@@ -11,6 +11,66 @@ export const createPost = (post) => async (dispatch) => {
   try {
     const res = await axios.post("/api/v1/posts/currentUser", post);
     actionDispatch(actionTypes.CREATE_POST, res.data, dispatch);
+  } catch (err) {
+    actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
+  }
+};
+
+// @route   DELETE api/v1/posts/currentUser/:id
+// @desc    Delete post for current user by id
+// @access  Protected
+export const deletePost = (id) => async (dispatch) => {
+  try {
+    await axios.delete(`/api/v1/posts/currentUser/${id}`);
+    actionDispatch(actionTypes.DELETE_POST, id, dispatch);
+  } catch (err) {
+    actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
+  }
+};
+
+// @route   POST api/v1/posts/like/:id
+// @desc    Like post by id
+// @access  Protected
+export const addLike = (id) => async (dispatch) => {
+  try {
+    const res = await axios.post(`/api/v1/posts/like/${id}`);
+    actionDispatch(actionTypes.UPDATE_POST, res.data, dispatch);
+  } catch (err) {
+    actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
+  }
+};
+
+// @route   DELETE api/v1/posts/like/:id
+// @desc    Remove like from post
+// @access  Protected
+export const removeLike = (id) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`/api/v1/posts/like/${id}`);
+    actionDispatch(actionTypes.UPDATE_POST, res.data, dispatch);
+  } catch (err) {
+    actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
+  }
+};
+
+// @route   POST api/v1/posts/dislike/:id
+// @desc    Dislike post
+// @access  Protected
+export const addDislike = (id) => async (dispatch) => {
+  try {
+    const res = await axios.post(`/api/v1/posts/dislike/${id}`);
+    actionDispatch(actionTypes.UPDATE_POST, res.data, dispatch);
+  } catch (err) {
+    actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
+  }
+};
+
+// @route   DELETE api/v1/posts/dislike/:id
+// @desc    Remove dislike from post
+// @access  Protected
+export const removeDislike = (id) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`/api/v1/posts/dislike/${id}`);
+    actionDispatch(actionTypes.UPDATE_POST, res.data, dispatch);
   } catch (err) {
     actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
   }

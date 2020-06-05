@@ -217,6 +217,9 @@ body {
 .fc-darkest {
   color: #333; }
 
+.fc-lightest {
+  color: #f7f7f7; }
+
 .fw-medium {
   font-weight: 400; }
 
@@ -391,6 +394,10 @@ body {
   min-width: 45rem;
   max-height: 90vh;
   overflow: hidden; }
+  .content-card--dark {
+    background-color: #222; }
+  .content-card--box-shadow {
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15); }
   .content-card__heading {
     position: relative;
     padding: 2rem;
@@ -486,15 +493,19 @@ body {
     height: 1.5rem;
     width: 1.5rem; }
   .icon--primary {
-    fill: #0669ac; }
+    fill: #149bf1; }
+  .icon--primary-white {
+    fill: #149bf1; }
+    .icon--primary-white:hover {
+      fill: #fff; }
   .icon--black-primary {
     fill: #555; }
     .icon--black-primary:hover {
-      fill: #0669ac; }
+      fill: #149bf1; }
   .icon--white-primary {
     fill: #fff; }
     .icon--white-primary:hover {
-      fill: #0669ac; }
+      fill: #149bf1; }
   .icon--white {
     fill: #fff; }
   .icon--black {
@@ -570,6 +581,49 @@ body {
   align-items: center;
   justify-content: center; }
 
+.post {
+  position: relative;
+  padding: 2rem 3rem;
+  width: 100%; }
+  .post__close-icon {
+    position: absolute;
+    top: 2rem;
+    right: 2rem; }
+  .post__content {
+    display: flex;
+    align-items: center; }
+    .post__content > :first-child {
+      margin-right: 2rem; }
+  .post__body {
+    width: 100%; }
+  .post__pfp {
+    height: 8rem;
+    width: 8rem;
+    border-radius: 50%; }
+  .post__info {
+    display: flex; }
+    .post__info > :not(:last-child) {
+      margin-right: 1rem;
+      transition: all 0.3s; }
+      .post__info > :not(:last-child):hover {
+        color: #149bf1; }
+    .post__info > :first-child {
+      color: #f7f7f7;
+      font-weight: 400; }
+    .post__info > :not(:first-child) {
+      color: #777; }
+  .post__text {
+    margin: 0.5rem 0; }
+  .post__options {
+    display: flex;
+    align-items: center;
+    float: right; }
+    .post__options > :not(:last-child) > :nth-child(2) {
+      margin: 0 0.5rem; }
+  .post__option {
+    display: flex;
+    align-items: center; }
+
 .spinner,
 .spinner:after {
   border-radius: 50%;
@@ -606,6 +660,25 @@ body {
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
+
+.timeline {
+  width: 100%;
+  color: #f7f7f7; }
+  .timeline__form {
+    width: 100%;
+    height: 15vh; }
+  .timeline__feed {
+    max-height: 43vh;
+    overflow-y: auto; }
+
+.content {
+  display: flex; }
+  .content > :first-child {
+    flex-basis: 55%; }
+  .content > :nth-child(2) {
+    flex-basis: 45%; }
+  .content > * {
+    margin: 2rem; }
 
 .navbar {
   height: 8rem;

@@ -5,6 +5,14 @@
   max-height: 90vh;
   overflow: hidden;
 
+  &--dark {
+    background-color: $color-grey-dark-5;
+  }
+
+  &--box-shadow {
+    box-shadow: $box-shadow--1;
+  }
+
   &__heading {
     @extend %gradient-background--primary;
     position: relative;

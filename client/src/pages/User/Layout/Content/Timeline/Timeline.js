@@ -13,9 +13,10 @@ import TimelineFeed from "./Layout/TimelineFeed";
 const Timeline = (props) => {
   return (
     <div className="timeline">
-      {props.auth.user.user._id === props.users.user._id ? (
+      {/* {props.auth.user.user._id === props.users.user._id ? (
         <TimelineForm />
-      ) : null}
+      ) : null} */}
+      <TimelineForm />
       <TimelineFeed />
     </div>
   );

@@ -14,6 +14,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import Auxiliary from "../../components/HigherOrder/Auxiliary";
 import Navbar from "../../components/Layout/Navbar";
 import Profile from "./Layout/Profile/Profile";
+import Content from "./Layout/Content/Content";
 
 class User extends Component {
   state = {
@@ -69,7 +70,7 @@ class User extends Component {
           <Profile currentUser={this.state.currentUser} />
           <div className="user__main">
             <Navbar />
-            <div className="user__content"></div>
+            <Content />
           </div>
         </Auxiliary>
       );
