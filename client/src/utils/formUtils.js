@@ -1,3 +1,24 @@
+export const willReceiveAsyncErrors = (currentClass, nextProps) => {
+  // Set errors in class's state
+  if (Object.keys(nextProps.errors).length > 0) {
+    currentClass.setState({ errors: nextProps.errors });
+  }
+
+  currentClass.timer = setTimeout(() => {
+    currentClass.props.clearErrors();
+    clearTimeout(currentClass.timer);
+  }, 6000);
+
+  // Clear errors from state when global errors cleared
+  if (
+    Object.keys(currentClass.state.errors).length > 0 &&
+    Object.keys(nextProps.errors).length === 0
+  ) {
+    clearTimeout(currentClass.timer);
+    currentClass.setState({ errors: {} });
+  }
+};
+
 // Set the errors in the class's state
 export const willReceiveErrors = (currentClass, nextProps) => {
   if (

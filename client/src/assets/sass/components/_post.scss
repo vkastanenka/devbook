@@ -59,14 +59,25 @@
     display: flex;
     align-items: center;
     float: right;
-
-    & > :not(:last-child) > :nth-child(2) {
-      margin: 0 0.5rem;
-    }
   }
 
   &__option {
     display: flex;
     align-items: center;
+
+    & span {
+      margin: 0 0.5rem;
+    }
+  }
+}
+
+.comments {
+  background-color: $color-grey-dark-4;
+  border-radius: 10px;
+  padding: 2rem 0;
+
+  &__feed {
+    max-height: 35vh;
+    overflow-y: auto;
   }
 }

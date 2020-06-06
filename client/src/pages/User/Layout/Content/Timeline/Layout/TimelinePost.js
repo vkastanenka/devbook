@@ -14,13 +14,17 @@ import {
   addDislike,
   removeDislike,
 } from "../../../../../../store/actions/postActions";
-import { clearErrorsOnUnmount } from "../../../../../../utils/formUtils";
+import {
+  willReceiveAsyncErrors,
+  clearErrorsOnUnmount,
+} from "../../../../../../utils/formUtils";
 import { clearErrors } from "../../../../../../store/actions/errorActions";
 
 // Utilities
 import postTime from "../../../../../../utils/postTime";
 
 // Components
+import Comments from "../Comments/Comments";
 import Icon from "../../../../../../components/Icon/Icon";
 
 // Individual timeline post
@@ -36,24 +40,7 @@ class TimelinePost extends Component {
   timer = null;
 
   componentWillReceiveProps(nextProps) {
-    // Set errors in class's state
-    if (Object.keys(nextProps.errors).length > 0) {
-      this.setState({ errors: nextProps.errors });
-    }
-
-    this.timer = setTimeout(() => {
-      this.props.clearErrors();
-      clearTimeout(this.timer);
-    }, 6000);
-
-    // Clear errors from state when global errors cleared
-    if (
-      Object.keys(this.state.errors).length > 0 &&
-      Object.keys(nextProps.errors).length === 0
-    ) {
-      clearTimeout(this.timer);
-      this.setState({ errors: {} });
-    }
+    willReceiveAsyncErrors(this, nextProps);
   }
 
   componentWillUnmount() {
@@ -98,7 +85,7 @@ class TimelinePost extends Component {
   };
 
   // Toggles dislike for the post
-  toggleDislike = async (dislikes, id, handle) => {
+  toggleDislike = async (dislikes, id) => {
     const { user } = this.props.auth.user;
 
     // Clear errors if any before submitting
@@ -108,10 +95,10 @@ class TimelinePost extends Component {
 
     if (dislikes.indexOf(user._id) > -1) {
       // DELETE request
-      await this.props.removeDislike(id, handle);
+      await this.props.removeDislike(id);
     } else {
       // POST request
-      await this.props.addDislike(id, handle);
+      await this.props.addDislike(id);
     }
 
     // Reverts icon
@@ -126,10 +113,18 @@ class TimelinePost extends Component {
   render() {
     const { post } = this.props;
     const { user } = this.props.auth.user;
-    let closeIcon, likeIcon, dislikeIcon;
-    const loadingIcon = <Icon type="cw" className="icon icon--large icon--primary rotate" />;
+    let closeIcon, likeIcon, dislikeIcon, commentIcon, commentsDropdown;
+    const {
+      showComments,
+      postToDelete,
+      postToLike,
+      postToDislike,
+    } = this.state;
+    const loadingIcon = (
+      <Icon type="cw" className="icon icon--large icon--primary rotate" />
+    );
 
-    if (post.user._id === user._id && post._id === this.state.postToDelete) {
+    if (post.user._id === user._id && post._id === postToDelete) {
       closeIcon = (
         <Icon
           type="cw"
@@ -149,7 +144,7 @@ class TimelinePost extends Component {
       );
     }
 
-    if (post._id === this.state.postToLike) {
+    if (post._id === postToLike) {
       likeIcon = loadingIcon;
     } else {
       likeIcon = (
@@ -164,7 +159,7 @@ class TimelinePost extends Component {
       );
     }
 
-    if (post._id === this.state.postToDislike) {
+    if (post._id === postToDislike) {
       dislikeIcon = loadingIcon;
     } else {
       dislikeIcon = (
@@ -176,6 +171,12 @@ class TimelinePost extends Component {
             this.setState({ postToDislike: post._id });
           }}
         />
+      );
+    }
+
+    if (showComments) {
+      commentsDropdown = (
+        <Comments comments={post.comments} postId={post._id} />
       );
     }
 
@@ -219,12 +220,18 @@ class TimelinePost extends Component {
               <div className="post__option">
                 <Icon
                   type="chat"
-                  className="icon icon--large icon--primary-white icon--active icon--translate"
+                  className={!showComments ? "icon icon--large icon--primary-white icon--active icon--translate" : "icon icon--large icon--white icon--active icon--translate-active"}
+                  onClick={() =>
+                    this.setState((prevState) => ({
+                      showComments: !prevState.showComments,
+                    }))
+                  }
                 />
               </div>
             </div>
           </div>
         </div>
+        {commentsDropdown}
       </div>
     );
   }

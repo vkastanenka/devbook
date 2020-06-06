@@ -45,7 +45,7 @@
     fill: $color-white;
 
     &:hover {
-      fill: $color-primary-light
+      fill: $color-primary-light;
     }
   }
 
@@ -57,7 +57,8 @@
     fill: $color-grey-dark-3;
   }
 
-  &--translate:hover {
+  &--translate:hover,
+  &--translate-active {
     transform: translateY(-2px);
   }
 

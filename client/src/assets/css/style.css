@@ -510,7 +510,7 @@ body {
     fill: #fff; }
   .icon--black {
     fill: #555; }
-  .icon--translate:hover {
+  .icon--translate:hover, .icon--translate-active {
     transform: translateY(-2px); }
   .icon--active {
     cursor: pointer; }
@@ -618,11 +618,19 @@ body {
     display: flex;
     align-items: center;
     float: right; }
-    .post__options > :not(:last-child) > :nth-child(2) {
-      margin: 0 0.5rem; }
   .post__option {
     display: flex;
     align-items: center; }
+    .post__option span {
+      margin: 0 0.5rem; }
+
+.comments {
+  background-color: #333;
+  border-radius: 10px;
+  padding: 2rem 0; }
+  .comments__feed {
+    max-height: 35vh;
+    overflow-y: auto; }
 
 .spinner,
 .spinner:after {

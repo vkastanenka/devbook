@@ -75,3 +75,85 @@ export const removeDislike = (id) => async (dispatch) => {
     actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
   }
 };
+
+// @route   POST api/v1/posts/comment/:id
+// @desc    Add comment to post
+// @access  Protected
+export const createComment = (postId, comment) => async (dispatch) => {
+  try {
+    const res = await axios.post(`/api/v1/posts/comment/${postId}`, comment);
+    actionDispatch(actionTypes.UPDATE_POST, res.data, dispatch);
+  } catch (err) {
+    actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
+  }
+};
+
+// @route   DELETE api/v1/posts/comment/:id/:comment_id
+// @desc    Remove comment from post
+// @access  Protected
+export const deleteComment = (postId, commentId) => async (dispatch) => {
+  try {
+    const res = await axios.delete(
+      `/api/v1/posts/comment/${postId}/${commentId}`
+    );
+    actionDispatch(actionTypes.UPDATE_POST, res.data, dispatch);
+  } catch (err) {
+    actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
+  }
+};
+
+// @route   POST api/v1/posts/likeComment/:id/:comment_id
+// @desc    Like comment
+// @access  Protected
+export const addCommentLike = (postId, commentId) => async (dispatch) => {
+  try {
+    const res = await axios.post(
+      `/api/v1/posts/likeComment/${postId}/${commentId}`
+    );
+    actionDispatch(actionTypes.UPDATE_POST, res.data, dispatch);
+  } catch (err) {
+    actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
+  }
+};
+
+// @route   DELETE api/v1/posts/likeComment/:id/:comment_id
+// @desc    Remove like from comment
+// @access  Protected
+export const removeCommentLike = (postId, commentId) => async (dispatch) => {
+  try {
+    const res = await axios.delete(
+      `/api/v1/posts/likeComment/${postId}/${commentId}`
+    );
+    actionDispatch(actionTypes.UPDATE_POST, res.data, dispatch);
+  } catch (err) {
+    actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
+  }
+};
+
+// @route   POST api/v1/posts/dislikeComment/:id/:comment_id
+// @desc    Dislike comment
+// @access  Protected
+export const addCommentDislike = (postId, commentId) => async (dispatch) => {
+  try {
+    const res = await axios.post(
+      `/api/v1/posts/dislikeComment/${postId}/${commentId}`
+    );
+    actionDispatch(actionTypes.UPDATE_POST, res.data, dispatch);
+  } catch (err) {
+    actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
+  }
+};
+
+// @route   DELETE api/v1/posts/dislikeComment/:id/:comment_id
+// @desc    Remove dislike from comment
+// @access  Protected
+export const removeCommentDislike = (postId, commentId) => async (dispatch) => {
+  try {
+    const res = await axios.delete(
+      `/api/v1/posts/dislikeComment/${postId}/${commentId}`
+    );
+    actionDispatch(actionTypes.UPDATE_POST, res.data, dispatch);
+  } catch (err) {
+    actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
+  }
+};
