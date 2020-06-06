@@ -73,6 +73,20 @@ const updatePost = (state, action) => {
   return updateObject(state, { user });
 };
 
+// Updates education
+const updateEducation = (state, action) => {
+  let user = Object.assign(state.user);
+  user.user.profile.education = action.payload;
+  return updateObject(state, { user });
+}
+
+// Updates experience
+const updateExperience = (state, action) => {
+  let user = Object.assign(state.user);
+  user.user.profile.experience = action.payload;
+  return updateObject(state, { user });
+}
+
 export default function (state = initialState, action) {
   switch (action.type) {
     case actionTypes.SET_USER_LOAD:
@@ -91,6 +105,10 @@ export default function (state = initialState, action) {
       return deletePost(state, action);
     case actionTypes.UPDATE_POST:
       return updatePost(state, action);
+    case actionTypes.UPDATE_EDUCATION:
+      return updateEducation(state, action);
+    case actionTypes.UPDATE_EXPERIENCE:
+      return updateExperience(state, action);
     default:
       return state;
   }

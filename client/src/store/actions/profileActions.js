@@ -50,3 +50,51 @@ export const updateCurrentUserProfile = (profileData) => async (dispatch) => {
     actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
   }
 };
+
+// @route   POST api/v1/profiles/education
+// @desc    Add education to profile
+// @access  Protected
+export const addEducation = eduData => async dispatch => {
+  try {
+    const res = await axios.post('/api/v1/profiles/education', eduData);
+    actionDispatch(actionTypes.UPDATE_EDUCATION, res.data, dispatch);
+  } catch (err) {
+    actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
+  }
+}
+
+// @route   DELETE api/v1/profiles/education/:id
+// @desc    Delete education from profile
+// @access  Protected
+export const deleteEducation = eduId => async dispatch => {
+  try {
+    const res = await axios.delete(`/api/v1/profiles/education/${eduId}`);
+    actionDispatch(actionTypes.UPDATE_EDUCATION, res.data, dispatch);
+  } catch (err) {
+    actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
+  }
+}
+
+// @route   POST api/v1/profiles/experience
+// @desc    Add experience to profile
+// @access  Protected
+export const addExperience = expData => async dispatch => {
+  try {
+    const res = await axios.post('/api/v1/profiles/experience', expData);
+    actionDispatch(actionTypes.UPDATE_EXPERIENCE, res.data, dispatch);
+  } catch (err) {
+    actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
+  }
+}
+
+// @route   DELETE api/v1/profiles/experience/:id
+// @desc    Delete experience from profile
+// @access  Protected
+export const deleteExperience = expId => async dispatch => {
+  try {
+    const res = await axios.delete(`/api/v1/profiles/experience/${expId}`);
+    actionDispatch(actionTypes.UPDATE_EXPERIENCE, res.data, dispatch);
+  } catch (err) {
+    actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
+  }
+}

@@ -18,7 +18,7 @@ import { willReceiveAsyncErrors, clearErrorsOnUnmount } from "../../../../../../
 import { clearErrors } from "../../../../../../../store/actions/errorActions";
 
 // Utilities
-import postTime from "../../../../../../../utils/postTime";
+import { postTime } from "../../../../../../../utils/dates";
 
 // Components
 import Icon from "../../../../../../../components/Icon/Icon";

@@ -1,4 +1,4 @@
-const postTime = time => {
+export const postTime = time => {
   let timeMessage;
   const nowTime = new Date(Date.now());
   const postTime = new Date(time);
@@ -20,4 +20,12 @@ const postTime = time => {
   return timeMessage;
 };
 
-export default postTime;
+export const MMDDYYYY = date => {
+  const fullDate = new Date(date);
+
+  const month = fullDate.getMonth() + 1;
+  const day = fullDate.getDate();
+  const year = fullDate.getFullYear();
+
+  return `${month}/${day}/${year}`;
+}

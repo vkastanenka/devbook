@@ -45,5 +45,39 @@
     &--update-account {
       max-height: calc(78vh - 1.5rem);
     }
+
+    &--user-info {
+      height: 62vh;
+      color: $color-grey-light-1;
+    }
+  }
+
+  &__no-info {
+    transform: translateY(-10vh);
+  }
+
+  &__list {
+    padding: 1rem;
+
+    & > :not(:last-child) {
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__list-entry {
+    padding: 2rem 1rem;
+    position: relative;
+    border-radius: 10px;
+    background-color: $color-grey-dark-4;
+
+    & p:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__close-icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
   }
 }
