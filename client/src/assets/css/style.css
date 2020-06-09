@@ -111,6 +111,9 @@ textarea {
 li {
   list-style: none; }
 
+a {
+  color: inherit; }
+
 /* width */
 ::-webkit-scrollbar {
   width: 1rem; }
@@ -198,6 +201,9 @@ body {
 
 .ma-y-sm {
   margin: 1.5rem 0 !important; }
+
+.ma-x-sm {
+  margin: 0 1.5rem !important; }
 
 .pd-y-sm {
   padding: 1.5rem 0 !important; }
@@ -431,12 +437,29 @@ body {
     position: relative;
     border-radius: 10px;
     background-color: #333; }
-    .content-card__list-entry p:not(:last-child) {
+    .content-card__list-entry p {
       margin-bottom: 1rem; }
   .content-card__close-icon {
     position: absolute;
     top: 1rem;
     right: 1rem; }
+
+.repository h3 {
+  display: inline-block;
+  transition: all 0.3s; }
+  .repository h3:hover {
+    color: #149bf1; }
+
+.repository__statistics {
+  display: flex;
+  margin-bottom: 1rem; }
+  .repository__statistics > :not(:last-child) {
+    margin-right: 1rem; }
+  .repository__statistics > * {
+    padding: 0.2rem 1rem;
+    border-radius: 20px; }
+  .repository__statistics--watchers, .repository__statistics--stars, .repository__statistics--forks {
+    background-image: linear-gradient(135deg, #149bf1, #3d51d3); }
 
 .form {
   text-align: center;

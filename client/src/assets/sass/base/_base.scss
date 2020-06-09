@@ -67,6 +67,10 @@ li {
   list-style: none;
 }
 
+a {
+  color: inherit;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 1rem;

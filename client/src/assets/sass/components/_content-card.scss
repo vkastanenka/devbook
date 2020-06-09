@@ -70,7 +70,7 @@
     border-radius: 10px;
     background-color: $color-grey-dark-4;
 
-    & p:not(:last-child) {
+    & p {
       margin-bottom: 1rem;
     }
   }
@@ -79,5 +79,40 @@
     position: absolute;
     top: 1rem;
     right: 1rem;
+  }
+}
+
+.repository {
+  & h3 {
+    display: inline-block;
+    transition: all 0.3s;
+
+    &:hover {
+      color: $color-primary-light;
+    }
+  }
+
+  &__statistics {
+    display: flex;
+    margin-bottom: 1rem;
+
+    & > :not(:last-child) {
+      margin-right: 1rem;
+    }
+
+    & > * {
+      padding: 0.2rem 1rem;
+      border-radius: 20px;
+    }
+
+    &--watchers,
+    &--stars,
+    &--forks {
+      background-image: linear-gradient(
+        135deg,
+        rgba($color-primary-light, 1),
+        rgba($color-primary-dark, 1)
+      );
+    }
   }
 }
