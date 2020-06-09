@@ -6,6 +6,10 @@ import Timeline from "./Timeline/Timeline";
 import Education from "./UserInfo/Education";
 import Experience from "./UserInfo/Experience";
 import Github from "./UserInfo/Github";
+import Auxiliary from "../../../../components/HigherOrder/Auxiliary";
+import Popup from "../../../../components/HigherOrder/Popup";
+import EducationForm from "../../../../components/Forms/Education";
+import ExperienceForm from "../../../../components/Forms/Experience";
 import ContentCard from "../../../../components/Cards/Content";
 
 class Content extends Component {
@@ -16,8 +20,8 @@ class Content extends Component {
   };
 
   render() {
-    let credentialsCard;
-    const { viewingUser } = this.state;
+    let credentialsCard, popupCard;
+    const { viewingUser, addingEducation, addingExperience } = this.state;
 
     if (viewingUser === "education") {
       credentialsCard = (
@@ -50,7 +54,7 @@ class Content extends Component {
           toggleCardRight={() => {
             this.setState({ viewingUser: "github" });
           }}
-          heading="Education"
+          heading="Experience"
           cardClassName="content-card--dark content-card--box-shadow"
         >
           <Experience />
@@ -70,16 +74,51 @@ class Content extends Component {
       );
     }
 
+    if (addingEducation) {
+      popupCard = (
+        <Popup>
+          <ContentCard
+            heading="Add Education"
+            icon={true}
+            iconType="cross"
+            iconOnClick={() => {
+              this.setState({ addingEducation: false });
+            }}
+          >
+            <EducationForm />
+          </ContentCard>
+        </Popup>
+      );
+    } else if (addingExperience) {
+      popupCard = (
+        <Popup>
+          <ContentCard
+            heading="Add Experience"
+            icon={true}
+            iconType="cross"
+            iconOnClick={() => {
+              this.setState({ addingExperience: false });
+            }}
+          >
+            <ExperienceForm />
+          </ContentCard>
+        </Popup>
+      );
+    }
+
     return (
-      <div className="user__content content">
-        <ContentCard
-          heading="Timeline"
-          cardClassName="content-card--dark content-card--box-shadow"
-        >
-          <Timeline />
-        </ContentCard>
-        {credentialsCard}
-      </div>
+      <Auxiliary>
+        {popupCard}
+        <div className="user__content content">
+          <ContentCard
+            heading="Timeline"
+            cardClassName="content-card--dark content-card--box-shadow"
+          >
+            <Timeline />
+          </ContentCard>
+          {credentialsCard}
+        </div>
+      </Auxiliary>
     );
   }
 }

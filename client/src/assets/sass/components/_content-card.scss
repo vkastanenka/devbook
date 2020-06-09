@@ -50,6 +50,10 @@
       height: 62vh;
       color: $color-grey-light-1;
     }
+
+    &--credentials {
+      max-height: 78vh;
+    }
   }
 
   &__no-info {
