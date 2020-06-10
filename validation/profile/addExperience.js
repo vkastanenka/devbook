@@ -30,6 +30,11 @@ module.exports = validateExperience = (data) => {
     errors.to = "If not current position, end date is required";
   }
 
+  // Location
+  if (Validator.isEmpty(data.location)) {
+    errors.location = "Position location is required";
+  }
+
   // Description
   if (Validator.isEmpty(data.description)) {
     errors.description =

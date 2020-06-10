@@ -151,7 +151,7 @@ exports.addEducation = catchAsync(async (req, res, next) => {
 
   // Save and respond
   await profile.save();
-  res.status(200).json(profile);
+  res.status(200).json(profile.education);
 });
 
 // @route   DELETE api/v1/profiles/education/:id
@@ -171,7 +171,7 @@ exports.deleteEducation = catchAsync(async (req, res, next) => {
 
   // Save and respond
   await profile.save();
-  res.status(200).json(profile);
+  res.status(200).json(profile.education);
 });
 
 // @route   POST api/v1/profiles/experience
@@ -190,7 +190,7 @@ exports.addExperience = catchAsync(async (req, res, next) => {
 
   // Save and respond
   await profile.save();
-  res.status(200).json(profile);
+  res.status(200).json(profile.experience);
 });
 
 // @route   DELETE api/v1/profiles/experience/:id
@@ -210,7 +210,7 @@ exports.deleteExperience = catchAsync(async (req, res, next) => {
 
   // Save and respond
   await profile.save();
-  res.status(200).json(profile);
+  res.status(200).json(profile.experience);
 });
 
 /////////////////////
