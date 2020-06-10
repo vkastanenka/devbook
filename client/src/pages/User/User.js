@@ -1,3 +1,5 @@
+// TODO: FINISHED
+
 // React
 import React, { Component } from "react";
 import PropTypes from "prop-types";
@@ -28,7 +30,7 @@ class User extends Component {
       // If authenticated, get user by handle in url params
       this.props.getUserByHandle(this.props.match.params.handle);
       // Set state if current user doesn't match url param
-      if (this.props.match.params.handle !== this.props.auth.user.user.handle) {
+      if (this.props.match.params.handle !== this.props.auth.user.handle) {
         this.setState({ currentUser: false });
       }
     }
@@ -40,10 +42,10 @@ class User extends Component {
       // If next url param for handle is different, get the user
       this.props.getUserByHandle(nextProps.match.params.handle);
       // Set state if current user doesn't match url param
-      if (nextProps.match.params.handle !== this.props.auth.user.user.handle) {
+      if (nextProps.match.params.handle !== this.props.auth.user.handle) {
         this.setState({ currentUser: false });
       } else if (
-        nextProps.match.params.handle === this.props.auth.user.user.handle
+        nextProps.match.params.handle === this.props.auth.user.handle
       ) {
         this.setState({ currentUser: true });
       }
@@ -62,6 +64,7 @@ class User extends Component {
         </div>
       </Auxiliary>
     );
+
     const { user, loading } = this.props.users;
 
     if (user && !loading) {

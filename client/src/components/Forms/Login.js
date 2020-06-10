@@ -224,7 +224,6 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   login: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
@@ -232,7 +231,6 @@ Login.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth,
   errors: state.errors,
 });
 

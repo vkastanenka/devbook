@@ -31,7 +31,7 @@ export const createCurrentUserProfile = (profileData) => async (dispatch) => {
     const res = await axios.post("/api/v1/profiles/currentUser", profileData);
     const decoded = decodeToken(res.data.token);
     dispatch(updateSetUser(decoded));
-    actionDispatch(actionTypes.UPDATE_USER, decoded, dispatch);
+    actionDispatch(actionTypes.UPDATE_PROFILE, decoded, dispatch);
   } catch (err) {
     actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
   }
@@ -45,7 +45,7 @@ export const updateCurrentUserProfile = (profileData) => async (dispatch) => {
     const res = await axios.patch("/api/v1/profiles/currentUser", profileData);
     const decoded = decodeToken(res.data.token);
     dispatch(updateSetUser(decoded));
-    actionDispatch(actionTypes.UPDATE_USER, decoded, dispatch);
+    actionDispatch(actionTypes.UPDATE_PROFILE, decoded, dispatch);
   } catch (err) {
     actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
   }

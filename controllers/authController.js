@@ -45,7 +45,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   // Find the user with the ID encoded in the JWT
-  const currentUser = await User.findById(decoded.user._id);
+  const currentUser = await User.findById(decoded._id);
 
   // Check if user still exists
   if (!currentUser) {
@@ -83,6 +83,7 @@ exports.restrictTo = (...roles) => {
 /////////////////
 // Public Routes
 
+// TODO: FINISHED
 // @route   POST api/v1/users/register
 // @desc    Register user
 // @access  Public
@@ -118,6 +119,7 @@ exports.register = catchAsync(async (req, res, next) => {
   res.status(201).json({ status: "success", newUser });
 });
 
+// TODO: FINISHED
 // @route   GET api/v1/users/login
 // @desc    Login User / JWT Response
 // @access  Public
@@ -128,11 +130,12 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // Find user
   const { loginEmail, loginPassword } = req.body;
+
+  // Find user
   const user = await User.findOne({ email: loginEmail })
     .select("+password")
     .populate([
       { path: "profile" },
-      { path: "following", select: "photo name handle" },
     ]);
 
   // Check is either email or password are incorrect
@@ -142,7 +145,7 @@ exports.login = catchAsync(async (req, res, next) => {
     return res.status(400).json(errors);
   }
 
-  // Create the JWT
+  // Create the JWT => Entire user document
   const token = createJWT(user);
 
   // Respond
@@ -153,6 +156,7 @@ exports.login = catchAsync(async (req, res, next) => {
   });
 });
 
+// TODO: FINISHED
 // @route   POST api/v1/users/sendPasswordResetToken
 // @desc    Send email with a password reset token
 // @access  Public
@@ -201,6 +205,7 @@ exports.sendPasswordResetToken = catchAsync(async (req, res, next) => {
   }
 });
 
+// TODO: FINISHED
 // @route   PATCH api/v1/users/resetPassword/:resetToken
 // @desc    Resets user password with token from email
 // @access  Public

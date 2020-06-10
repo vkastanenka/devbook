@@ -1,3 +1,5 @@
+ // TODO: FINISHED
+
 // React
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
@@ -65,7 +67,7 @@ class TimelinePost extends Component {
 
   // Toggles like for the post
   toggleLike = async (likes, id) => {
-    const { user } = this.props.auth.user;
+    const { user } = this.props.auth;
 
     // Clear errors if any before submitting
     if (Object.keys(this.props.errors).length > 0) {
@@ -86,7 +88,7 @@ class TimelinePost extends Component {
 
   // Toggles dislike for the post
   toggleDislike = async (dislikes, id) => {
-    const { user } = this.props.auth.user;
+    const { user } = this.props.auth;
 
     // Clear errors if any before submitting
     if (Object.keys(this.props.errors).length > 0) {
@@ -112,7 +114,7 @@ class TimelinePost extends Component {
 
   render() {
     const { post } = this.props;
-    const { user } = this.props.auth.user;
+    const { user } = this.props.auth;
     let closeIcon, likeIcon, dislikeIcon, commentsDropdown;
     const {
       showComments,

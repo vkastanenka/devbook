@@ -1,5 +1,11 @@
+// TODO: FINISHED
+
 // React
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+
+// Redux
+import { connect } from "react-redux";
 
 // Components
 import Timeline from "./Timeline/Timeline";
@@ -21,9 +27,15 @@ class Content extends Component {
 
   render() {
     let credentialsCard, popupCard;
+    const { user } = this.props.users.user;
+    const authUser = this.props.auth.user;
     const { viewingUser, addingEducation, addingExperience } = this.state;
 
-    if (viewingUser === "education") {
+    if (
+      viewingUser === "education" &&
+      user.profile &&
+      user._id === authUser._id
+    ) {
       credentialsCard = (
         <ContentCard
           icon={true}
@@ -40,7 +52,23 @@ class Content extends Component {
           <Education />
         </ContentCard>
       );
-    } else if (viewingUser === "experience") {
+    } else if (viewingUser === "education") {
+      credentialsCard = (
+        <ContentCard
+          toggleCardRight={() => {
+            this.setState({ viewingUser: "experience" });
+          }}
+          heading="Education"
+          cardClassName="content-card--dark content-card--box-shadow"
+        >
+          <Education />
+        </ContentCard>
+      );
+    } else if (
+      viewingUser === "experience" &&
+      user.profile &&
+      user._id === authUser._id
+    ) {
       credentialsCard = (
         <ContentCard
           icon={true}
@@ -48,6 +76,21 @@ class Content extends Component {
           iconOnClick={() => {
             this.setState({ addingExperience: true });
           }}
+          toggleCardLeft={() => {
+            this.setState({ viewingUser: "education" });
+          }}
+          toggleCardRight={() => {
+            this.setState({ viewingUser: "github" });
+          }}
+          heading="Experience"
+          cardClassName="content-card--dark content-card--box-shadow"
+        >
+          <Experience />
+        </ContentCard>
+      );
+    } else if (viewingUser === "experience") {
+      credentialsCard = (
+        <ContentCard
           toggleCardLeft={() => {
             this.setState({ viewingUser: "education" });
           }}
@@ -123,4 +166,14 @@ class Content extends Component {
   }
 }
 
-export default Content;
+Content.propTypes = {
+  auth: PropTypes.object.isRequired,
+  users: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  users: state.users,
+});
+
+export default connect(mapStateToProps)(Content);

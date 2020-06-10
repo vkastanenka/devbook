@@ -35,15 +35,11 @@ const getUsers = (state, action) => {
   });
 };
 
-// Update current user
-const updateUser = (state, action) => {
-  if (action.payload.user._id === state.user._id) {
-    return updateObject(state, {
-      user: action.payload.user,
-    });
-  } else {
-    return state;
-  }
+// Update current user profile
+const updateProfile = (state, action) => {
+  let user = Object.assign(state.user);
+  user.user.profile = action.payload.profile;
+  return updateObject(state, { user });
 };
 
 // Add post user object
@@ -69,7 +65,7 @@ const updatePost = (state, action) => {
   const updatedPosts = user.posts.map((post) =>
     post._id === action.payload._id ? action.payload : post
   );
-  user.posts = updatedPosts
+  user.posts = updatedPosts;
   return updateObject(state, { user });
 };
 
@@ -78,14 +74,14 @@ const updateEducation = (state, action) => {
   let user = Object.assign(state.user);
   user.user.profile.education = action.payload;
   return updateObject(state, { user });
-}
+};
 
 // Updates experience
 const updateExperience = (state, action) => {
   let user = Object.assign(state.user);
   user.user.profile.experience = action.payload;
   return updateObject(state, { user });
-}
+};
 
 export default function (state = initialState, action) {
   switch (action.type) {
@@ -97,8 +93,8 @@ export default function (state = initialState, action) {
       return setSearchedUser(state, action);
     case actionTypes.GET_USERS:
       return getUsers(state, action);
-    case actionTypes.UPDATE_USER:
-      return updateUser(state, action);
+    case actionTypes.UPDATE_PROFILE:
+      return updateProfile(state, action);
     case actionTypes.CREATE_POST:
       return createPost(state, action);
     case actionTypes.DELETE_POST:

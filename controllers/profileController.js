@@ -73,16 +73,14 @@ exports.createCurrentUserProfile = catchAsync(async (req, res, next) => {
 
   // Add the new profile's id to the current user's document
   await User.findOneAndUpdate(
-    { _id: req.user.id },
+    { _id: req.user._id },
     { profile: newProfile._id }
   );
 
   // Retrieve the updated user document with the profile
-  const updatedUser = await User.findById(req.user.id)
-    .populate({
-      path: "profile",
-    })
-    .populate({ path: "following" });
+  const updatedUser = await User.findById(req.user._id).populate({
+    path: "profile",
+  });
 
   // Create JWT with updated user information (new profile)
   const token = createJWT(updatedUser);
@@ -100,7 +98,7 @@ exports.updateCurrentUserProfile = catchAsync(async (req, res, next) => {
   if (!isValid) return res.status(400).json(errors);
 
   // Find current user's profile document
-  const profile = await Profile.findOne({ user: req.user.id });
+  const profile = await Profile.findOne({ user: req.user._id });
 
   // Format profile body
   const profileBody = {
@@ -122,7 +120,7 @@ exports.updateCurrentUserProfile = catchAsync(async (req, res, next) => {
   await profile.update({ $set: profileBody }, { new: true });
 
   // Find the updated user in order to populate required fields for front end
-  const updatedUser = await User.findById(req.user.id)
+  const updatedUser = await User.findById(req.user._id)
     .populate({
       path: "profile",
     })
@@ -144,7 +142,7 @@ exports.addEducation = catchAsync(async (req, res, next) => {
   if (!isValid) return res.status(400).json(errors);
 
   // Find current user's profile
-  const profile = await Profile.findOne({ user: req.user.id });
+  const profile = await Profile.findOne({ user: req.user._id });
 
   // Add education object to profile document array
   profile.education.unshift(req.body);
@@ -159,7 +157,7 @@ exports.addEducation = catchAsync(async (req, res, next) => {
 // @access  Protected
 exports.deleteEducation = catchAsync(async (req, res, next) => {
   // Find current user profile
-  const profile = await Profile.findOne({ user: req.user.id });
+  const profile = await Profile.findOne({ user: req.user._id });
 
   // Determine index of education to remove
   const removeIndex = profile.education
@@ -183,7 +181,7 @@ exports.addExperience = catchAsync(async (req, res, next) => {
   if (!isValid) return res.status(400).json(errors);
 
   // Find current user's profile
-  const profile = await Profile.findOne({ user: req.user.id });
+  const profile = await Profile.findOne({ user: req.user._id });
 
   // Add experience object to profile document array
   profile.experience.unshift(req.body);
@@ -198,7 +196,7 @@ exports.addExperience = catchAsync(async (req, res, next) => {
 // @access  Protected
 exports.deleteExperience = catchAsync(async (req, res, next) => {
   // Find current user profile
-  const profile = await Profile.findOne({ user: req.user.id });
+  const profile = await Profile.findOne({ user: req.user._id });
 
   // Determine index of experience to remove
   const removeIndex = profile.experience

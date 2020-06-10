@@ -17,9 +17,11 @@ const User = require("../models/userModel");
 /////////////
 // Middleware
 
+// TODO: FINISHED
 // Store the file in memory as a Buffer object
 const multerStorage = multer.memoryStorage();
 
+// TODO: FINISHED
 // Test if the file is an image
 const multerFilter = (req, file, cb) => {
   if (file.mimetype.startsWith("image")) {
@@ -29,15 +31,18 @@ const multerFilter = (req, file, cb) => {
   }
 };
 
+// TODO: FINISHED
 // Configuring multer upload
 const upload = multer({
   storage: multerStorage,
   fileFilter: multerFilter,
 });
 
+// TODO: FINISHED
 // Accept a single file with the name 'photo' => File stored in req.file
 exports.uploadUserPhoto = upload.single("photo");
 
+// TODO: FINISHED
 // Image processing (resizing, formatting, quality, and file location)
 exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
   if (!req.file) return next();
@@ -58,6 +63,7 @@ exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
 ////////////////
 // Public Routes
 
+// TODO: FINISHED
 // @route   GET api/v1/users/test
 // @desc    Tests users route
 // @access  Public
@@ -96,7 +102,10 @@ exports.getUserByHandle = catchAsync(async (req, res, next) => {
   query404(user, res, "There is no user with that handle");
 
   // Organize posts
-  const followPostsSubArray = user.following.map((follow) => follow.posts);
+  const followPostsSubArray = user.following
+    .filter((follow) => follow.posts.length !== 0)
+    .map((follow) => follow.posts);
+
   let followPosts = [];
   followPostsSubArray.forEach((follow) => (followPosts = [...follow]));
   let posts = [...user.posts, ...followPosts];
@@ -150,8 +159,7 @@ exports.updateCurrentUser = catchAsync(async (req, res, next) => {
     new: true,
     runValidators: true,
   })
-    .populate({ path: "profile" })
-    .populate({ path: "following" });
+    .populate({ path: "profile" });
 
   // Create the JWT
   const token = createJWT(updatedUser);
@@ -164,30 +172,34 @@ exports.updateCurrentUser = catchAsync(async (req, res, next) => {
   });
 });
 
+// TODO: FINISHED
 // @route   PATCH api/v1/users/updateCurrentUserPhoto
 // @desc    Update current user's photo
 // @access  Protected
 exports.updateCurrentUserPhoto = catchAsync(async (req, res, next) => {
-  if (req.file) {
-    // Update user
-    const photoName = req.file.filename;
-    const user = await User.findOneAndUpdate(
-      { _id: req.user.id },
-      { photo: photoName },
-      { new: true }
-    );
+  // Normal action for updating user profile
+  // if (req.file) {
+  // // Update user
+  // const photoName = req.file.filename;
+  // const user = await User.findOneAndUpdate(
+  //   { _id: req.user._id },
+  //   { photo: photoName },
+  //   { new: true }
+  // );
 
-    // Send updated JWT
-    const token = createJWT(user);
-    return res.status(200).json({ user, token });
-  }
+  // // Send updated JWT
+  // const token = createJWT(user);
+  // return res.status(200).json({ user, token });
+  // }
 
   // Error handling
-  const errors = {};
-  errors.noPhoto = "Please upload a photo!";
-  return res.status(400).json(errors);
+  // const errors = {};
+  // errors.noPhoto = "Please upload a photo!";
+  // return res.status(400).json(errors);
+  return res.status(400).json({ noPhoto: "Feature unavailable in production" });
 });
 
+// TODO: FINISHED
 // @route   POST api/v1/users/follow/:id
 // @desc    Follows user by their id
 // @access  Protected
@@ -229,6 +241,7 @@ exports.followById = catchAsync(async (req, res, next) => {
   res.status(200).json({ status: "success", user, token });
 });
 
+// TODO: FINISHED
 // @route   DELETE api/v1/users/follow/:id
 // @desc    Unfollows user by their id
 // @access  Protected

@@ -10,17 +10,6 @@ module.exports = validateProfile = (data) => {
   // Developer status
   if (Validator.isEmpty(data.status)) {
     errors.status = "Developer status is required";
-  } else if (
-    data.status !== "Developer" ||
-    data.status !== "Junior Developer" ||
-    data.status !== "Senior Developer" ||
-    data.status !== "Manager" ||
-    data.status !== "Student or Learning" ||
-    data.status !== "Instructor or Teacher" ||
-    data.status !== "Intern" ||
-    data.status !== "Other"
-  ) {
-    errors.status = "Invalid developer status";
   }
 
   // Developer skills

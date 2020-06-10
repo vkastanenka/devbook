@@ -1,6 +1,7 @@
 // React
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 
 // Redux
 import { connect } from "react-redux";
@@ -12,7 +13,6 @@ import {
   willReceiveErrors,
   clearErrorsOnUnmount,
   prepareRequest,
-  finishRequest,
   buttonText,
 } from "../../utils/formUtils";
 
@@ -33,7 +33,7 @@ class UpdateAccount extends Component {
 
   // Filling fields on mount
   componentDidMount() {
-    const { user } = this.props.auth.user;
+    const { user } = this.props.auth;
     this.setState({
       email: user.email,
       name: user.name,
@@ -75,7 +75,20 @@ class UpdateAccount extends Component {
     await this.props.updateCurrentUser(accountData);
 
     // Let user know it was a success
-    finishRequest(this);
+    if (Object.keys(this.state.errors).length === 0) {
+      this.setState({
+        submitting: false,
+        disableSubmitButton: false,
+        submitted: true,
+      });
+
+      // Clear success message after 6 seconds
+      this.timer = setTimeout(() => {
+        this.setState({ submitted: false });
+        this.props.history.push(`/user/${this.state.handle}`);
+        clearTimeout(this.timer);
+      }, 6000);
+    }
   };
 
   render() {
@@ -133,7 +146,7 @@ class UpdateAccount extends Component {
               submitted,
               "Update information",
               "Updating information...",
-              "Updated information!"
+              "Updated! Redirecting..."
             )}
           </button>
         </div>
@@ -145,6 +158,8 @@ class UpdateAccount extends Component {
 UpdateAccount.propTypes = {
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
+  clearErrors: PropTypes.func.isRequired,
+  updateCurrentUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -152,6 +167,7 @@ const mapStateToProps = (state) => ({
   errors: state.errors,
 });
 
-export default connect(mapStateToProps, { clearErrors, updateCurrentUser })(
-  UpdateAccount
-);
+export default connect(mapStateToProps, {
+  clearErrors,
+  updateCurrentUser,
+})(withRouter(UpdateAccount));

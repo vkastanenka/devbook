@@ -27,9 +27,38 @@ class SideNav extends Component {
   };
 
   render() {
-    const { user } = this.props.auth.user;
+    const authUser = this.props.auth.user;
+    const { user } = this.props.users.user;
     const { active, inactivate } = this.props;
-    let popupCard;
+    let popupCard, updateOptions;
+
+    if (user._id === authUser._id) {
+      updateOptions = (
+        <Auxiliary>
+          {!user.profile ? (
+            <li
+              onClick={() => this.setState({ creatingProfile: true })}
+              className="sidenav__option"
+            >
+              Create Profile
+            </li>
+          ) : (
+            <li
+              onClick={() => this.setState({ updatingProfile: true })}
+              className="sidenav__option"
+            >
+              Update Profile
+            </li>
+          )}
+          <li
+            onClick={() => this.setState({ updatingAccount: true })}
+            className="sidenav__option"
+          >
+            Update Account
+          </li>
+        </Auxiliary>
+      );
+    }
 
     if (this.state.browsingDevelopers) {
       popupCard = (
@@ -128,27 +157,7 @@ class SideNav extends Component {
             >
               Browse Developers
             </li>
-            {!user.profile ? (
-              <li
-                onClick={() => this.setState({ creatingProfile: true })}
-                className="sidenav__option"
-              >
-                Create Profile
-              </li>
-            ) : (
-              <li
-                onClick={() => this.setState({ updatingProfile: true })}
-                className="sidenav__option"
-              >
-                Update Profile
-              </li>
-            )}
-            <li
-              onClick={() => this.setState({ updatingAccount: true })}
-              className="sidenav__option"
-            >
-              Update Account
-            </li>
+            {updateOptions}
             <li onClick={() => this.props.logout()} className="sidenav__option">
               Logout
             </li>
@@ -160,12 +169,15 @@ class SideNav extends Component {
 }
 
 SideNav.propTypes = {
+  auth: PropTypes.object.isRequired,
+  users: PropTypes.object.isRequired,
   active: PropTypes.bool.isRequired,
   inactivate: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  users: state.users,
 });
 
 export default connect(mapStateToProps, { logout })(SideNav);

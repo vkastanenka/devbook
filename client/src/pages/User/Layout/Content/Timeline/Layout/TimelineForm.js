@@ -1,3 +1,5 @@
+// TODO: FINISHED
+
 // React
 import React, { Component } from "react";
 import PropTypes from "prop-types";
@@ -71,7 +73,6 @@ class TimelineForm extends Component {
         <TextAreaGroup
           name="text"
           id="text"
-          // inputClass="form__textarea"
           placeholder="What's on your mind?"
           value={this.state.text}
           required={true}

@@ -23,5 +23,6 @@ export const UPDATE_POST = 'UPDATE_POST';
 export const DELETE_POST = 'DELETE_POST';
 
 // Profile
+export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const UPDATE_EDUCATION = 'UPDATE_EDUCATION';
 export const UPDATE_EXPERIENCE = 'UPDATE_EXPERIENCE';

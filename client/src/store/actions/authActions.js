@@ -104,7 +104,6 @@ export const updateCurrentUser = (userData) => async (dispatch) => {
     const res = await axios.patch(`/api/v1/users/updateCurrentUser`, userData);
     const decoded = decodeToken(res.data.token);
     dispatch(setCurrentUser(decoded));
-    actionDispatch(actionTypes.UPDATE_USER, decoded, dispatch);
   } catch (err) {
     actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
   }

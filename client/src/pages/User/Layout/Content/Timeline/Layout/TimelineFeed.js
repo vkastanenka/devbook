@@ -1,3 +1,5 @@
+// TODO: FINISHED
+
 // React
 import React from "react";
 import PropTypes from "prop-types";
@@ -14,9 +16,9 @@ const TimelineFeed = props => {
   let clientPosts;
   let feed = (
     <div className="timeline__feed flex flex--abs-center">
-      <h3 className="text-tertiary font-megrim">
+      <p className="text-primary">
         This user has no posts on their timeline
-      </h3>
+      </p>
     </div>
   );
 

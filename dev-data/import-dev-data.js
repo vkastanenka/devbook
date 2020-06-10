@@ -58,7 +58,7 @@ if (process.argv[2] === "--import") importData();
 else if (process.argv[2] === "--delete") deleteData();
 
 // Deleting
-// node dev-data/data/import-dev-data.js --delete
+// node dev-data/import-dev-data.js --delete
 
 // Importing
-// node dev-data/data/import-dev-data.js --import
+// node dev-data/import-dev-data.js --import

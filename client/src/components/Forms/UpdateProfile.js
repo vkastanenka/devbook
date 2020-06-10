@@ -46,10 +46,10 @@ class UpdateProfile extends Component {
 
   componentDidMount() {
     if (!this.props.new) {
-      const { profile } = this.props.auth.user.user;
+      const { profile } = this.props.auth.user;
       const { social } = profile;
 
-      const socialURLs = Object.keys(social);
+      const socialURLs = Object.values(social);
       const socialCheck = socialURLs.filter((url) => url !== "");
 
       this.setState({

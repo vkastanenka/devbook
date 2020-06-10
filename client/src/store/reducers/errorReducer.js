@@ -6,13 +6,7 @@ const initialState = {};
 const getErrors = (state, action) => {
   console.log(action.payload);
   const errors = {};
-  if (
-    typeof action.payload === "string" &&
-    action.payload.startsWith("<!DOCTYPE html>")
-  ) {
-    errors.noPhoto = "Only images accepted!";
-    return errors;
-  } else if (typeof action.payload === "string") {
+  if (typeof action.payload === "string") {
     errors.server500 = "Internal server error, please try again later!";
     return errors;
   }

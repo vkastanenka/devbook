@@ -428,8 +428,6 @@ body {
       color: #f7f7f7; }
     .content-card__content--credentials {
       max-height: 78vh; }
-  .content-card__no-info {
-    transform: translateY(-10vh); }
   .content-card__list {
     padding: 1rem; }
     .content-card__list > :not(:last-child) {
@@ -721,6 +719,7 @@ body {
     width: 100%;
     height: 15vh; }
   .timeline__feed {
+    min-height: 43vh;
     max-height: 43vh;
     overflow-y: auto; }
 

@@ -1,3 +1,5 @@
+// TODO: FINISHED
+
 // React
 import React from "react";
 import PropTypes from "prop-types";
@@ -13,10 +15,9 @@ import TimelineFeed from "./Layout/TimelineFeed";
 const Timeline = (props) => {
   return (
     <div className="timeline">
-      {/* {props.auth.user.user._id === props.users.user._id ? (
+      {props.auth.user._id === props.users.user.user._id ? (
         <TimelineForm />
-      ) : null} */}
-      <TimelineForm />
+      ) : null}
       <TimelineFeed />
     </div>
   );

@@ -1,3 +1,5 @@
+// TODO: FINISHED
+
 // React
 import React, { Component } from "react";
 import PropTypes from "prop-types";
@@ -45,59 +47,70 @@ class Education extends Component {
   };
 
   render() {
-    const authUser = this.props.auth.user.user;
+    const authUser = this.props.auth.user;
     const { user } = this.props.users.user;
     let content, educationEntries, fromDate, toDate;
-    const education = this.props.users.user.user.profile.education;
 
-    if (education.length === 0) {
-      content = (
+    if (!user.profile) {
+      return (
         <div className="content-card__content--user-info flex flex--abs-center">
           <p className="text-primary content-card__no-info">
-            This user has not yet added any education to their profile
+            This user has not yet created their developer profile
           </p>
         </div>
       );
-    } else if (education.length > 0) {
-      educationEntries = education.map((edu) => {
-        fromDate = MMDDYYYY(edu.from);
-        !edu.current ? (toDate = MMDDYYYY(edu.to)) : (toDate = "Now");
-
-        return (
-          <li key={edu._id} className="content-card__list-entry">
-            {authUser._id === user._id ? (
-              <Icon
-                type="cross"
-                className="icon icon--white-primary icon--medium content-card__close-icon icon--active icon--translate"
-                onClick={() => {
-                  this.onDeleteClick(edu._id);
-                }}
-              />
-            ) : null}
-            <h3 className="heading-tertiary">{edu.school}</h3>
-            <p className="text-primary">{`${fromDate} - ${toDate}`}</p>
+    } else if (user.profile) {
+      const { education } = this.props.users.user.user.profile;
+      if (education.length === 0) {
+        content = (
+          <div className="content-card__content--user-info flex flex--abs-center">
             <p className="text-primary">
-              <span className="fw-medium">Degree:</span> {edu.degree}
+              This user has not yet added any education to their profile
             </p>
-            <p className="text-primary">
-              <span className="fw-medium">Field of Study:</span>{" "}
-              {edu.fieldofstudy}
-            </p>
-            <p className="text-primary">
-              <span className="fw-medium">Description:</span> {edu.description}
-            </p>
-          </li>
+          </div>
         );
-      });
+      } else if (education.length > 0) {
+        educationEntries = education.map((edu) => {
+          fromDate = MMDDYYYY(edu.from);
+          !edu.current ? (toDate = MMDDYYYY(edu.to)) : (toDate = "Now");
 
-      content = (
-        <div className="content-card__content content-card__content--user-info">
-          <ul className="content-card__list">{educationEntries}</ul>
-        </div>
-      );
+          return (
+            <li key={edu._id} className="content-card__list-entry">
+              {authUser._id === user._id ? (
+                <Icon
+                  type="cross"
+                  className="icon icon--white-primary icon--medium content-card__close-icon icon--active icon--translate"
+                  onClick={() => {
+                    this.onDeleteClick(edu._id);
+                  }}
+                />
+              ) : null}
+              <h3 className="heading-tertiary">{edu.school}</h3>
+              <p className="text-primary">{`${fromDate} - ${toDate}`}</p>
+              <p className="text-primary">
+                <span className="fw-medium">Degree:</span> {edu.degree}
+              </p>
+              <p className="text-primary">
+                <span className="fw-medium">Field of Study:</span>{" "}
+                {edu.fieldofstudy}
+              </p>
+              <p className="text-primary">
+                <span className="fw-medium">Description:</span>{" "}
+                {edu.description}
+              </p>
+            </li>
+          );
+        });
+
+        content = (
+          <div className="content-card__content content-card__content--user-info">
+            <ul className="content-card__list">{educationEntries}</ul>
+          </div>
+        );
+      }
+
+      return content;
     }
-
-    return content;
   }
 }
 

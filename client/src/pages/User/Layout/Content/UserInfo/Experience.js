@@ -1,3 +1,5 @@
+// TODO: FINISHED
+
 // React
 import React, { Component } from "react";
 import PropTypes from "prop-types";
@@ -45,59 +47,69 @@ class Experience extends Component {
   };
 
   render() {
-    const authUser = this.props.auth.user.user;
+    const authUser = this.props.auth.user;
     const { user } = this.props.users.user;
     let content, experienceEntries, fromDate, toDate;
-    const experience = this.props.users.user.user.profile.experience;
 
-    if (experience.length === 0) {
-      content = (
+    if (!user.profile) {
+      return (
         <div className="content-card__content--user-info flex flex--abs-center">
           <p className="text-primary content-card__no-info">
-            This user has not yet added any experience to their profile
+            This user has not yet created their developer profile
           </p>
         </div>
       );
-    } else if (experience.length > 0) {
-      experienceEntries = experience.map((exp) => {
-        fromDate = MMDDYYYY(exp.from);
-        !exp.current ? (toDate = MMDDYYYY(exp.to)) : (toDate = "Now");
-
-        return (
-          <li key={exp._id} className="content-card__list-entry">
-            {authUser._id === user._id ? (
-              <Icon
-                type="cross"
-                className="icon icon--white-primary icon--medium content-card__close-icon icon--active icon--translate"
-                onClick={() => {
-                  this.onDeleteClick(exp._id);
-                }}
-              />
-            ) : null}
-            <h3 className="heading-tertiary">{exp.title}</h3>
-            <p className="text-primary">{`${fromDate} - ${toDate}`}</p>
+    } else if (user.profile) {
+      const { experience } = this.props.users.user.user.profile;
+      if (experience.length === 0) {
+        content = (
+          <div className="content-card__content--user-info flex flex--abs-center">
             <p className="text-primary">
-              <span className="fw-medium">Company:</span> {exp.company}
+              This user has not yet added any experience to their profile
             </p>
-            <p className="text-primary">
-              <span className="fw-medium">Location:</span>{" "}
-              {exp.location}
-            </p>
-            <p className="text-primary">
-              <span className="fw-medium">Description:</span> {exp.description}
-            </p>
-          </li>
+          </div>
         );
-      });
+      } else if (experience.length > 0) {
+        experienceEntries = experience.map((exp) => {
+          fromDate = MMDDYYYY(exp.from);
+          !exp.current ? (toDate = MMDDYYYY(exp.to)) : (toDate = "Now");
 
-      content = (
-        <div className="content-card__content content-card__content--user-info">
-          <ul className="content-card__list">{experienceEntries}</ul>
-        </div>
-      );
+          return (
+            <li key={exp._id} className="content-card__list-entry">
+              {authUser._id === user._id ? (
+                <Icon
+                  type="cross"
+                  className="icon icon--white-primary icon--medium content-card__close-icon icon--active icon--translate"
+                  onClick={() => {
+                    this.onDeleteClick(exp._id);
+                  }}
+                />
+              ) : null}
+              <h3 className="heading-tertiary">{exp.title}</h3>
+              <p className="text-primary">{`${fromDate} - ${toDate}`}</p>
+              <p className="text-primary">
+                <span className="fw-medium">Company:</span> {exp.company}
+              </p>
+              <p className="text-primary">
+                <span className="fw-medium">Location:</span> {exp.location}
+              </p>
+              <p className="text-primary">
+                <span className="fw-medium">Description:</span>{" "}
+                {exp.description}
+              </p>
+            </li>
+          );
+        });
+
+        content = (
+          <div className="content-card__content content-card__content--user-info">
+            <ul className="content-card__list">{experienceEntries}</ul>
+          </div>
+        );
+      }
+
+      return content;
     }
-
-    return content;
   }
 }
 

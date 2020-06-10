@@ -1,6 +1,6 @@
 // React
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
 // Redux
@@ -16,18 +16,30 @@ class Navbar extends Component {
     viewingOptions: false,
   };
 
+  componentDidMount() {
+    if (this.state.viewingOptions) {
+      this.setState({ viewingOptions: false });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.match.params.handle !== nextProps.match.params.handle) {
+      this.setState({ viewingOptions: false });
+    }
+  }
+
   // Prevents requiring a photo that doesn't exist
   tryRequirePhoto = () => {
     try {
-      return require(`../../assets/img/users/${this.props.auth.user.user.photo}`);
+      return require(`../../assets/img/users/${this.props.auth.user.photo}`);
     } catch (err) {
       return require("../../assets/img/users/default.jpg");
     }
   };
 
   render() {
-    const { user } = this.props.auth.user;
-    let userLink;
+    const { user } = this.props.auth;
+    let userLink, sideNav;
 
     if (!this.props.loading) {
       userLink = (
@@ -44,6 +56,13 @@ class Navbar extends Component {
             </h2>
           </div>
         </Link>
+      );
+
+      sideNav = (
+        <SideNav
+          active={this.state.viewingOptions}
+          inactivate={() => this.setState({ viewingOptions: false })}
+        />
       );
     } else {
       userLink = (
@@ -63,10 +82,7 @@ class Navbar extends Component {
 
     return (
       <Auxiliary>
-        <SideNav
-          active={this.state.viewingOptions}
-          inactivate={() => this.setState({ viewingOptions: false })}
-        />
+        {sideNav}
         <nav className="navbar">
           {userLink}
           <div className="navbar__options">
@@ -91,4 +107,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps)(withRouter(Navbar));

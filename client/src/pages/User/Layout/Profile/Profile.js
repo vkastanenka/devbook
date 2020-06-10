@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 // Actions
+import { clearErrors } from "../../../../store/actions/errorActions";
 import { updateUserPhoto } from "../../../../store/actions/userActions";
 
 // Components
@@ -20,18 +21,40 @@ class Profile extends Component {
     viewing: "profile",
   };
 
+  // Set timer in component instance
+  timer = null;
+
+  // Clear errors on unmount
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+    if (this.props.errors.noPhoto) this.props.clearErrors();
+  }
+
   // Updating user model photo field
   onPhotoSubmit = async (e) => {
     e.preventDefault();
+
+    // Clear errors if any
+    if (this.props.errors.noPhoto) this.props.clearErrors();
+
+    // Create form data
     const formData = new FormData();
     formData.append("photo", e.target.files[0]);
+
+    // Patch request
     await this.props.updateUserPhoto(formData);
+
+    // Clear the errors from unavailable feature
+    this.timer = setTimeout(() => {
+      this.props.clearErrors();
+      clearTimeout(this.timer);
+    }, 6000);
   };
 
   // Prevents requiring a photo that doesn't exist
   tryRequirePhoto = () => {
     try {
-      return require(`../../../../assets/img/users/${this.props.users.user.photo}`);
+      return require(`../../../../assets/img/users/${this.props.users.user.user.photo}`);
     } catch (err) {
       return require("../../../../assets/img/users/default.jpg");
     }
@@ -43,10 +66,10 @@ class Profile extends Component {
     const { currentUser, loading } = this.props;
 
     if (!loading) {
-      user = this.props.users.user;
-      profile = user.profile;
-    }
+      user = this.props.users.user.user;
 
+      if (user.profile) profile = user.profile;
+    }
 
     // Assign social media icons if listed in profile
     if (profile && profile.social) {
@@ -193,13 +216,18 @@ Profile.propTypes = {
   loading: PropTypes.bool,
   auth: PropTypes.object.isRequired,
   users: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
   currentUser: PropTypes.bool.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   updateUserPhoto: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
   users: state.users,
+  errors: state.errors,
 });
 
-export default connect(mapStateToProps, { updateUserPhoto })(Profile);
+export default connect(mapStateToProps, { clearErrors, updateUserPhoto })(
+  Profile
+);

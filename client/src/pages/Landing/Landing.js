@@ -1,3 +1,5 @@
+// FINISHED
+
 // React
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
@@ -21,11 +23,12 @@ class Landing extends Component {
     passwordResetToken: "",
   };
 
-  // If authenticated, push user to their profile card
   componentDidMount() {
+    // If authenticated, push user to their profile card
     if (this.props.auth.isAuth) {
-      this.props.history.push(`/user/${this.props.auth.user.user.handle}`);
+      this.props.history.push(`/user/${this.props.auth.user.handle}`);
     } else if (this.props.match.params.token) {
+      // If there is a token parameter, set the page to reset the user's password
       this.setState({
         resettingPassword: true,
         passwordResetToken: this.props.match.params.token,
@@ -36,7 +39,7 @@ class Landing extends Component {
   // If user authenticates, push them to their profile card
   componentWillReceiveProps(nextProps) {
     if (!this.props.auth.isAuth && nextProps.auth.isAuth) {
-      this.props.history.push(`/user/${nextProps.auth.user.user.handle}`);
+      this.props.history.push(`/user/${nextProps.auth.user.handle}`);
     }
   }
 

@@ -1,3 +1,5 @@
+// TODO: FINISHED
+
 // React
 import React, { Component } from "react";
 import PropTypes from "prop-types";
@@ -23,18 +25,16 @@ class FollowIcon extends Component {
 
   // Sets state to display icon/action depending on whether or not user is followed
   componentDidMount() {
-    const currentFollows = this.props.auth.user.user.following.map(
-      (user) => user._id
-    );
-    const { user } = this.props.users;
-    const followIndex = currentFollows.indexOf(user._id);
+    const { following } = this.props.auth.user
+    const { user } = this.props.users.user;
+    const followIndex = following.indexOf(user._id);
     if (followIndex > -1) this.setState({ followed: true });
   }
 
   // Changes icon / action once user is followed / unfollowed
   componentWillReceiveProps(nextProps) {
     if (
-      nextProps.auth.user.user.following.indexOf(this.props.users.user._id) > -1
+      nextProps.auth.user.following.indexOf(this.props.users.user.user._id) > -1
     ) {
       this.setState({ followed: true });
     } else {
@@ -68,7 +68,7 @@ class FollowIcon extends Component {
 
   render() {
     let followIcon;
-    const { user } = this.props.users;
+    const { user } = this.props.users.user;
 
     if (this.state.isUpdatingFollow) {
       followIcon = (

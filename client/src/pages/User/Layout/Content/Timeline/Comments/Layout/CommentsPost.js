@@ -1,3 +1,5 @@
+// TODO: FINISHED
+
 // React
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
@@ -60,7 +62,7 @@ class CommentsPost extends Component {
 
   // Toggles like for the comment
   toggleLike = async (likes, postId, commentId) => {
-    const { user } = this.props.auth.user;
+    const { user } = this.props.auth;
 
     // Clear errors if any before submitting
     if (Object.keys(this.props.errors).length > 0) {
@@ -81,7 +83,7 @@ class CommentsPost extends Component {
 
   // Toggles dislike for the comment
   toggleDislike = async (dislikes, postId, commentId) => {
-    const { user } = this.props.auth.user;
+    const { user } = this.props.auth;
 
     // Clear errors if any before submitting
     if (Object.keys(this.props.errors).length > 0) {
@@ -101,8 +103,9 @@ class CommentsPost extends Component {
   };
 
   render() {
-    const { user } = this.props.auth.user;
+    const { user } = this.props.auth;
     const { postId, comment } = this.props;
+    console.log(comment);
     let closeIcon, likeIcon, dislikeIcon;
     const { commentToDelete, commentToLike, commentToDislike } = this.state;
     const loadingIcon = (

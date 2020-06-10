@@ -7,12 +7,11 @@ import { connect } from "react-redux";
 
 // Actions
 import { clearErrors } from "../../store/actions/errorActions";
-import { updatePassword } from "../../store/actions/authActions";
+import { updatePassword, logout } from "../../store/actions/authActions";
 import {
   willReceiveErrors,
   clearErrorsOnUnmount,
   prepareRequest,
-  finishRequest,
   buttonText,
 } from "../../utils/formUtils";
 
@@ -64,23 +63,27 @@ class UpdatePassword extends Component {
     // PATCH request
     await this.props.updatePassword(passData);
 
-    // Let user know it was a success
-    finishRequest(this);
+    // Let user know request was a success
+    if (Object.keys(this.state.errors).length === 0) {
+      this.setState({
+        submitting: false,
+        disableSubmitButton: false,
+        submitted: true,
+      });
+
+      // Clear success message after 6 seconds
+      this.timer = setTimeout(() => {
+        this.setState({ submitted: false });
+        this.props.logout();
+        clearTimeout(this.timer);
+      }, 6000);
+    }
   };
 
   render() {
     const { errors, submitting, submitted, disableSubmitButton } = this.state;
 
     return (
-      // TODO:
-      //   <form
-      //   className={
-      //     !this.props.formClassName
-      //       ? "form"
-      //       : `form ${this.props.formClassName}`
-      //   }
-      //   onSubmit={this.onRegisterSubmit}
-      // >
       <form className="form ma-y-sm" onSubmit={this.onPasswordUpdate}>
         <h3 className="text-primary font-megrim pd-y-sm">Update Password</h3>
         <InputGroup
@@ -122,9 +125,6 @@ class UpdatePassword extends Component {
           label="Confirm new password"
           errors={errors.newPasswordConfirm}
         />
-        {/* TODO:
-        <div className="form__group">
-        */}
         <button
           className="btn btn--primary ma-bt-sm"
           type="submit"
@@ -135,12 +135,9 @@ class UpdatePassword extends Component {
             submitted,
             "Update password",
             "Updating password...",
-            "Updated password!"
+            "Updated! Logging out..."
           )}
         </button>
-        {/* TODO:
-        </div>
-        */}
       </form>
     );
   }
@@ -149,6 +146,9 @@ class UpdatePassword extends Component {
 UpdatePassword.propTypes = {
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
+  clearErrors: PropTypes.func.isRequired,
+  updatePassword: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -156,4 +156,8 @@ const mapStateToProps = (state) => ({
   errors: state.errors,
 });
 
-export default connect(mapStateToProps, { clearErrors, updatePassword })(UpdatePassword);
+export default connect(mapStateToProps, {
+  clearErrors,
+  updatePassword,
+  logout,
+})(UpdatePassword);
