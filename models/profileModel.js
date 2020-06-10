@@ -104,21 +104,4 @@ const profileSchema = new mongoose.Schema({
   },
 });
 
-///////////////////
-// Query Middleware
-
-// Populate required fields for front-end profile page
-// profileSchema.pre(/^find/, function (next) {
-//   this.populate({
-//     path: "user",
-//     select: "name photo following posts",
-//     populate: {
-//       path: "following",
-//       select: "name photo handle posts",
-//     },
-//   });
-
-//   next();
-// });
-
 module.exports = Profile = mongoose.model("Profile", profileSchema);

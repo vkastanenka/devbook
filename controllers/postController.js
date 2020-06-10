@@ -36,35 +36,37 @@ exports.getPostById = factory.getOne(Post);
 // @access  Public
 exports.getPostsByUserId = catchAsync(async (req, res, next) => {
   // Find user
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.params.id).populate([
+    { path: "profile" },
+    { path: "posts", populate: { path: "comments" } },
+    {
+      path: "following",
+      select: "photo name handle posts",
+      populate: { path: "posts", populate: { path: "comments" } },
+    },
+  ]);
 
-  // Check if the user exists
+  // Respond if no user is found
   query404(user, res, "There is no user with that id");
 
-  // Find all posts
-  const allPosts = await Post.find();
+  // Organize posts
+  const followPostsSubArray = user.following
+    .filter((follow) => follow.posts.length !== 0)
+    .map((follow) => follow.posts);
 
-  // Filter posts that only relate to the user as well as their followed users
-  let filteredPosts;
-  const followingIDs = user.following.map((follow) => follow._id);
-  filteredPosts = allPosts.filter((post) => {
-    if (
-      post.user._id.toString() === user._id.toString() ||
-      followingIDs.includes(post.user._id.toString())
-    )
-      return true;
-  });
+  let followPosts = [];
+  followPostsSubArray.forEach((follow) => (followPosts = [...follow]));
+  let posts = [...user.posts, ...followPosts];
 
   // Sort the posts from newest to oldest
-  filteredPosts = filteredPosts.sort((a, b) => {
+  posts = posts.sort((a, b) => {
     return new Date(b.date) - new Date(a.date);
   });
 
   // Respond
-  res.status(200).json(filteredPosts);
+  res.status(200).json(posts);
 });
 
-// TODO: Refactor
 // @route   GET api/v1/posts/handle/:handle
 // @desc    Get posts by handle
 // @access  Public
@@ -72,33 +74,35 @@ exports.getPostsByHandle = catchAsync(async (req, res, next) => {
   // Find profile
   const user = await User.findOne({
     handle: req.params.handle,
-  });
+  }).populate([
+    { path: "profile" },
+    { path: "posts", populate: { path: "comments" } },
+    {
+      path: "following",
+      select: "photo name handle posts",
+      populate: { path: "posts", populate: { path: "comments" } },
+    },
+  ]);
 
-  // Check if the user exists
-  if (!user) return res.status(404).json({ query: 'There is no user with that handle' });
+  // Respond if no user is found
+  query404(user, res, "There is no user with that id");
 
-  // Find all posts
-  const allPosts = await Post.find();
+  // Organize posts
+  const followPostsSubArray = user.following
+    .filter((follow) => follow.posts.length !== 0)
+    .map((follow) => follow.posts);
 
-  // Filter posts that only relate to the profile's user as well as their followed users
-  let filteredPosts;
-  const followingIDs = user.following.map((follow) => follow._id);
-
-  filteredPosts = allPosts.filter((post) => {
-    if (
-      post.user._id.toString() === user._id.toString() ||
-      followingIDs.includes(post.user._id.toString())
-    )
-      return true;
-  });
+  let followPosts = [];
+  followPostsSubArray.forEach((follow) => (followPosts = [...follow]));
+  let posts = [...user.posts, ...followPosts];
 
   // Sort the posts from newest to oldest
-  filteredPosts = filteredPosts.sort((a, b) => {
+  posts = posts.sort((a, b) => {
     return new Date(b.date) - new Date(a.date);
   });
 
   // Respond
-  res.status(200).json(filteredPosts);
+  res.status(200).json(posts);
 });
 
 ///////////////////

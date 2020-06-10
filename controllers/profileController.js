@@ -49,7 +49,7 @@ exports.createCurrentUserProfile = catchAsync(async (req, res, next) => {
   const profileCheck = await Profile.findOne({ _id: req.user.profile });
   if (profileCheck) {
     errors.alreadyCreated = "User has already created a profile";
-    return res.status(400).json({ errors });
+    return res.status(400).json(errors);
   }
 
   // Format profile body
@@ -120,11 +120,9 @@ exports.updateCurrentUserProfile = catchAsync(async (req, res, next) => {
   await profile.update({ $set: profileBody }, { new: true });
 
   // Find the updated user in order to populate required fields for front end
-  const updatedUser = await User.findById(req.user._id)
-    .populate({
-      path: "profile",
-    })
-    .populate({ path: "following" });
+  const updatedUser = await User.findById(req.user._id).populate({
+    path: "profile",
+  });
 
   // Create JWT with updated user information (new profile)
   const token = createJWT(updatedUser);

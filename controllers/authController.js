@@ -83,7 +83,6 @@ exports.restrictTo = (...roles) => {
 /////////////////
 // Public Routes
 
-// TODO: FINISHED
 // @route   POST api/v1/users/register
 // @desc    Register user
 // @access  Public
@@ -119,7 +118,6 @@ exports.register = catchAsync(async (req, res, next) => {
   res.status(201).json({ status: "success", newUser });
 });
 
-// TODO: FINISHED
 // @route   GET api/v1/users/login
 // @desc    Login User / JWT Response
 // @access  Public
@@ -156,7 +154,6 @@ exports.login = catchAsync(async (req, res, next) => {
   });
 });
 
-// TODO: FINISHED
 // @route   POST api/v1/users/sendPasswordResetToken
 // @desc    Send email with a password reset token
 // @access  Public
@@ -199,13 +196,12 @@ exports.sendPasswordResetToken = catchAsync(async (req, res, next) => {
     await user.save({ validateBeforeSave: false });
 
     // Respond
-    errors.server =
+    errors.server500 =
       "There was a problem sending the email, please try again later.";
     res.status(500).json(errors);
   }
 });
 
-// TODO: FINISHED
 // @route   PATCH api/v1/users/resetPassword/:resetToken
 // @desc    Resets user password with token from email
 // @access  Public

@@ -3,6 +3,14 @@
 const Validator = require("validator");
 const isEmpty = require("../../utils/isEmpty");
 
+// {
+// 	"registerEmail": "test@gmail.com",
+// 	"registerName": "Test Test",
+// 	"registerHandle": "testing",
+// 	"registerPassword": "test1234",
+// 	"registerPasswordConfirm": "test1234"
+// }
+
 // Registering a new user
 module.exports = validateRegistration = (data) => {
   const errors = {};
