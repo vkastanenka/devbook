@@ -84,7 +84,7 @@ class Education extends Component {
                   }}
                 />
               ) : null}
-              <h3 className="heading-tertiary">{edu.school}</h3>
+              <h3 className="heading-tertiary fw-medium">{edu.school}</h3>
               <p className="text-primary">{`${fromDate} - ${toDate}`}</p>
               <p className="text-primary">
                 <span className="fw-medium">Degree:</span> {edu.degree}

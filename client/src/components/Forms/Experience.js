@@ -99,6 +99,9 @@ class Experience extends Component {
         submitFunction={this.onAddExperience}
         formClassName="content-card__content content-card__content--credentials pd-y-sm"
       >
+        <h3 className="text-primary font-megrim ma-y-sm">
+          Add experiential credentials
+        </h3>
         <InputGroup
           type="text"
           name="title"

@@ -156,7 +156,7 @@ class Login extends Component {
           }
           onSubmit={this.onLoginSubmit}
         >
-          <h2 className="heading-secondary ma-bt-sm">Login</h2>
+          <h2 className="heading-secondary text-gradient ma-bt-sm">Login</h2>
           <InputGroup
             type="email"
             name="loginEmail"

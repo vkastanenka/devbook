@@ -90,7 +90,7 @@ class Github extends Component {
               target="_blank"
               className="link-style"
             >
-              <h3 className="heading-tertiary">{repo.name}</h3>
+              <h3 className="heading-tertiary fw-medium">{repo.name}</h3>
             </a>
             <div className="repository__statistics">
               <p className="repository__statistics--stars text-secondary">

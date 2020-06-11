@@ -39,7 +39,7 @@ const Content = (props) => {
             onClick={toggleCardLeft}
           />
         ) : null}
-        <h3 className="heading-tertiary font-megrim ma-x-sm">{heading}</h3>
+        <h3 className="heading-secondary font-megrim ma-x-sm">{heading}</h3>
         {toggleCardRight ? (
           <Icon
             type="arrow-with-circle-right"

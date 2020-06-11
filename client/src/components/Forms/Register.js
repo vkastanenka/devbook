@@ -95,7 +95,7 @@ class Register extends Component {
         }
         onSubmit={this.onRegisterSubmit}
       >
-        <h2 className="heading-secondary ma-bt-sm">Register</h2>
+        <h2 className="heading-secondary text-gradient  ma-bt-sm">Register</h2>
         <InputGroup
           type="email"
           name="registerEmail"

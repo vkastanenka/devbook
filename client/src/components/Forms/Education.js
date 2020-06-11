@@ -99,6 +99,9 @@ class Education extends Component {
         submitFunction={this.onAddEducation}
         formClassName="content-card__content content-card__content--credentials pd-y-sm"
       >
+        <h3 className="text-primary font-megrim ma-y-sm">
+          Add educational credentials
+        </h3>
         <InputGroup
           type="text"
           name="school"

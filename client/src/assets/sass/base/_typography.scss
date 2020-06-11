@@ -1,11 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Megrim&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Megrim&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap");
 
 body {
   line-height: 1.6;
   font-weight: 300;
   font-family: "Lato", sans-serif;
   color: $color-grey-light-1;
+}
+
+.text-gradient {
+  background-image: linear-gradient(
+    90deg,
+    $color-primary-light,
+    $color-primary
+  );
+  background-clip: text;
+  color: transparent;
 }
 
 .heading-primary {
@@ -16,25 +26,18 @@ body {
 }
 
 .font-megrim {
-  font-family: 'Megrim', sans-serif;
+  font-family: "Megrim", sans-serif;
 }
 
 .heading-secondary {
   font-size: 3.6rem;
   text-transform: uppercase;
   font-weight: 700;
-  background-image: linear-gradient(
-    90deg,
-    $color-primary-light,
-    $color-primary
-  );
-  background-clip: text;
-  color: transparent;
   display: inline-block;
   letter-spacing: 0.15rem;
 
   &--smaller {
-    font-size: 3.2rem !important;
+    font-size: 3rem !important;
   }
 }
 
@@ -46,11 +49,11 @@ body {
 }
 
 .text-primary {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
 }
 
 .text-secondary {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
 }
 
 .fw-light {

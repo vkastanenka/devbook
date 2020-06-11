@@ -84,7 +84,7 @@ class Experience extends Component {
                   }}
                 />
               ) : null}
-              <h3 className="heading-tertiary">{exp.title}</h3>
+              <h3 className="heading-tertiary fw-medium">{exp.title}</h3>
               <p className="text-primary">{`${fromDate} - ${toDate}`}</p>
               <p className="text-primary">
                 <span className="fw-medium">Company:</span> {exp.company}
