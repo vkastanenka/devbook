@@ -93,7 +93,10 @@ exports.getUserByHandle = catchAsync(async (req, res, next) => {
   ]);
 
   // Respond if no user is found
-  query404(user, res, "There is no user with that handle");
+  if (!user)
+    return res
+      .status(404)
+      .json({ noUserHandle: "There is no user with that handle" });
 
   // Organize posts
   const followPostsSubArray = user.following
@@ -101,7 +104,9 @@ exports.getUserByHandle = catchAsync(async (req, res, next) => {
     .map((follow) => follow.posts);
 
   let followPosts = [];
-  followPostsSubArray.forEach((follow) => (followPosts = [...follow]));
+  followPostsSubArray.forEach((follow) =>
+    follow.forEach((post) => followPosts.push(post))
+  );
   let posts = [...user.posts, ...followPosts];
 
   // Sort the posts from newest to oldest

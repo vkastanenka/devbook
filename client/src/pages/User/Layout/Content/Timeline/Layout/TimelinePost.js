@@ -1,5 +1,3 @@
- // TODO: FINISHED
-
 // React
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
@@ -222,7 +220,11 @@ class TimelinePost extends Component {
               <div className="post__option">
                 <Icon
                   type="chat"
-                  className={!showComments ? "icon icon--large icon--primary-white icon--active icon--translate" : "icon icon--large icon--white icon--active icon--translate-active"}
+                  className={
+                    !showComments
+                      ? "icon icon--large icon--primary-white icon--active icon--translate"
+                      : "icon icon--large icon--white icon--active icon--translate-active"
+                  }
                   onClick={() =>
                     this.setState((prevState) => ({
                       showComments: !prevState.showComments,

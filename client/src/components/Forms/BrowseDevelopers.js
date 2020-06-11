@@ -15,6 +15,7 @@ import Spinner from "../Spinner/Spinner";
 import Auxiliary from "../HigherOrder/Auxiliary";
 import InputGroup from "../Inputs/InputGroup";
 
+// Form for browsing developers registered in the site
 class BrowseDevelopers extends Component {
   state = {
     handleFilterSelect: true,

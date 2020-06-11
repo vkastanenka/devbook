@@ -1,5 +1,6 @@
 // React
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
 // Redux
@@ -16,6 +17,7 @@ import SocialMediaLink from "./Layout/SocialMediaLink";
 import SkillsList from "./Layout/SkillsList";
 import FollowList from "./Layout/FollowList";
 
+// Profile section of user card
 class Profile extends Component {
   state = {
     viewing: "profile",
@@ -229,5 +231,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { clearErrors, updateUserPhoto })(
-  Profile
+  withRouter(Profile)
 );

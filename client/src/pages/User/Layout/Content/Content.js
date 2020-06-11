@@ -1,5 +1,3 @@
-// TODO: FINISHED
-
 // React
 import React, { Component } from "react";
 import PropTypes from "prop-types";
@@ -18,6 +16,7 @@ import EducationForm from "../../../../components/Forms/Education";
 import ExperienceForm from "../../../../components/Forms/Experience";
 import ContentCard from "../../../../components/Cards/Content";
 
+// Primary content of the user card
 class Content extends Component {
   state = {
     viewingUser: "education",

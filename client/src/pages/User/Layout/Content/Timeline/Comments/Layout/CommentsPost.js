@@ -1,5 +1,3 @@
-// TODO: FINISHED
-
 // React
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
@@ -105,7 +103,6 @@ class CommentsPost extends Component {
   render() {
     const { user } = this.props.auth;
     const { postId, comment } = this.props;
-    console.log(comment);
     let closeIcon, likeIcon, dislikeIcon;
     const { commentToDelete, commentToLike, commentToDislike } = this.state;
     const loadingIcon = (

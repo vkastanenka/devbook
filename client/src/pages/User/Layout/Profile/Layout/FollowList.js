@@ -1,10 +1,9 @@
-// TODO: FINISHED
-
 // React
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
+// List of people current user is following
 const FollowList = (props) => {
   const following = props.following.map((follow) => {
     let followName = follow.name;

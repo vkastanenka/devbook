@@ -1,5 +1,3 @@
-// TODO: FINISHED
-
 // React
 import React from "react";
 import PropTypes from "prop-types";
@@ -8,6 +6,7 @@ import PropTypes from "prop-types";
 import CommentsForm from "./Layout/CommentsForm";
 import CommentsFeed from "./Layout/CommentsFeed";
 
+// Comments for an individual post
 const Comments = (props) => {
   const { postId, comments } = props;
 

@@ -55,7 +55,9 @@ exports.getPostsByUserId = catchAsync(async (req, res, next) => {
     .map((follow) => follow.posts);
 
   let followPosts = [];
-  followPostsSubArray.forEach((follow) => (followPosts = [...follow]));
+  followPostsSubArray.forEach((follow) =>
+    follow.forEach((post) => followPosts.push(post))
+  );
   let posts = [...user.posts, ...followPosts];
 
   // Sort the posts from newest to oldest
@@ -93,7 +95,9 @@ exports.getPostsByHandle = catchAsync(async (req, res, next) => {
     .map((follow) => follow.posts);
 
   let followPosts = [];
-  followPostsSubArray.forEach((follow) => (followPosts = [...follow]));
+  followPostsSubArray.forEach((follow) =>
+    follow.forEach((post) => followPosts.push(post))
+  );
   let posts = [...user.posts, ...followPosts];
 
   // Sort the posts from newest to oldest

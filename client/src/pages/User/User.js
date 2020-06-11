@@ -1,5 +1,3 @@
-// TODO: FINISHED
-
 // React
 import React, { Component } from "react";
 import PropTypes from "prop-types";
@@ -18,9 +16,10 @@ import Navbar from "../../components/Layout/Navbar";
 import Profile from "./Layout/Profile/Profile";
 import Content from "./Layout/Content/Content";
 
+// User page with the main content
 class User extends Component {
   state = {
-    currentUser: true,
+    currentUser: true
   };
 
   componentDidMount() {
@@ -83,6 +82,9 @@ class User extends Component {
       <main className="user">
         <Auxiliary>
           {" "}
+          {this.props.errors.noUserHandle ? (
+            <Alert type="error" message={this.props.errors.noUserHandle} />
+          ) : null}
           {this.props.errors.server500 ? (
             <Alert type="error" message={this.props.errors.server500} />
           ) : null}

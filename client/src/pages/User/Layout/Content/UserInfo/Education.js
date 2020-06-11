@@ -1,5 +1,3 @@
-// TODO: FINISHED
-
 // React
 import React, { Component } from "react";
 import PropTypes from "prop-types";
@@ -21,6 +19,7 @@ import { MMDDYYYY } from "../../../../../utils/dates";
 // Components
 import Icon from "../../../../../components/Icon/Icon";
 
+// Education from user's profile
 class Education extends Component {
   state = {
     errors: {},
