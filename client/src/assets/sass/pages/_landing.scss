@@ -1,3 +1,17 @@
 .landing {
   transform: translateY(-2vh);
+
+  @include respond(bp-medium) {
+    transform: translateY(0);
+  }
+
+  & > :first-child {
+    @include respond(bp-medium) {
+      margin-bottom: 1rem;
+    }
+
+    @include respond(bp-smallest) {
+      margin-bottom: 1.5rem;
+    }
+  }
 }

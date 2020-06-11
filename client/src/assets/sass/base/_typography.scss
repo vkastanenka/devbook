@@ -23,6 +23,18 @@ body {
   text-transform: uppercase;
   text-align: center;
   backface-visibility: hidden;
+
+  @include respond(bp-medium) {
+    font-size: 7rem;
+  }
+
+  @include respond(bp-smaller) {
+    font-size: 6.4rem;
+  }
+
+  @include respond(bp-smallest) {
+    font-size: 5rem;
+  }
 }
 
 .font-megrim {
@@ -36,6 +48,14 @@ body {
   display: inline-block;
   letter-spacing: 0.15rem;
 
+  @include respond(bp-smaller) {
+    font-size: 3.4rem;
+  }
+
+  @include respond(bp-smallest) {
+    font-size: 3rem;
+  }
+
   &--smaller {
     font-size: 3rem !important;
   }
@@ -46,6 +66,14 @@ body {
   letter-spacing: 0.2rem;
   font-weight: 700;
   text-transform: uppercase;
+
+  @include respond(bp-smaller) {
+    font-size: 2.6rem;
+  }
+
+  @include respond(bp-smallest) {
+    font-size: 2.4rem;
+  }
 }
 
 .text-primary {

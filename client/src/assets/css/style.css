@@ -147,6 +147,15 @@ body {
   text-transform: uppercase;
   text-align: center;
   backface-visibility: hidden; }
+  @media only screen and (max-width: 50em) {
+    .heading-primary {
+      font-size: 7rem; } }
+  @media only screen and (max-width: 31.25em) {
+    .heading-primary {
+      font-size: 6.4rem; } }
+  @media only screen and (max-width: 25em) {
+    .heading-primary {
+      font-size: 5rem; } }
 
 .font-megrim {
   font-family: "Megrim", sans-serif; }
@@ -157,6 +166,12 @@ body {
   font-weight: 700;
   display: inline-block;
   letter-spacing: 0.15rem; }
+  @media only screen and (max-width: 31.25em) {
+    .heading-secondary {
+      font-size: 3.4rem; } }
+  @media only screen and (max-width: 25em) {
+    .heading-secondary {
+      font-size: 3rem; } }
   .heading-secondary--smaller {
     font-size: 3rem !important; }
 
@@ -165,6 +180,12 @@ body {
   letter-spacing: 0.2rem;
   font-weight: 700;
   text-transform: uppercase; }
+  @media only screen and (max-width: 31.25em) {
+    .heading-tertiary {
+      font-size: 2.6rem; } }
+  @media only screen and (max-width: 25em) {
+    .heading-tertiary {
+      font-size: 2.4rem; } }
 
 .text-primary {
   font-size: 1.6rem; }
@@ -568,6 +589,21 @@ body {
   border-radius: 20px;
   box-shadow: 0 5px 10px 10px rgba(0, 0, 0, 0.25);
   transform: translateY(-1vh); }
+  @media only screen and (max-width: 75em) {
+    .login-register {
+      width: 80vw; } }
+  @media only screen and (max-width: 62.5em) {
+    .login-register {
+      width: 85vw;
+      height: 70vh; } }
+  @media only screen and (max-width: 50em) {
+    .login-register {
+      width: 90vw;
+      height: 65vh; } }
+  @media only screen and (max-width: 31.25em) {
+    .login-register {
+      width: 95vw;
+      height: 62.5vh; } }
   .login-register__forms {
     width: 100%;
     display: flex;
@@ -576,6 +612,9 @@ body {
       padding: 2rem;
       flex-basis: 50%;
       transition: all 0.5s ease-in-out; }
+      @media only screen and (max-width: 25em) {
+        .login-register__forms > * {
+          padding: 1rem; } }
     .login-register__forms--login {
       opacity: 0;
       transform: translateX(-100%); }
@@ -604,6 +643,9 @@ body {
     .login-register__overlay > * {
       transition: all 0.5s ease-in-out;
       width: 80%; }
+      @media only screen and (max-width: 25em) {
+        .login-register__overlay > * {
+          width: 90%; } }
     .login-register__overlay--register-content {
       transform: translate(450%, -50%); }
       .login-register__overlay--register-content--active {
@@ -934,6 +976,15 @@ body {
 
 .landing {
   transform: translateY(-2vh); }
+  @media only screen and (max-width: 50em) {
+    .landing {
+      transform: translateY(0); } }
+  @media only screen and (max-width: 50em) {
+    .landing > :first-child {
+      margin-bottom: 1rem; } }
+  @media only screen and (max-width: 25em) {
+    .landing > :first-child {
+      margin-bottom: 1.5rem; } }
 
 .user {
   height: 95vh;
