@@ -10,7 +10,7 @@ const CommentsFeed = (props) => {
   const { comments, postId } = props;
   let commentPosts;
   let feed = <div className="timeline__comments flex flex--abs-center">
-    <p className="text-secondary ma-y-sm">
+    <p className="text-primary ma-y-sm">
       Be the first to reply to this post
     </p>
   </div>;
