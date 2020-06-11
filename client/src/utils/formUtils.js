@@ -59,8 +59,9 @@ export const prepareRequest = (e, currentClass) => {
   e.preventDefault();
 
   // Clear errors if any before submitting
-  if (Object.keys(currentClass.props.errors).length > 0)
+  if (Object.keys(currentClass.props.errors).length > 0) {
     currentClass.props.clearErrors();
+  }
 
   // Let user know request is happening and disable button
   currentClass.setState({ submitting: true, disableSubmitButton: true });

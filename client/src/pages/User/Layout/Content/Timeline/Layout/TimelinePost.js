@@ -14,13 +14,8 @@ import {
   addDislike,
   removeDislike,
 } from "../../../../../../store/actions/postActions";
-import { clearErrors } from "../../../../../../store/actions/errorActions";
 
 // Utilities
-import {
-  willReceiveAsyncErrors,
-  clearErrorsOnUnmount,
-} from "../../../../../../utils/formUtils";
 import { postTime } from "../../../../../../utils/dates";
 
 // Components
@@ -34,43 +29,17 @@ class TimelinePost extends Component {
     postToDelete: "",
     postToLike: "",
     postToDislike: "",
-    errors: {},
   };
-
-  timer = null;
-
-  componentWillReceiveProps(nextProps) {
-    willReceiveAsyncErrors(this, nextProps);
-  }
-
-  componentWillUnmount() {
-    clearErrorsOnUnmount(this);
-  }
 
   // Deletes post if belongs to the user
   onDeleteClick = async (id) => {
-    // Clear errors if any before submitting
-    if (Object.keys(this.props.errors).length > 0) {
-      this.props.clearErrors();
-    }
-
     // DELETE request
     await this.props.deletePost(id);
-
-    // Reverts icon if errors
-    if (Object.keys(this.state.errors).length > 0) {
-      this.setState({ postToDelete: "" });
-    }
   };
 
   // Toggles like for the post
   toggleLike = async (likes, id) => {
     const { user } = this.props.auth;
-
-    // Clear errors if any before submitting
-    if (Object.keys(this.props.errors).length > 0) {
-      this.props.clearErrors();
-    }
 
     if (likes.indexOf(user._id) > -1) {
       // DELETE request
@@ -87,11 +56,6 @@ class TimelinePost extends Component {
   // Toggles dislike for the post
   toggleDislike = async (dislikes, id) => {
     const { user } = this.props.auth;
-
-    // Clear errors if any before submitting
-    if (Object.keys(this.props.errors).length > 0) {
-      this.props.clearErrors();
-    }
 
     if (dislikes.indexOf(user._id) > -1) {
       // DELETE request
@@ -242,7 +206,6 @@ class TimelinePost extends Component {
 }
 
 TimelinePost.propTypes = {
-  clearErrors: PropTypes.func.isRequired,
   deletePost: PropTypes.func.isRequired,
   addLike: PropTypes.func.isRequired,
   removeLike: PropTypes.func.isRequired,
@@ -250,16 +213,13 @@ TimelinePost.propTypes = {
   removeDislike: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  errors: state.errors,
 });
 
 export default connect(mapStateToProps, {
-  clearErrors,
   deletePost,
   addLike,
   removeLike,

@@ -29,43 +29,17 @@ class CommentsPost extends Component {
     commentToDelete: "",
     commentToLike: "",
     commentToDislike: "",
-    errors: {},
   };
-
-  timer = null;
-
-  componentWillReceiveProps(nextProps) {
-    willReceiveAsyncErrors(this, nextProps);
-  }
-
-  componentWillUnmount() {
-    clearErrorsOnUnmount(this);
-  }
 
   // Deletes comment if belongs to the user
   onDeleteClick = async (postId, commentId) => {
-    // Clear errors if any before submitting
-    if (Object.keys(this.props.errors).length > 0) {
-      this.props.clearErrors();
-    }
-
     // DELETE request
     await this.props.deleteComment(postId, commentId);
-
-    // Reverts icon if errors
-    if (Object.keys(this.state.errors).length > 0) {
-      this.setState({ postToDelete: "" });
-    }
   };
 
   // Toggles like for the comment
   toggleLike = async (likes, postId, commentId) => {
     const { user } = this.props.auth;
-
-    // Clear errors if any before submitting
-    if (Object.keys(this.props.errors).length > 0) {
-      this.props.clearErrors();
-    }
 
     if (likes.indexOf(user._id) > -1) {
       // DELETE request
@@ -83,11 +57,6 @@ class CommentsPost extends Component {
   toggleDislike = async (dislikes, postId, commentId) => {
     const { user } = this.props.auth;
 
-    // Clear errors if any before submitting
-    if (Object.keys(this.props.errors).length > 0) {
-      this.props.clearErrors();
-    }
-
     if (dislikes.indexOf(user._id) > -1) {
       // DELETE request
       await this.props.removeCommentDislike(postId, commentId);
@@ -101,6 +70,7 @@ class CommentsPost extends Component {
   };
 
   render() {
+    console.log('comment');
     const { user } = this.props.auth;
     const { postId, comment } = this.props;
     let closeIcon, likeIcon, dislikeIcon;
