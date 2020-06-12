@@ -182,7 +182,7 @@ exports.sendPasswordResetToken = catchAsync(async (req, res, next) => {
 
   try {
     // Send an email with a link to a form to reset the user's password
-    const resetURL = `http://127.0.0.1:3000/${resetToken}`;
+    const resetURL = `https://vkastanenka-devconnector.herokuapp.com/${resetToken}`;
     await new Email(user, resetURL).sendPasswordReset();
 
     // Respond
