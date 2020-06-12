@@ -14,8 +14,6 @@ import {
   addCommentDislike,
   removeCommentDislike,
 } from "../../../../../../../store/actions/postActions";
-import { willReceiveAsyncErrors, clearErrorsOnUnmount } from "../../../../../../../utils/formUtils";
-import { clearErrors } from "../../../../../../../store/actions/errorActions";
 
 // Utilities
 import { postTime } from "../../../../../../../utils/dates";
@@ -70,7 +68,6 @@ class CommentsPost extends Component {
   };
 
   render() {
-    console.log('comment');
     const { user } = this.props.auth;
     const { postId, comment } = this.props;
     let closeIcon, likeIcon, dislikeIcon;
@@ -177,7 +174,6 @@ class CommentsPost extends Component {
 }
 
 CommentsPost.propTypes = {
-  clearErrors: PropTypes.func.isRequired,
   deleteComment: PropTypes.func.isRequired,
   addCommentLike: PropTypes.func.isRequired,
   removeCommentLike: PropTypes.func.isRequired,
@@ -195,7 +191,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  clearErrors,
   deleteComment,
   addCommentLike,
   removeCommentLike,
