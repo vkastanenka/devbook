@@ -76,7 +76,7 @@ class User extends Component {
             hideProfile={() => this.setState({ showProfile: false })}
           />
           <div className="user__main">
-            <Navbar showProfile={() => this.setState({ showProfile: true })} />
+            <Navbar loading={false} showProfile={() => this.setState({ showProfile: true })} />
             <Content />
           </div>
         </Auxiliary>

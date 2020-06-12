@@ -66,9 +66,11 @@ export const login = (userData) => async (dispatch) => {
 
 // Logout user => Removes JWT from LS and auth headers
 export const logout = () => (dispatch) => {
+  dispatch(setAuthLoad());
   localStorage.removeItem("jwtToken");
   setAuthToken(false);
   dispatch(setCurrentUser({}));
+  dispatch(unsetAuthLoad());
 };
 
 // @route   POST api/v1/users/sendPasswordResetToken

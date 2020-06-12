@@ -1086,6 +1086,13 @@ body {
       color: #0669ac;
       transform: translateY(-2px); }
 
+.error__title {
+  text-align: center; }
+  .error__title h3 {
+    transition: all 0.3s; }
+    .error__title h3:hover {
+      color: #0669ac; }
+
 .landing {
   transform: translateY(-2vh); }
   @media only screen and (max-width: 50em) {

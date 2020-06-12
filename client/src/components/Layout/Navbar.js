@@ -53,7 +53,7 @@ class Navbar extends Component {
                 className="navbar__current-user-photo"
               />
               <h2 className="heading-secondary text-gradient heading-secondary--smaller font-megrim">
-                {user.name.split(" ")[0]}
+                {user.name ? user.name.split(" ")[0] : 'Loading...'}
               </h2>
             </div>
           </Link>

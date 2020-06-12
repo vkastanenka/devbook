@@ -1,0 +1,14 @@
+.error {
+  &__title {
+    text-align: center;
+
+    & h3 {
+      transition: all 0.3s;
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+  }
+}
+
