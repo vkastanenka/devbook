@@ -47,7 +47,7 @@ class Github extends Component {
 
     if (!user.profile) {
       return (
-        <div className="content-card__content--user-info flex flex--abs-center">
+        <div className="content-card__content--user-info flex flex--abs-center ta-center">
           <p className="text-primary content-card__no-info">
             This user has not yet created their developer profile
           </p>
@@ -55,7 +55,7 @@ class Github extends Component {
       );
     } else if (user.profile && !user.profile.githubusername) {
       return (
-        <div className="content-card__content--user-info flex flex--abs-center">
+        <div className="content-card__content--user-info flex flex--abs-center ta-center">
           <p className="text-primary content-card__no-info">
             This user has not provided their Github username
           </p>
@@ -66,7 +66,7 @@ class Github extends Component {
         content = <Spinner />;
       } else if (!loadingRepos && repos.length === 0) {
         content = (
-          <div className="content-card__content--user-info flex flex--abs-center">
+          <div className="content-card__content--user-info flex flex--abs-center ta-center">
             <p className="text-primary">
               This user has no repositories associated with their Github account
             </p>
@@ -74,7 +74,7 @@ class Github extends Component {
         );
       } else if (errors) {
         content = (
-          <div className="content-card__content--user-info flex flex--abs-center">
+          <div className="content-card__content--user-info flex flex--abs-center ta-center">
             <p className="text-primary">
               There was an error retrieving this user's repositories, please try
               again later!

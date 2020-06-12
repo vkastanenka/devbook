@@ -19,7 +19,8 @@ import Content from "./Layout/Content/Content";
 // User page with the main content
 class User extends Component {
   state = {
-    currentUser: true
+    currentUser: true,
+    showProfile: true,
   };
 
   componentDidMount() {
@@ -42,11 +43,11 @@ class User extends Component {
       this.props.getUserByHandle(nextProps.match.params.handle);
       // Set state if current user doesn't match url param
       if (nextProps.match.params.handle !== this.props.auth.user.handle) {
-        this.setState({ currentUser: false });
+        this.setState({ currentUser: false, showProfile: false });
       } else if (
         nextProps.match.params.handle === this.props.auth.user.handle
       ) {
-        this.setState({ currentUser: true });
+        this.setState({ currentUser: true, showProfile: false });
       }
     }
   }
@@ -69,9 +70,13 @@ class User extends Component {
     if (user && !loading) {
       content = (
         <Auxiliary>
-          <Profile currentUser={this.state.currentUser} />
+          <Profile
+            currentUser={this.state.currentUser}
+            showing={this.state.showProfile}
+            hideProfile={() => this.setState({ showProfile: false })}
+          />
           <div className="user__main">
-            <Navbar />
+            <Navbar showProfile={() => this.setState({ showProfile: true })} />
             <Content />
           </div>
         </Auxiliary>

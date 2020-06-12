@@ -22,7 +22,8 @@ $color-black: #000;
 $color-invalid: #eb4d4b;
 
 // SHADOWS
-$box-shadow--1: 0 1rem 2rem rgba($color-black, 0.15);
+$box-shadow--1: 2px 2px 10px rgba($color-black, 0.75);
+$box-shadow--2: 2px 0px 10px rgba($color-black, 0.75);
 $text-shadow--1: 0 0.5rem 2rem rgba($color-black, 0.15);
 $btn-hover-shadow: 0 1rem 2rem rgba($color-black, 0.2);
 $btn-active-shadow: 0 0.5rem 1rem rgba($color-black, 0.2);

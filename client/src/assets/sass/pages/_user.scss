@@ -4,18 +4,57 @@
   border-radius: 10px;
   box-shadow: $box-shadow--1;
   @extend %gradient-background--abstract-2;
+  position: relative;
+  overflow: hidden;
 
   display: flex;
+
+  @include respond(bp-small) {
+    height: 100vh;
+    width: 100vw;
+    border-radius: 0;
+  }
+
+  & > * {
+    transition: all 0.3s;
+  }
 
   &__profile {
     flex-basis: 15%;
     background-color: $color-grey-dark-5;
+
+    &--show {
+      transform: translateX(0) !important;
+    }
+
+    @include respond(bp-large) {
+      flex-basis: 20%;
+    }
+
+    @include respond(bp-medium) {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 25rem;
+      z-index: 300;
+      transform: translateX(-27.5rem);
+      box-shadow: $box-shadow--2
+    }
   }
 
   &__main {
     flex-basis: 85%;
     display: flex;
     flex-direction: column;
+
+    @include respond(bp-large) {
+      flex-basis: 80%;
+    }
+
+    @include respond(bp-medium) {
+      flex-basis: 100%;
+    }
   }
 
   &__content {

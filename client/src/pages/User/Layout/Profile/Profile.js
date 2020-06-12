@@ -11,6 +11,7 @@ import { clearErrors } from "../../../../store/actions/errorActions";
 import { updateUserPhoto } from "../../../../store/actions/userActions";
 
 // Components
+import Icon from "../../../../components/Icon/Icon";
 import Auxiliary from "../../../../components/HigherOrder/Auxiliary";
 import FollowIcon from "./Layout/FollowIcon";
 import SocialMediaLink from "./Layout/SocialMediaLink";
@@ -63,9 +64,15 @@ class Profile extends Component {
   };
 
   render() {
-    let user, profile;
+    let user, profile, profileClass;
     let twIcon, fbIcon, liIcon, ytIcon, inIcon;
-    const { currentUser, loading } = this.props;
+    const { currentUser, loading, showing, hideProfile } = this.props;
+
+    if (showing) {
+      profileClass = "user__profile user__profile--show profile";
+    } else {
+      profileClass = "user__profile profile";
+    }
 
     if (!loading) {
       user = this.props.users.user.user;
@@ -92,13 +99,19 @@ class Profile extends Component {
     }
 
     return (
-      <section className="user__profile profile">
+      // <section className="user__profile user__profile--hidden profile">
+      <section className={profileClass}>
         {loading ? (
           <div className="profile__head flex flex--abs-center">
             <h2 className="heading-secondary">...</h2>
           </div>
         ) : (
           <div className="profile__head">
+            <Icon
+              onClick={hideProfile}
+              type="cross"
+              className="profile__close-icon icon icon--large icon--white-primary icon--active"
+            />
             {!currentUser ? <FollowIcon /> : null}
             <div
               className={
@@ -216,6 +229,8 @@ class Profile extends Component {
 
 Profile.propTypes = {
   loading: PropTypes.bool,
+  showing: PropTypes.bool,
+  hideProfile: PropTypes.func,
   auth: PropTypes.object.isRequired,
   users: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,

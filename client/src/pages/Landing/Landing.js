@@ -54,6 +54,7 @@ class Landing extends Component {
               this.setState({ resettingPassword: false });
               this.props.history.push("/");
             }}
+            cardClassName="content-card--popup"
           >
             <ResetPassword
               token={this.state.passwordResetToken}

@@ -1,6 +1,11 @@
 .content {
   display: flex;
 
+  @include respond(bp-small) {
+    display: inline-block;
+    overflow-y: scroll;
+  }
+
   & > :first-child {
     flex-basis: 55%;
   }
@@ -11,5 +16,20 @@
 
   & > * {
     margin: 2rem;
+    width: 100% !important;
+
+    @include respond(bp-medium) {
+      margin: 1rem;
+    }
+
+    @include respond(bp-small) {
+      margin: 2rem auto;
+      width: 90% !important;
+    }
+
+    @include respond(bp-smaller) {
+      margin: 2rem auto;
+      width: 95% !important;
+    }
   }
 }

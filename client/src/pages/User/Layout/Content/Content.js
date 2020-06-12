@@ -97,7 +97,7 @@ class Content extends Component {
             this.setState({ viewingUser: "github" });
           }}
           heading="Experience"
-          cardClassName="content-card--dark content-card--box-shadow"
+          cardClassName="content-card--dark content-card--box-shadow content-card--popup"
         >
           <Experience />
         </ContentCard>
@@ -126,6 +126,7 @@ class Content extends Component {
             iconOnClick={() => {
               this.setState({ addingEducation: false });
             }}
+            cardClassName="content-card--popup"
           >
             <EducationForm />
           </ContentCard>
@@ -141,6 +142,7 @@ class Content extends Component {
             iconOnClick={() => {
               this.setState({ addingExperience: false });
             }}
+            cardClassName="content-card--popup"
           >
             <ExperienceForm />
           </ContentCard>

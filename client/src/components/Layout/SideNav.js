@@ -71,6 +71,7 @@ class SideNav extends Component {
               this.setState({ browsingDevelopers: false });
               this.props.inactivate();
             }}
+            cardClassName="content-card--popup"
           >
             <BrowseDevelopers
               closeForm={() => {
@@ -92,6 +93,7 @@ class SideNav extends Component {
               this.setState({ creatingProfile: false });
               this.props.inactivate();
             }}
+            cardClassName="content-card--popup"
           >
             <UpdateProfile new={true} />
           </ContentCard>
@@ -108,6 +110,7 @@ class SideNav extends Component {
               this.setState({ updatingProfile: false });
               this.props.inactivate();
             }}
+            cardClassName="content-card--popup"
           >
             <UpdateProfile new={false} />
           </ContentCard>
@@ -124,6 +127,7 @@ class SideNav extends Component {
               this.setState({ updatingAccount: false });
               this.props.inactivate();
             }}
+            cardClassName="content-card--popup"
           >
             <div className="content-card__content content-card__content--update-account ma-y-sm">
               <UpdateAccount />

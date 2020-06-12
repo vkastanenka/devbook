@@ -1,9 +1,24 @@
 .content-card {
   background-color: $color-grey-light-1;
   border-radius: 10px;
-  min-width: 50rem;
   max-height: 90vh;
   overflow: hidden;
+
+  &--popup {
+    min-width: 50rem;
+
+    @include respond(bp-small) {
+      min-width: 45rem;
+    }
+
+    @include respond(bp-smaller) {
+      min-width: 40rem;
+    }
+
+    @include respond(bp-smallest) {
+      min-width: 35rem;
+    }
+  }
 
   &--dark {
     background-color: $color-grey-dark-6;
@@ -20,6 +35,10 @@
     border-radius: 10px 10px 0 0;
     height: 10vh;
     @extend %flex-center;
+
+    @include respond(bp-small) {
+      height: 8vh;
+    }
   }
 
   &__icon {
@@ -46,8 +65,17 @@
     }
 
     &--user-info {
-      height: calc(57.5vh + 12rem);
+      min-height: calc(85vh - 15rem);
+      max-height: calc(85vh - 10rem);
       color: $color-grey-light-1;
+
+      @include respond(bp-medium) {
+        max-height: calc(85vh - 8rem);
+      }
+
+      @include respond(bp-small) {
+        max-height: calc(92vh - 14rem);
+      }
     }
 
     &--credentials {

@@ -274,7 +274,7 @@ body {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   padding: 1.6rem 5rem;
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15); }
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.75); }
   .alert--success {
     background-color: #0669ac; }
   .alert--error {
@@ -322,7 +322,7 @@ body {
     .browse-devs__page-number:hover, .browse-devs__page-number--active {
       color: #f7f7f7;
       background-color: #149bf1;
-      box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15); }
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.75); }
   .browse-devs__dev-list {
     width: 100%;
     margin: 0 auto;
@@ -420,9 +420,19 @@ body {
 .content-card {
   background-color: #f7f7f7;
   border-radius: 10px;
-  min-width: 50rem;
   max-height: 90vh;
   overflow: hidden; }
+  .content-card--popup {
+    min-width: 50rem; }
+    @media only screen and (max-width: 37.5em) {
+      .content-card--popup {
+        min-width: 45rem; } }
+    @media only screen and (max-width: 31.25em) {
+      .content-card--popup {
+        min-width: 40rem; } }
+    @media only screen and (max-width: 25em) {
+      .content-card--popup {
+        min-width: 35rem; } }
   .content-card--dark {
     background-color: #111; }
   .content-card--box-shadow {
@@ -432,6 +442,9 @@ body {
     text-align: center;
     border-radius: 10px 10px 0 0;
     height: 10vh; }
+    @media only screen and (max-width: 37.5em) {
+      .content-card__heading {
+        height: 8vh; } }
   .content-card__icon {
     position: absolute;
     top: 1rem;
@@ -446,8 +459,15 @@ body {
     .content-card__content--update-account {
       max-height: calc(80vh - 1.5rem); }
     .content-card__content--user-info {
-      height: calc(57.5vh + 12rem);
+      min-height: calc(85vh - 15rem);
+      max-height: calc(85vh - 10rem);
       color: #f7f7f7; }
+      @media only screen and (max-width: 50em) {
+        .content-card__content--user-info {
+          max-height: calc(85vh - 8rem); } }
+      @media only screen and (max-width: 37.5em) {
+        .content-card__content--user-info {
+          max-height: calc(92vh - 14rem); } }
     .content-card__content--credentials {
       max-height: 80vh; }
   .content-card__list {
@@ -768,23 +788,53 @@ body {
   color: #f7f7f7; }
   .timeline__form {
     width: 100%;
-    height: 12rem; }
+    height: 12rem;
+    position: relative;
+    z-index: 10; }
   .timeline__feed {
     overflow-y: auto;
     padding: 2rem; }
     .timeline__feed--user {
-      height: 54vh; }
+      max-height: calc(85vh - 25rem); }
+      @media only screen and (max-width: 50em) {
+        .timeline__feed--user {
+          max-height: calc(85vh - 23rem); } }
+      @media only screen and (max-width: 37.5em) {
+        .timeline__feed--user {
+          max-height: calc(92vh - 29rem); } }
     .timeline__feed--other {
-      height: calc(57.5vh + 12rem); }
+      max-height: calc(85vh - 10rem); }
+      @media only screen and (max-width: 50em) {
+        .timeline__feed--other {
+          max-height: calc(85vh - 8rem); } }
+      @media only screen and (max-width: 37.5em) {
+        .timeline__feed--other {
+          max-height: calc(92vh - 14rem); } }
 
 .content {
   display: flex; }
+  @media only screen and (max-width: 37.5em) {
+    .content {
+      display: inline-block;
+      overflow-y: scroll; } }
   .content > :first-child {
     flex-basis: 55%; }
   .content > :nth-child(2) {
     flex-basis: 45%; }
   .content > * {
-    margin: 2rem; }
+    margin: 2rem;
+    width: 100% !important; }
+    @media only screen and (max-width: 50em) {
+      .content > * {
+        margin: 1rem; } }
+    @media only screen and (max-width: 37.5em) {
+      .content > * {
+        margin: 2rem auto;
+        width: 90% !important; } }
+    @media only screen and (max-width: 31.25em) {
+      .content > * {
+        margin: 2rem auto;
+        width: 95% !important; } }
 
 .navbar {
   height: 6rem;
@@ -794,9 +844,17 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem; }
-  .navbar__current-user {
+  @media only screen and (max-width: 37.5em) {
+    .navbar {
+      border-radius: 0;
+      height: 10rem; } }
+  .navbar__user {
     display: flex;
     align-items: center; }
+  .navbar__current-user {
+    display: flex;
+    align-items: center;
+    margin-right: 1.5rem; }
     .navbar__current-user > :first-child {
       margin-right: 1.5rem; }
     .navbar__current-user > :nth-child(2) {
@@ -812,18 +870,29 @@ body {
   .navbar__options-icon {
     transform: translateY(2px);
     z-index: 10 !important; }
+  .navbar__profile-icon {
+    display: none; }
+    @media only screen and (max-width: 50em) {
+      .navbar__profile-icon {
+        display: inline-block; } }
 
 .profile {
   overflow: hidden;
   display: flex;
   flex-direction: column;
   border-radius: 10px 0 0 10px; }
+  @media only screen and (max-width: 37.5em) {
+    .profile {
+      border-radius: 0; } }
   .profile > * {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     padding: 2rem 3rem; }
+    @media only screen and (max-width: 75em) {
+      .profile > * {
+        padding: 1.5rem 2rem; } }
   .profile__head {
     flex-basis: 30%;
     position: relative; }
@@ -846,6 +915,14 @@ body {
       fill: #f7f7f7; }
     .profile__social-alerts:hover > * {
       transform: translateY(-2px); }
+  .profile__close-icon {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    display: none; }
+    @media only screen and (max-width: 50em) {
+      .profile__close-icon {
+        display: inline-block; } }
   .profile__heading {
     font-size: 1.6rem;
     padding: 0rem 1rem;
@@ -855,6 +932,9 @@ body {
     background-color: #111; }
     .profile__head > :not(:last-child) {
       margin-bottom: 1rem; }
+      @media only screen and (max-width: 50em) {
+        .profile__head > :not(:last-child) {
+          margin-bottom: 1.5rem; } }
   .profile__pfp-container {
     width: 14rem;
     height: 14rem;
@@ -862,6 +942,10 @@ body {
     position: relative;
     padding: 1rem;
     border: 2px solid #0669ac; }
+    @media only screen and (max-width: 50em) {
+      .profile__pfp-container {
+        width: 15rem;
+        height: 15rem; } }
     .profile__pfp-container--current-user:hover .profile__pfp {
       filter: blur(0.3rem) brightness(50%); }
     .profile__pfp-container--current-user:hover .profile__pfp-input {
@@ -887,6 +971,12 @@ body {
     display: flex; }
     .profile__social > * {
       margin: 0 0.7rem; }
+      @media only screen and (max-width: 62.5em) {
+        .profile__social > * {
+          margin: 0 0.5rem; } }
+      @media only screen and (max-width: 50em) {
+        .profile__social > * {
+          margin: 0 0.7rem; } }
   .profile__body-selection {
     display: flex;
     align-items: center;
@@ -908,6 +998,9 @@ body {
       width: 100%; }
       .profile__body > * > .profile__heading {
         margin-bottom: 1rem; }
+        @media only screen and (max-width: 50em) {
+          .profile__body > * > .profile__heading {
+            margin-bottom: 1.5rem; } }
   .profile__skills-list-item {
     display: inline-block; }
     .profile__skills-list-item:not(:first-child) {
@@ -921,6 +1014,9 @@ body {
     padding: 0rem 1rem; }
   .profile__following-list-item {
     margin: 0 auto; }
+    @media only screen and (max-width: 50em) {
+      .profile__following-list-item {
+        width: 80%; } }
     .profile__following-list-item:not(:last-child) {
       margin-bottom: 1.75rem; }
     .profile__following-list-item > :first-child {
@@ -990,14 +1086,44 @@ body {
   height: 95vh;
   width: 97vw;
   border-radius: 10px;
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.75);
+  position: relative;
+  overflow: hidden;
   display: flex; }
+  @media only screen and (max-width: 37.5em) {
+    .user {
+      height: 100vh;
+      width: 100vw;
+      border-radius: 0; } }
+  .user > * {
+    transition: all 0.3s; }
   .user__profile {
     flex-basis: 15%;
     background-color: #222; }
+    .user__profile--show {
+      transform: translateX(0) !important; }
+    @media only screen and (max-width: 62.5em) {
+      .user__profile {
+        flex-basis: 20%; } }
+    @media only screen and (max-width: 50em) {
+      .user__profile {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 25rem;
+        z-index: 300;
+        transform: translateX(-27.5rem);
+        box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.75); } }
   .user__main {
     flex-basis: 85%;
     display: flex;
     flex-direction: column; }
+    @media only screen and (max-width: 62.5em) {
+      .user__main {
+        flex-basis: 80%; } }
+    @media only screen and (max-width: 50em) {
+      .user__main {
+        flex-basis: 100%; } }
   .user__content {
     min-height: calc(100% - 6rem); }

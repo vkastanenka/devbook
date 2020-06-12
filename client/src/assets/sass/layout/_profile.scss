@@ -4,12 +4,20 @@
   flex-direction: column;
   border-radius: 10px 0 0 10px;
 
+  @include respond(bp-small) {
+    border-radius: 0;
+  }
+
   & > * {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     padding: 2rem 3rem;
+
+    @include respond(bp-larger) {
+      padding: 1.5rem 2rem;
+    }
   }
 
   &__head {
@@ -52,6 +60,17 @@
     }
   }
 
+  &__close-icon {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    display: none;
+
+    @include respond(bp-medium) {
+      display: inline-block;
+    }
+  }
+
   &__heading {
     font-size: 1.6rem;
     @extend %gradient-background--primary;
@@ -65,6 +84,10 @@
 
     & > :not(:last-child) {
       margin-bottom: 1rem;
+
+      @include respond(bp-medium) {
+        margin-bottom: 1.5rem;
+      }
     }
   }
 
@@ -75,6 +98,11 @@
     position: relative;
     padding: 1rem;
     border: 2px solid $color-primary;
+
+    @include respond(bp-medium) {
+      width: 15rem;
+      height: 15rem;
+    }
 
     &--current-user {
       &:hover .profile__pfp {
@@ -113,6 +141,14 @@
 
     & > * {
       margin: 0 0.7rem;
+
+      @include respond(bp-large) {
+        margin: 0 0.5rem;
+      }
+
+      @include respond(bp-medium) {
+        margin: 0 0.7rem;
+      }
     }
   }
 
@@ -145,6 +181,10 @@
 
       & > .profile__heading {
         margin-bottom: 1rem;
+
+        @include respond(bp-medium) {
+          margin-bottom: 1.5rem;
+        }
       }
     }
   }
@@ -172,6 +212,10 @@
 
   &__following-list-item {
     margin: 0 auto;
+
+    @include respond(bp-medium) {
+      width: 80%;
+    }
 
     &:not(:last-child) {
       margin-bottom: 1.75rem;

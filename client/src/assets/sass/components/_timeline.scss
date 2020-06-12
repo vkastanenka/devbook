@@ -5,6 +5,8 @@
   &__form {
     width: 100%;
     height: 12rem;
+    position: relative;
+    z-index: 10;
   }
 
   &__feed {
@@ -12,11 +14,40 @@
     padding: 2rem;
 
     &--user {
-      height: 54vh;
+      max-height: calc(85vh - 25rem);
+
+      @include respond(bp-medium) {
+        max-height: calc(85vh - 23rem);
+      }
+
+      @include respond(bp-small) {
+        max-height: calc(92vh - 29rem);
+      }
     }
 
     &--other {
-      height: calc(57.5vh + 12rem);
+      max-height: calc(85vh - 10rem);
+
+      @include respond(bp-medium) {
+        max-height: calc(85vh - 8rem);
+      }
+
+      @include respond(bp-small) {
+        max-height: calc(92vh - 14rem);
+      }
     }
+
+    // &--user-info {
+    //   max-height: calc(85vh - 10rem);
+    //   color: $color-grey-light-1;
+
+    //   @include respond(bp-medium) {
+    //     max-height: calc(85vh - 8rem);
+    //   }
+
+    //   @include respond(bp-small) {
+    //     max-height: calc(92vh - 14rem);
+    //   }
+    // }
   }
 }

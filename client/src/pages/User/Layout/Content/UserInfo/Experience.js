@@ -52,7 +52,7 @@ class Experience extends Component {
 
     if (!user.profile) {
       return (
-        <div className="content-card__content--user-info flex flex--abs-center">
+        <div className="content-card__content--user-info flex flex--abs-center ta-center">
           <p className="text-primary content-card__no-info">
             This user has not yet created their developer profile
           </p>
@@ -62,7 +62,7 @@ class Experience extends Component {
       const { experience } = this.props.users.user.user.profile;
       if (experience.length === 0) {
         content = (
-          <div className="content-card__content--user-info flex flex--abs-center">
+          <div className="content-card__content--user-info flex flex--abs-center ta-center">
             <p className="text-primary">
               This user has not yet added any experience to their profile
             </p>

@@ -9,9 +9,20 @@
 
   padding: 0 2rem;
 
+  @include respond(bp-small) {
+    border-radius: 0;
+    height: 10rem;
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+  }
+
   &__current-user {
     display: flex;
     align-items: center;
+    margin-right: 1.5rem;
 
     & > :first-child {
       margin-right: 1.5rem;
@@ -38,5 +49,13 @@
   &__options-icon {
     transform: translateY(2px);
     z-index: 10 !important;
+  }
+
+  &__profile-icon {
+    display: none;
+
+    @include respond(bp-medium) {
+      display: inline-block;
+    }
   }
 }

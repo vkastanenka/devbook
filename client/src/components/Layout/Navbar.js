@@ -43,19 +43,26 @@ class Navbar extends Component {
 
     if (!this.props.loading) {
       userLink = (
-        <Link to={`/user/${user.handle}`} className="link-style">
-          <div className="navbar__current-user">
-            {/* eslint-disable-next-line */}
-            <img
-              src={this.tryRequirePhoto()}
-              alt="User photo"
-              className="navbar__current-user-photo"
-            />
-            <h2 className="heading-secondary text-gradient heading-secondary--smaller font-megrim">
-              {user.name.split(" ")[0]}
-            </h2>
-          </div>
-        </Link>
+        <div className="navbar__user">
+          <Link to={`/user/${user.handle}`} className="link-style">
+            <div className="navbar__current-user">
+              {/* eslint-disable-next-line */}
+              <img
+                src={this.tryRequirePhoto()}
+                alt="User photo"
+                className="navbar__current-user-photo"
+              />
+              <h2 className="heading-secondary text-gradient heading-secondary--smaller font-megrim">
+                {user.name.split(" ")[0]}
+              </h2>
+            </div>
+          </Link>
+          <Icon
+            onClick={this.props.showProfile}
+            type="level-down"
+            className="navbar__profile-icon icon icon--large icon--black-primary icon--active"
+          />
+        </div>
       );
 
       sideNav = (
@@ -101,6 +108,7 @@ class Navbar extends Component {
 Navbar.propTypes = {
   loading: PropTypes.bool,
   auth: PropTypes.object.isRequired,
+  showProfile: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
