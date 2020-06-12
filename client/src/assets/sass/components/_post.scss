@@ -12,8 +12,8 @@
 
   &__close-icon {
     position: absolute;
-    top: 2rem;
-    right: 2rem;
+    top: 1rem;
+    right: 1rem;
   }
 
   &__content {
@@ -38,6 +38,18 @@
   &__info {
     display: flex;
 
+    @include respond(bp-large) {
+      flex-direction: column;
+    }
+
+    @include respond(bp-small) {
+      flex-direction: row;
+    }
+
+    @include respond(bp-smaller) {
+      flex-direction: column;
+    }
+
     & > :not(:last-child) {
       margin-right: 1rem;
 
@@ -55,6 +67,20 @@
 
     & > :not(:first-child) {
       color: $color-grey-dark-2;
+    }
+
+    &--secondary {
+      display: flex;
+
+      & > :first-child {
+        margin-right: 1rem;
+
+        transition: all 0.3s;
+
+        &:hover {
+          color: $color-primary-light;
+        }
+      }
     }
   }
 

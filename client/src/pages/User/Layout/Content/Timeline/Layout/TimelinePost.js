@@ -163,13 +163,15 @@ class TimelinePost extends Component {
               >
                 {post.user.name}
               </Link>
-              <Link
-                to={`/user/${post.user.handle}`}
-                className="link-style text-secondary"
-              >
-                @{post.user.handle}
-              </Link>
-              <p className="text-secondary">{postTime(post.date)}</p>
+              <div className="post__info--secondary">
+                <Link
+                  to={`/user/${post.user.handle}`}
+                  className="link-style text-secondary"
+                >
+                  @{post.user.handle}
+                </Link>
+                <p className="text-secondary">{postTime(post.date)}</p>
+              </div>
             </div>
             <p className="text-primary post__text">{post.text}</p>
             <div className="post__options">
