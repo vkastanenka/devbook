@@ -132,9 +132,7 @@ exports.login = catchAsync(async (req, res, next) => {
   // Find user
   const user = await User.findOne({ email: loginEmail })
     .select("+password")
-    .populate([
-      { path: "profile" },
-    ]);
+    .populate([{ path: "profile" }]);
 
   // Check is either email or password are incorrect
   if (!user || !(await user.correctPassword(loginPassword, user.password))) {
@@ -182,8 +180,7 @@ exports.sendPasswordResetToken = catchAsync(async (req, res, next) => {
 
   try {
     // Send an email with a link to a form to reset the user's password
-    // const resetURL = `https://vkastanenka-devconnector.herokuapp.com/${resetToken}`;
-    const resetURL = `http://localhost:3000/${resetToken}`;
+    const resetURL = `https://vkastanenka-devbook.herokuapp.com/${resetToken}`;
     await new Email(user, resetURL).sendPasswordReset();
 
     // Respond
