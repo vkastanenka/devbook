@@ -11,7 +11,7 @@ Redux - Client side state management
 Node.js - Back end runtime environment used
 Express - Back end framework used to build RESTful API
 MongoDB - Database used
-Mongoose - Object data modelling library for MongoDB
+Mongoose - Object data modeling library for MongoDB
 
 # Authors
 Victoria Kastanenka
