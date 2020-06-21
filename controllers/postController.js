@@ -123,12 +123,7 @@ exports.createCurrentUserPost = catchAsync(async (req, res, next) => {
   // Create a new post document
   const newPost = new Post({ user: req.user.id, text: req.body.text });
 
-  // Add the new post's ID to the current user's document
-  const user = await User.findOne({ _id: req.user.id });
-  user.posts.unshift(newPost._id);
-
-  // Save the user and post documents
-  await user.save({ validateBeforeSave: false });
+  // Save the post document
   await newPost.save();
 
   // Obtain post with populated fields
@@ -150,14 +145,6 @@ exports.deleteCurrentUserPost = catchAsync(async (req, res, next) => {
   if (post.user._id.toString() !== req.user.id) {
     return res.status(401).json({ notauthorized: "User not authorized" });
   }
-
-  // Find the user document to remove post id reference from
-  const user = await User.findById(req.user.id);
-
-  // Remove reference to post from user document
-  const removalIndex = user.posts.indexOf(req.params.id);
-  user.posts.splice(removalIndex, 1);
-  await user.save({ validateBeforeSave: false });
 
   // Delete and repond
   await post.remove();

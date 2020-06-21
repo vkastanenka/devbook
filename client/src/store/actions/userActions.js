@@ -7,7 +7,8 @@ import decodeToken from "../../utils/decodeToken";
 import actionDispatch from "../../utils/actionDispatch";
 
 // Actions
-import { setCurrentUser, updateSetUser } from "./authActions";
+import { setCurrentUser } from "./authActions";
+// import { setCurrentUser, updateSetUser } from "./authActions";
 
 // Sets loading state
 export const setUserLoad = () => {
@@ -66,16 +67,21 @@ export const getAllUsers = () => async (dispatch) => {
 // @desc    Update current user's photo
 // @access  Protected
 export const updateUserPhoto = (photo) => async (dispatch) => {
-  try {
-    const res = await axios.patch(
-      "/api/v1/users/updateCurrentUserPhoto",
-      photo
-    );
-    const decoded = decodeToken(res.data.token);
-    dispatch(updateSetUser(decoded));
-  } catch (err) {
-    actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
-  }
+  actionDispatch(
+    actionTypes.GET_ERRORS,
+    { noPhoto: "Feature unavailable in production" },
+    dispatch
+  );
+  // try {
+  //   const res = await axios.patch(
+  //     "/api/v1/users/updateCurrentUserPhoto",
+  //     photo
+  //   );
+  //   const decoded = decodeToken(res.data.token);
+  //   dispatch(updateSetUser(decoded));
+  // } catch (err) {
+  //   actionDispatch(actionTypes.GET_ERRORS, err.response.data, dispatch);
+  // }
 };
 
 // @route   POST api/v1/users/follow/:id

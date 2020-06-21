@@ -5,72 +5,87 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 
 // User schema
-const userSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: [true, "Please provide your email"],
-    unique: true,
-    lowercase: true,
-    validate: [validator.isEmail],
-  },
-  name: {
-    type: String,
-    required: [true, "Please tell us your name"],
-  },
-  handle: {
-    type: String,
-    required: [true, "User must have a handle"],
-    unique: true,
-    max: 12,
-  },
-  photo: {
-    type: String,
-    default: "default.jpg",
-  },
-  role: {
-    type: String,
-    enum: ["user", "admin"],
-    default: "user",
-  },
-  password: {
-    type: String,
-    required: [true, "Please provide a password"],
-    minlength: 8,
-    select: false,
-  },
-  passwordConfirm: {
-    type: String,
-    required: [true, "Please confirm your password"],
-    validate: {
-      validator: function (el) {
-        return el === this.password;
+const userSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: [true, "Please provide your email"],
+      unique: true,
+      lowercase: true,
+      validate: [validator.isEmail],
+    },
+    name: {
+      type: String,
+      required: [true, "Please tell us your name"],
+    },
+    handle: {
+      type: String,
+      required: [true, "User must have a handle"],
+      unique: true,
+      max: 12,
+    },
+    photo: {
+      type: String,
+      default: "default.jpg",
+    },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
+    password: {
+      type: String,
+      required: [true, "Please provide a password"],
+      minlength: 8,
+      select: false,
+    },
+    passwordConfirm: {
+      type: String,
+      required: [true, "Please confirm your password"],
+      validate: {
+        validator: function (el) {
+          return el === this.password;
+        },
+        message: "Passwords must match",
       },
-      message: "Passwords must match",
+    },
+    following: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+      },
+    ],
+    passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
+    date: {
+      type: Date,
+      default: Date.now(),
     },
   },
-  profile: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Profile",
-  },
-  following: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ],
-  posts: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Post",
-    },
-  ],
-  passwordChangedAt: Date,
-  passwordResetToken: String,
-  passwordResetExpires: Date,
-  date: {
-    type: Date,
-    default: Date.now(),
-  },
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
+);
+
+//////////////////////
+// Virtual Properties
+
+// Reference to user's profile
+userSchema.virtual("profile", {
+  ref: "Profile",
+  localField: "_id",
+  foreignField: "user",
+  justOne: true,
+});
+
+// Reference to user's posts
+userSchema.virtual("posts", {
+  ref: "Post",
+  localField: "_id",
+  foreignField: "user",
+  justOne: false,
 });
 
 //////////////////////

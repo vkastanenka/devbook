@@ -15,17 +15,14 @@
 
   @include respond(bp-large) {
     width: 85vw;
-    height: 70vh;
   }
 
   @include respond(bp-medium) {
     width: 90vw;
-    height: 65vh;
   }
 
   @include respond(bp-smaller) {
     width: 95vw;
-    height: 62.5vh;
   }
 
   &__forms {

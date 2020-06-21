@@ -88,24 +88,24 @@ class ResetPassword extends Component {
         <InputGroup
           type="password"
           name="password"
-          id="password"
+          id="passwordReset"
           placeholder="New password"
           value={this.state.password}
           required={true}
           onChange={(e) => this.onChange(e)}
-          htmlFor="password"
+          htmlFor="passwordReset"
           label="New password"
           errors={errors.password || errors.invalidToken}
         />
         <InputGroup
           type="password"
           name="passwordConfirm"
-          id="passwordConfirm"
+          id="passwordResetConfirm"
           placeholder="Confirm new password"
           value={this.state.passwordConfirm}
           required={true}
           onChange={(e) => this.onChange(e)}
-          htmlFor="passwordConfirm"
+          htmlFor="passwordResetConfirm"
           label="Confirm new password"
           errors={errors.passwordConfirm || errors.invalidToken}
         />
@@ -120,7 +120,7 @@ class ResetPassword extends Component {
               submitted,
               "Reset password",
               "Resetting password...",
-              "Reset password!"
+              "Reset password! Redirecting..."
             )}
           </button>
         </div>

@@ -1,5 +1,6 @@
 .landing {
   transform: translateY(-2vh);
+  max-height: 100vh;
 
   @include respond(bp-medium) {
     transform: translateY(0);

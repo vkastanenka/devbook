@@ -600,16 +600,13 @@ body {
       width: 80vw; } }
   @media only screen and (max-width: 62.5em) {
     .login-register {
-      width: 85vw;
-      height: 70vh; } }
+      width: 85vw; } }
   @media only screen and (max-width: 50em) {
     .login-register {
-      width: 90vw;
-      height: 65vh; } }
+      width: 90vw; } }
   @media only screen and (max-width: 31.25em) {
     .login-register {
-      width: 95vw;
-      height: 62.5vh; } }
+      width: 95vw; } }
   .login-register__forms {
     width: 100%;
     display: flex;
@@ -1080,7 +1077,8 @@ body {
       color: #0669ac; }
 
 .landing {
-  transform: translateY(-2vh); }
+  transform: translateY(-2vh);
+  max-height: 100vh; }
   @media only screen and (max-width: 50em) {
     .landing {
       transform: translateY(0); } }

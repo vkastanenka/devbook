@@ -27,7 +27,7 @@ router.get("/user/:id", userController.getUserById);
 // @route   GET api/v1/users/handle/:handle
 // @desc    Returns user by handle
 // @access  Public
-router.get('/handle/:handle', userController.getUserByHandle);
+router.get("/handle/:handle", userController.getUserByHandle);
 
 // @route   POST api/v1/users/register
 // @desc    Register user
@@ -74,8 +74,8 @@ router.patch("/updateCurrentUser", userController.updateCurrentUser);
 // @access  Protected
 router.patch(
   "/updateCurrentUserPhoto",
-  // userController.uploadUserPhoto,
-  // userController.resizeUserPhoto,
+  userController.uploadUserPhoto,
+  userController.resizeUserPhoto,
   userController.updateCurrentUserPhoto
 );
 

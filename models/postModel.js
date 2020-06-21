@@ -59,7 +59,7 @@ const postSchema = new mongoose.Schema({
   },
 });
 
-///////////////////
+////////////////////
 // Query Middleware
 
 // Populate required fields for front-end profile page

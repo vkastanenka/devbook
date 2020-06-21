@@ -73,16 +73,14 @@ exports.getAllUsers = factory.getAll(User);
 // @route   GET api/v1/users/users/:id
 // @desc    Returns users matching id parameter
 // @access  Public
-exports.getUserById = factory.getOne(User);
+exports.getUserById = factory.getOne(User, "profile");
 
 // @route   GET api/v1/users/handle/:handle
 // @desc    Returns user and posts by handle
 // @access  Public
 exports.getUserByHandle = catchAsync(async (req, res, next) => {
   // Find user
-  const user = await User.findOne({
-    handle: req.params.handle,
-  }).populate([
+  const user = await User.findOne({ handle: req.params.handle }).populate([
     { path: "profile" },
     { path: "posts", populate: { path: "comments" } },
     {
@@ -93,12 +91,12 @@ exports.getUserByHandle = catchAsync(async (req, res, next) => {
   ]);
 
   // Respond if no user is found
-  if (!user)
-    return res
-      .status(404)
-      .json({ noUserHandle: "There is no user with that handle" });
+  if (!user) {
+    const noUserHandle = "There is no user with that handle";
+    return res.status(404).json({ noUserHandle });
+  }
 
-  // Organize posts
+  // Organize posts from every followed user
   const followPostsSubArray = user.following
     .filter((follow) => follow.posts.length !== 0)
     .map((follow) => follow.posts);
@@ -107,6 +105,8 @@ exports.getUserByHandle = catchAsync(async (req, res, next) => {
   followPostsSubArray.forEach((follow) =>
     follow.forEach((post) => followPosts.push(post))
   );
+
+  // Combine user's and followed users' posts
   let posts = [...user.posts, ...followPosts];
 
   // Sort the posts from newest to oldest
@@ -150,7 +150,7 @@ exports.updateCurrentUser = catchAsync(async (req, res, next) => {
     return res.status(400).json(errors);
   }
 
-  // Filter the user's request for only name and email fields
+  // Filter the user's request for only name, email, and handle fields
   const filteredBody = filterObj(req.body, "email", "name", "handle");
 
   // Update user document
@@ -174,26 +174,25 @@ exports.updateCurrentUser = catchAsync(async (req, res, next) => {
 // @desc    Update current user's photo
 // @access  Protected
 exports.updateCurrentUserPhoto = catchAsync(async (req, res, next) => {
-  // Normal action for updating user profile
-  // if (req.file) {
-  // // Update user
-  // const photoName = req.file.filename;
-  // const user = await User.findOneAndUpdate(
-  //   { _id: req.user._id },
-  //   { photo: photoName },
-  //   { new: true }
-  // );
+  // If a file is found
+  if (req.file) {
+  // Update user
+  const photoName = req.file.filename;
+  const user = await User.findOneAndUpdate(
+    { _id: req.user._id },
+    { photo: photoName },
+    { new: true }
+  );
 
-  // // Send updated JWT
-  // const token = createJWT(user);
-  // return res.status(200).json({ user, token });
-  // }
+  // Send updated JWT
+  const token = createJWT(user);
+  return res.status(200).json({ user, token });
+  }
 
   // Error handling
-  // const errors = {};
-  // errors.noPhoto = "Please upload a photo!";
-  // return res.status(400).json(errors);
-  return res.status(400).json({ noPhoto: "Feature unavailable in production" });
+  const errors = {};
+  errors.noPhoto = "Please upload a photo!";
+  return res.status(400).json(errors);
 });
 
 // @route   POST api/v1/users/follow/:id

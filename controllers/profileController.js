@@ -69,13 +69,7 @@ exports.createCurrentUserProfile = catchAsync(async (req, res, next) => {
   };
 
   // Create the new profile
-  const newProfile = await new Profile(profileBody).save();
-
-  // Add the new profile's id to the current user's document
-  await User.findOneAndUpdate(
-    { _id: req.user._id },
-    { profile: newProfile._id }
-  );
+  await new Profile(profileBody).save();
 
   // Retrieve the updated user document with the profile
   const updatedUser = await User.findById(req.user._id).populate({
@@ -86,7 +80,7 @@ exports.createCurrentUserProfile = catchAsync(async (req, res, next) => {
   const token = createJWT(updatedUser);
 
   // Respond
-  return res.status(201).json({ status: "success", token });
+  return res.status(201).json({ status: "success", token, updatedUser });
 });
 
 // @route   PATCH api/v1/profiles/currentUser
@@ -97,8 +91,12 @@ exports.updateCurrentUserProfile = catchAsync(async (req, res, next) => {
   const { errors, isValid } = validateProfileInput(req.body);
   if (!isValid) return res.status(400).json(errors);
 
-  // Find current user's profile document
+  // Check if the user has yet created a profile
   const profile = await Profile.findOne({ user: req.user._id });
+  if (!profile) {
+    errors.notCreated = "User has already not yet created a profile";
+    return res.status(400).json(errors);
+  }
 
   // Format profile body
   const profileBody = {
@@ -128,7 +126,7 @@ exports.updateCurrentUserProfile = catchAsync(async (req, res, next) => {
   const token = createJWT(updatedUser);
 
   // Respond
-  return res.status(200).json({ status: "success", token });
+  return res.status(200).json({ status: "success", token, updatedUser });
 });
 
 // @route   POST api/v1/profiles/education
