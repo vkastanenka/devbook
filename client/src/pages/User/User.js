@@ -76,7 +76,10 @@ class User extends Component {
             hideProfile={() => this.setState({ showProfile: false })}
           />
           <div className="user__main">
-            <Navbar loading={false} showProfile={() => this.setState({ showProfile: true })} />
+            <Navbar
+              loading={false}
+              showProfile={() => this.setState({ showProfile: true })}
+            />
             <Content />
           </div>
         </Auxiliary>
@@ -90,11 +93,11 @@ class User extends Component {
           {this.props.errors.noUserHandle ? (
             <Alert type="error" message={this.props.errors.noUserHandle} />
           ) : null}
-          {this.props.errors.server500 ? (
-            <Alert type="error" message={this.props.errors.server500} />
-          ) : null}
           {this.props.errors.noPhoto ? (
             <Alert type="error" message={this.props.errors.noPhoto} />
+          ) : null}
+          {this.props.errors.server500 ? (
+            <Alert type="error" message={this.props.errors.server500} />
           ) : null}
           {content}
         </Auxiliary>

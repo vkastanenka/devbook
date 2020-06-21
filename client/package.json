@@ -1,6 +1,15 @@
 {
-  "name": "client",
-  "version": "0.1.0",
+  "name": "devbook",
+  "version": "1.0.0",
+  "license": "ISC",
+  "author": "Victoria Kastanenka",
+  "description": "Client side dependencies required for devbook",
+  "keywords": [
+    "react",
+    "redux",
+    "state management",
+    "client side"
+  ],
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -13,8 +22,6 @@
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "react-scroll": "^1.7.16",
-    "react-transition-group": "^4.4.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0"
   },

@@ -76,7 +76,7 @@ class Landing extends Component {
             <Alert type="error" message={this.props.errors.passwordReset} />
           ) : null}
           <h1 className="heading-primary font-megrim landing__heading">
-            DevConnector
+            Devbook
           </h1>
           <LoginRegister />
         </main>
